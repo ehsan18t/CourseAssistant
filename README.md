@@ -109,7 +109,7 @@
 ## 🔆 **Need Help?**
 **Email (Ahasan):** [makhan201122@bscse.uiu.ac.bd](mailto:makhan201122@bscse.uiu.ac.bd)\
 **Email (Ashik):** [mashik201123@bscse.uiu.ac.bd](mailto:mashik201123@bscse.uiu.ac.bd)\
-**Email (Kamran):** [mkamran201039@bscse.uiu.ac.bd](mailto:mkamran201039@bscse.uiu.ac.bd)
-**Email (Amina):** [aafroz201391@bscse.uiu.ac.bd](mailto:aafroz201391@bscse.uiu.ac.bd)
+**Email (Kamran):** [mkamran201039@bscse.uiu.ac.bd](mailto:mkamran201039@bscse.uiu.ac.bd)\
+**Email (Amina):** [aafroz201391@bscse.uiu.ac.bd](mailto:aafroz201391@bscse.uiu.ac.bd)\
 **Email (George):** [jpurification201244@bscse.uiu.ac.bd](mailto:jpurification201244@bscse.uiu.ac.bd)
 
