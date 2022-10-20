@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.2.0"
+  },
+  "dependencies": {
+    "tailwind-theme-switcher": "^1.0.2"
+  }
+}
