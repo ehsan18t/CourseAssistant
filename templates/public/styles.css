@@ -649,18 +649,9 @@ video {
   border-radius: 9999px;
 }
 
-.border-b {
-  border-bottom-width: 1px;
-}
-
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
-}
-
-.border-\[\#B4ABAB\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(180 171 171 / var(--tw-border-opacity));
 }
 
 .bg-\[\#FFFFFF\] {
@@ -778,11 +769,4 @@ video {
   outline-offset: 2px;
 }
 
-#border-people li:not(:last-child){
-    border-bottom-width: 1px;
-}
-
-#border-group li:not(:last-child){
-    border-bottom-width: 1px;
-}
 
