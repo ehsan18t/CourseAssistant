@@ -649,10 +649,6 @@ video {
   border-radius: 9999px;
 }
 
-.border-b {
-  border-bottom-width: 1px;
-}
-
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -772,3 +768,5 @@ video {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+
+
