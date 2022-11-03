@@ -138,4 +138,3 @@ GitHub.sublime-settings
 
 # Custom
 node_modules/
-!static/css/dist/
