@@ -1,12 +1,3 @@
-<!-- 
-  TODO:
-      1. Add content sharing  -- Lead: Sunny
-      2. Add result tracking  --|
-      3. Add savings tracker  --| Lead: Ahasan
-      4. Add todo fetures     --|
-      5. Add study group      --|
--->
-
 <h1 align="center">Course Assistant</h1>
 <div align="center">
   <strong>Course Manager and Tracker</strong>
@@ -38,8 +29,8 @@
     * Share Contents
     * Request Contents
     * Track Results
-    * Savings Tracker
-    * Todo List
+    * Content Suggestion
+    * Visualize Progression
     * Study Group
 
 &nbsp;
@@ -66,13 +57,13 @@
 </details>
 
 <details>
-  <summary> Savings Tracker</summary>
+  <summary> Content Suggestion</summary>
 
     * Details will be added later.
 </details>
 
 <details>
-  <summary> Todo List</summary>
+  <summary> Visualize Progression</summary>
 
     * Details will be added later.
 </details>
@@ -110,6 +101,4 @@
 **Email (Ahasan):** [makhan201122@bscse.uiu.ac.bd](mailto:makhan201122@bscse.uiu.ac.bd)\
 **Email (Ashik):** [mashik201123@bscse.uiu.ac.bd](mailto:mashik201123@bscse.uiu.ac.bd)\
 **Email (Kamran):** [mkamran201039@bscse.uiu.ac.bd](mailto:mkamran201039@bscse.uiu.ac.bd)\
-**Email (Amina):** [aafroz201391@bscse.uiu.ac.bd](mailto:aafroz201391@bscse.uiu.ac.bd)\
-**Email (George):** [jpurification201244@bscse.uiu.ac.bd](mailto:jpurification201244@bscse.uiu.ac.bd)
-
+**Email (Amina):** [aafroz201391@bscse.uiu.ac.bd](mailto:aafroz201391@bscse.uiu.ac.bd)
