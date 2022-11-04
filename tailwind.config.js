@@ -18,6 +18,7 @@ module.exports = {
           text: "var(--color-text)",
           muted: "var(--color-text-muted)",
           svg: "var(--color-svg)",
+          shadow: "var(--color-shadow)",
         },
       },
     },

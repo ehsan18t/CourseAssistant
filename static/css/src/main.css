@@ -18,6 +18,7 @@
     --color-text: #707070;
     --color-text-muted: #ffffff;
     --color-svg: #222831;
+    --color-shadow: #93bfed;
   }
 
   .dark {
@@ -29,6 +30,7 @@
     --color-text: #e7e7e7;
     --color-text-muted: #ffffff;
     --color-svg: #ffffff;
+    --color-shadow: #313d55;
   }
 }
 
