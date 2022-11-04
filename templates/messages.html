@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/dist/msg.css">
-    <title>Document</title>
-</head>
-<body class="">
+{% extends 'main.html' %}
 
-    <div class="flex space-x-9 place-content-center py-12">
-      <div class="bg-[#FFFFFF] space-y-2">
+{% block content %}
+    <link rel="stylesheet" href="static/css/dist/msg.css">
+
+    <div class="flex space-x-9 h-full">
+      <div class="bg-[#FFFFFF] space-y-2 p-2">
 
         <!-- search bar -->
         <div class="shadow-md shadow-[#93bfed] pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center ">
@@ -18,13 +12,13 @@
               <img src="static/img/search-icon.svg" alt="">
           </button>
           <div>
-            <input class=" border-gray-300 bg-white h-8 px-5 pr-20 rounded-2xl text-sm focus:outline-none" type="search"
+            <input class="border-gray-300 bg-white h-8 px-5 pr-20 rounded-2xl text-sm focus:outline-none" type="search"
             name="search" placeholder="Search">
           </div>
         </div>
 
         <!-- study Group -->
-        <div id="border-group" class="shadow-md shadow-[#93bfed] pt-4 pb-7 pl-3 pr-4 rounded-2xl grid justify-center space-y-2">
+        <div id="border-group" class="rounded-2xl shadow-md shadow-[#93bfed] pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2">
           <p class="font-bold font-['Roboto'] text-lg">Study Groups</p>
           
           <!-- group 1 -->
@@ -75,7 +69,7 @@
         </div>
 
         <!-- people -->
-        <div id="border-people" class="shadow-md shadow-[#93bfed] pt-4 pb-7 pl-3 pr-4 rounded-2xl grid justify-center space-y-2">
+        <div id="border-people" class="rounded-2xl shadow-md shadow-[#93bfed] pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2">
           <p class="font-bold font-['Roboto'] text-lg">People</p>
           
           <!-- people 1 -->
@@ -154,17 +148,13 @@
           </li>
 
         </div>
-        
+
       </div>
-    
+
       <section>
         <div>
           <h1>Chat History</h1>
         </div>
       </section>
+{% endblock content %}
     </div>
-
-    
-
-</body>
-</html>
