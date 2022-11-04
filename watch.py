@@ -31,7 +31,7 @@ def run_fast_scandir(src, ignore=[], inc_ext=[]):
     return subfolders, files
 
 
-def build_css(filename):
+def watch_css(filename):
     filename = filename.replace('\\', '/')
     src_file = src_dir + filename
     dist_file = dist_dir + filename
@@ -44,4 +44,4 @@ sf, file_list = run_fast_scandir(src_dir, ignore_list, include_ext)
 
 for item in file_list:
     print(f"-> Watching \"{item}\"")
-    build_css(item)
+    watch_css(item)
