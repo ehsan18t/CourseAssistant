@@ -39,7 +39,7 @@ def build_css(filename):
     filename = filename.replace('\\', '/')
     src_file = src_dir + filename
     dist_file = dist_dir + filename
-    os.system(f'{cmd_start}npx tailwindcss -i \"{src_file}\" -o \"{dist_file}\" --watch\"')
+    os.system(f'{cmd_start}npx tailwindcss -i \"{src_file}\" -o \"{dist_file}\" --watch')
 
 
 # Main
