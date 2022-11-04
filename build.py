@@ -1,10 +1,6 @@
 #!/usr/bin/python
 import os
-
-if os.name == 'nt':
-    cmd_start = 'cmd /c "START /B '
-else:
-    cmd_start = ''
+import subprocess
 
 # Configs
 include_ext = ["css"]  # Remove File Types
@@ -39,7 +35,8 @@ def build_css(filename):
     filename = filename.replace('\\', '/')
     src_file = src_dir + filename
     dist_file = dist_dir + filename
-    os.system(f'{cmd_start}npx tailwindcss -i \"{src_file}\" -o \"{dist_file}\" --minify')
+    cmd = f'npx tailwindcss -i {src_file} -o {dist_file} --minify'
+    subprocess.Popen(cmd, shell=True)
 
 
 # Main
