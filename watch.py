@@ -1,12 +1,9 @@
 #!/usr/bin/python
 import os
-import subprocess
 
-is_linux = False
 if os.name == 'nt':
     cmd_start = 'cmd /c "START /B '
 else:
-    is_linux = True
     cmd_start = ''
 
 # Configs
@@ -42,13 +39,7 @@ def build_css(filename):
     filename = filename.replace('\\', '/')
     src_file = src_dir + filename
     dist_file = dist_dir + filename
-    if not is_linux:
-        os.system(f'{cmd_start}npx tailwindcss -i \"{src_file}\" -o \"{dist_file}\" --watch')
-    else:
-        subprocess.Popen(f'{cmd_start}npx tailwindcss -i \"{src_file}\" -o \"{dist_file}\" --watch'.split(' '),
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE,
-                         shell=True)
+    os.system(f'{cmd_start}npx tailwindcss -i \"{src_file}\" -o \"{dist_file}\" --watch')
 
 
 # Main
