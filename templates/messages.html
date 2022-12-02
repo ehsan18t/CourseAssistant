@@ -1,170 +1,256 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/dist/msg.css">
-    <title>Document</title>
-</head>
-<body class="">
+{% extends 'main.html' %}
 
-    <div class="flex space-x-9 place-content-center py-12">
-      <div class="bg-[#FFFFFF] space-y-2">
+{% block content %}
+<link rel="stylesheet" href="static/css/dist/msg.css" />
 
-        <!-- search bar -->
-        <div class="shadow-md shadow-[#93bfed] pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center ">
-          <button type="submit" class="h-5 w-5">
-              <img src="static/img/search-icon.svg" alt="">
-          </button>
-          <div>
-            <input class=" border-gray-300 bg-white h-8 px-5 pr-20 rounded-2xl text-sm focus:outline-none" type="search"
-            name="search" placeholder="Search">
-          </div>
-        </div>
-
-        <!-- study Group -->
-        <div id="border-group" class="shadow-md shadow-[#93bfed] pt-4 pb-7 pl-3 pr-4 rounded-2xl grid justify-center space-y-2">
-          <p class="font-bold font-['Roboto'] text-lg">Study Groups</p>
-          
-          <!-- group 1 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/Ellipse 3.png" alt="People image"/>
-            <div class="">
-              <p class="font-bold font-['Roboto'] text-base">SAD Lab [A]</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">Django tutorialdf link dsfaadf adf</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Wednesday, 9.52pm</p></div>
-              <div class="bg-[#F24E1E] rounded-full w-5 h-5 flex justify-center items-center shadow-xl">
-                 <p class="text-sm ">4</p>
-              </div>
-            </div>
-          </li>
-
-          <!-- group 2 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/Ellipse 4.png" alt="People image"/>
-            <div class="">
-              <p class="font-bold font-['Roboto'] text-base">Electronics</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">CMOS technology is one of</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Today, 9.52pm</p></div>
-              <div class="pl-10">
-                 <img src="static/img/charm_tick-double.png" alt="">
-              </div>
-            </div>
-          </li>
-
-          <!-- group 3 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/Ellipse 5.png" alt="People image"/>
-            <div class="">
-              <p class="font-bold font-['Roboto'] text-base">SAD</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">It is not going to happen</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Today, 9.52pm</p></div>
-              <div class="pl-10">
-                 <img src="static/img/charm_tick-double.png" alt="">
-              </div>
-            </div>
-          </li>
-
-        </div>
-
-        <!-- people -->
-        <div id="border-people" class="shadow-md shadow-[#93bfed] pt-4 pb-7 pl-3 pr-4 rounded-2xl grid justify-center space-y-2">
-          <p class="font-bold font-['Roboto'] text-lg">People</p>
-          
-          <!-- people 1 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/avatar/ashan.png" alt="People image"/>
-            <div>
-              <p class="font-semibold font-['Roboto'] text-base">Ahsan</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">Django is latest froamework</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Today, 9.52pm</p></div>
-              <div class="pl-10">
-                 <img src="static/img/charm_tick-double.png" alt="">
-              </div>
-            </div>
-          </li>
-
-          <!-- people 2 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/avatar/shafi.png" alt="People image"/>
-            <div class="">
-              <p class="font-semibold font-['Roboto'] text-base">Shafi</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">Figma is awesome!</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Today, 12.52am</p></div>
-              <div class="bg-[#F24E1E] rounded-full w-5 h-5 flex justify-center items-center shadow-xl">
-                 <p class="text-sm ">1</p>
-              </div>
-            </div>
-          </li>
-
-          <!-- people 3 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/avatar/ashik.jpg" alt="People image"/>
-            <div class="">
-              <p class="font-semibold font-['Roboto'] text-base">Ashik</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">Tailwind makes life easy!</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Wednesday 12.52pm</p></div>
-              <div class="bg-[#F24E1E] rounded-full w-5 h-5 flex justify-center items-center shadow-xl">
-                 <p class="text-sm ">1</p>
-              </div>
-            </div>
-          </li>
-
-          <!-- people 4 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/avatar/jeorj.png" alt="People image"/>
-            <div class="">
-              <p class="font-semibold font-['Roboto'] text-base">Jeorge</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">Python is easy</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Yesterday, 9.52pm</p></div>
-              <div class="bg-[#F24E1E] rounded-full w-5 h-5 flex justify-center items-center shadow-xl">
-                 <p class="text-sm ">5</p>
-              </div>
-            </div>
-          </li>
-
-          <!-- people 5 -->
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
-            <img class="rounded-full w-8 h-8" src="static/img/avatar/amina.png" alt="People image"/>
-            <div class="">
-              <p class="font-semibold font-['Roboto'] text-base">Amina</p>
-              <p class="truncate w-36 text-sm text-[#303030] font-light">SAD lab is nice</p>
-            </div>
-            <div class="grid justify-items-end w-40">
-              <div><p class="whitespace-nowrap text-sm text-[#303030] font-light">Today, 9.52pm</p></div>
-              <div class="pl-10">
-                 <img src="static/img/charm_tick-double.png" alt="">
-              </div>
-            </div>
-          </li>
-
-        </div>
-        
+<div class="flex space-x-9 h-full">
+  <div class="bg-skin-sidebar space-y-2 p-2">
+    <!-- search bar -->
+    <div
+      class="shadow-md shadow-skin-shadow pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center"
+    >
+      <button type="submit" class="h-5 w-5">
+        <img src="static/img/search-icon.svg" alt="" />
+      </button>
+      <div>
+        <input
+          class="border-skin-text bg-skin-sidebar h-8 px-5 pr-20 rounded-2xl text-sm focus:outline-none"
+          type="search"
+          name="search"
+          placeholder="Search"
+        />
       </div>
-    
-      <section>
-        <div>
-          <h1>Chat History</h1>
-        </div>
-      </section>
     </div>
 
-    
+    <!-- study Group -->
+    <div
+      id="border-group"
+      class="rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2"
+    >
+      <p class="font-bold font-['Roboto'] text-lg text-skin-svg">Study Groups</p>
 
-</body>
-</html>
+      <!-- group 1 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/Ellipse 3.png"
+          alt="People image"
+        />
+        <div class="">
+          <p class="font-bold font-['Roboto'] text-skin-svg">SAD Lab [A]</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            Django tutorialdf link dsfaadf adf
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Wednesday, 9.52pm
+            </p>
+          </div>
+          <div
+            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
+          >
+            <p class="text-sm text-skin-muted">4</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- group 2 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/Ellipse 4.png"
+          alt="People image"
+        />
+        <div class="">
+          <p class="font-bold font-['Roboto'] text-skin-svg">Electronics</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            CMOS technology is one of
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Today, 9.52pm
+            </p>
+          </div>
+          <div class="pl-10">
+            <img src="static/img/charm_tick-double.png" alt="" />
+          </div>
+        </div>
+      </li>
+
+      <!-- group 3 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/Ellipse 5.png"
+          alt="People image"
+        />
+        <div class="">
+          <p class="font-bold font-['Roboto'] text-skin-svg">SAD</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            It is not going to happen
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Today, 9.52pm
+            </p>
+          </div>
+          <div class="pl-10">
+            <img src="static/img/charm_tick-double.png" alt="" />
+          </div>
+        </div>
+      </li>
+    </div>
+
+    <!-- people -->
+    <div
+      id="border-people"
+      class="rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2"
+    >
+      <p class="font-bold font-['Roboto'] text-lg text-skin-svg">People</p>
+
+      <!-- people 1 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/avatar/ashan.png"
+          alt="People image"
+        />
+        <div>
+          <p class="font-semibold font-['Roboto'] text-skin-svg">Ahsan</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            Django is latest froamework
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Today, 9.52pm
+            </p>
+          </div>
+          <div class="pl-10">
+            <img src="static/img/charm_tick-double.png" alt="" />
+          </div>
+        </div>
+      </li>
+
+      <!-- people 2 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/avatar/shafi.png"
+          alt="People image"
+        />
+        <div class="">
+          <p class="font-semibold font-['Roboto'] text-skin-svg">Shafi</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            Figma is awesome!
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Today, 12.52am
+            </p>
+          </div>
+          <div
+            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
+          >
+            <p class="text-sm text-skin-muted">1</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- people 3 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/avatar/ashik.jpg"
+          alt="People image"
+        />
+        <div class="">
+          <p class="font-semibold font-['Roboto'] text-skin-svg">Ashik</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            Tailwind makes life easy!
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Wednesday 12.52pm
+            </p>
+          </div>
+          <div
+            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
+          >
+            <p class="text-sm text-skin-muted">1</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- people 4 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/avatar/jeorj.png"
+          alt="People image"
+        />
+        <div class="">
+          <p class="font-semibold font-['Roboto'] text-skin-svg">Jeorge</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            Python is easy
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Yesterday, 9.52pm
+            </p>
+          </div>
+          <div
+            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
+          >
+            <p class="text-sm text-skin-muted">5</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- people 5 -->
+      <li class="flex space-x-3 justify-between place-items-center pb-2">
+        <img
+          class="rounded-full w-8 h-8"
+          src="static/img/avatar/amina.png"
+          alt="People image"
+        />
+        <div class="">
+          <p class="font-semibold font-['Roboto'] text-skin-svg">Amina</p>
+          <p class="truncate w-36 text-sm text-skin-text font-light">
+            SAD lab is nice
+          </p>
+        </div>
+        <div class="grid justify-items-end w-40">
+          <div>
+            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
+              Today, 9.52pm
+            </p>
+          </div>
+          <div class="pl-10">
+            <img src="static/img/charm_tick-double.png" alt="" />
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+
+  <section>
+    <div>
+      <h1>Chat History</h1>
+    </div>
+  </section>
+</div>
+{% endblock content %}
