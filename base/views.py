@@ -8,3 +8,7 @@ def home(request):
 
 def messages(request):
     return render(request, 'messages.html')
+
+
+def chat(request):
+    return render(request, 'chat.html')
