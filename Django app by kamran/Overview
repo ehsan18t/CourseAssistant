@@ -1,0 +1,3 @@
+Hello,
+I have created a django app to launch homepage. Here in templates folder "homepage by kamran flex.html" file is the homepage. I have created a model/table 
+named content with 5 attributes (course_name, course_code, contributor, image & comment). The content data coming from database.
