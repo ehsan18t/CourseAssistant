@@ -3,5 +3,5 @@ from .models import University
 from .models import User
 
 # Register your models here.
-admin.register(University)
-admin.register(User)
+admin.site.register(University)
+admin.site.register(User)
