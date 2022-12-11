@@ -1,9 +1,12 @@
 from django.shortcuts import render
 
+from base.models import User
+
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    data = User.objects.all()
+    return render(request, 'home.html', {'data': data})
 
 
 def messages(request):
