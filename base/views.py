@@ -12,3 +12,6 @@ def messages(request):
 
 def chat(request):
     return render(request, 'chat.html')
+
+def content_approval(request):
+    return render(request, 'content_approval.html')
