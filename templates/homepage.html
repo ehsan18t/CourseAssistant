@@ -1,0 +1,98 @@
+{% load static %}
+{% static "img" as baseURL %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a676914d6c.js" crossorigin="anonymous"></script>
+    <title>Homepage</title>
+
+    <style>
+
+        .flex-container{
+           
+            width: 90%;
+            background-color: white;
+            display: flex;
+            flex-wrap: wrap; 
+            margin:auto;
+            justify-content: center; 
+            align-items: center; 
+            height: auto;
+        }
+
+        .flex-container > div {
+            background-color: white;
+            margin: 15px;
+            padding: 0px;
+            border-bottom: 1px solid #7093F0;
+            width: 340px; 
+            text-align: center;
+            height: 260px;
+            
+            
+        }
+
+       
+
+        .icon-box{
+           
+            letter-spacing: 10px;
+            font-size: 20px;
+            line-height: 1.8;
+            margin-top: 40px;
+        }
+        
+        .flex-container> div:hover {
+            background-color: white;
+            border-radius: 10px;
+   
+            box-shadow: 3px 3px 3px 3px #888888;
+	        transition-duration: 0.1s;
+              
+            }
+
+    
+    
+    </style>
+
+</head>
+<body>
+   
+    <div class="flex-container">
+
+        {% for i in c %}
+        <div class="div1" >
+            <p>
+                <img src="{{baseURL}}/{{i.fields.image}} " alt="image not found" style="height: 50px;width:50px; border-radius:50%"> 
+            </p>
+            
+            
+            <h3> {{i.fields.course_name}}</h3>
+            <i><b>{{i.fields.course_code}}</b></i><br>
+            <i style="font-size: 14px">Contributor: {{i.fields.contributor}}</i>
+
+            <div class="icon-box" >
+                <abbr title="Download Content"><i class="fa-solid fa-download" style="color:#86E385 ;"></i></abbr>
+                <abbr title="Edit"><i class="fa-solid fa-pen-to-square" style="color:#7093F0 ;"></i></abbr>
+                <abbr title="Comment"><i class="fa-solid fa-comments" style="color:#7093F0 ;"></i></abbr>
+                <abbr title="Delete"><i class="fa-solid fa-trash" style="color:#FF1D1D ;"></i></abbr>
+
+            </div>
+            
+            
+        </div>
+
+        {% endfor %}
+        
+        
+
+        
+    
+       
+
+    </div>
+    
+</body>
+</html>
