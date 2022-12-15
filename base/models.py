@@ -45,9 +45,14 @@ class University(models.Model):
         return f'{self.name} {self.domain} ({self.email_pattern}) - {self.sid_pattern}'
 
 
-class User(models.Model):
+class Department(models.Model):
     id = models.AutoField(primary_key=True)
-    s_id = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.name} ({self.university})'
+
 
 # Create user extending default user model
 class User(AbstractUser, PermissionsMixin):
