@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from .forms import CreateUserForm as UserCreationForm
+from .forms import LoginForm
 from .models import User
 
 
@@ -11,7 +12,12 @@ def home(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            return render(request, 'home.html')
+    return render(request, 'login.html', {'form': form})
 
 
 def signup(request):
