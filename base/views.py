@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import CreateUserForm as UserCreationForm
 
 from base.models import User
 
@@ -19,6 +20,19 @@ def login(request):
         else:
             return render(request, 'login.html', {'email': email, 'passwords': passwords})
     return render(request, 'login.html')
+
+
+def signup(request):
+    form = {'form': UserCreationForm()}
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'login.html')
+        else:
+            return render(request, 'signup.html', {'form': form})
+
+    return render(request, 'signup.html', form)
 
 
 def messages(request):
