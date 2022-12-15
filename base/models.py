@@ -63,8 +63,8 @@ class Department(models.Model):
 # Create user extending default user model
 class User(AbstractUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
-    s_id = models.CharField(max_length=20, unique=True)
     email = models.EmailField(_('email address'), max_length=100, unique=True)
+    s_id = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     passwords = models.CharField(max_length=300)
@@ -76,8 +76,8 @@ class User(AbstractUser, PermissionsMixin):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     register_date = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = 's_id'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'passwords', 'department', 'university']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['s_id', 'first_name', 'last_name', 'passwords', 'department', 'university']
     
     objects = CustomAccountManager()
 
