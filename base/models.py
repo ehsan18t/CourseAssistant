@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
+
 class CustomAccountManager(BaseUserManager):
-    def create_superuser(self, email, s_id, first_name, last_name, passwords, department, university, **other_fields):
+    def create_superuser(self, email, first_name, last_name, passwords, **other_fields):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
         other_fields.setdefault('is_active', True)
@@ -13,7 +14,7 @@ class CustomAccountManager(BaseUserManager):
         if other_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self.create_user(email, s_id, first_name, last_name, passwords, department, university, **other_fields)
+        return self.create_user(email, first_name, last_name, passwords, **other_fields)
 
     def create_user(self, email, s_id, first_name, last_name, passwords, department, university, **other_fields):
         # Validations
@@ -78,9 +79,8 @@ class User(AbstractUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['s_id', 'first_name', 'last_name', 'passwords', 'department', 'university']
-    
+
     objects = CustomAccountManager()
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} ({self.email})'
-
