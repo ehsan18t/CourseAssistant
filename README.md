@@ -17,15 +17,20 @@
 
 &nbsp;
 &nbsp;
+
 ## 💠 **Introductions**
-  An alrounder helper for undergraduate student. <sub>(check screenshots)</sub>
-    <br>
-    <br>
-    <b> Note: </b>This project is the recreation and the improved version of the original https://github.com/Ahsan40/course-assistant project with django.
+
+An alrounder helper for undergraduate student. <sub>(check screenshots)</sub>
+<br>
+<br>
+<b> Note: </b>This project is the recreation and the improved version of the
+original https://github.com/Ahsan40/course-assistant project with django.
 
 &nbsp;
 &nbsp;
+
 ## 📜 **Features**
+
     * Share Contents
     * Request Contents
     * Track Results
@@ -41,6 +46,7 @@
   <summary> Share Contents</summary>
 
     * Details will be added later.
+
 </details>
 
 
@@ -48,30 +54,35 @@
   <summary> Request Contents</summary>
 
     * Details will be added later.
+
 </details>
 
 <details>
   <summary> Track Results</summary>
 
     * Details will be added later.
+
 </details>
 
 <details>
   <summary> Content Suggestion</summary>
 
     * Details will be added later.
+
 </details>
 
 <details>
   <summary> Visualize Progression</summary>
 
     * Details will be added later.
+
 </details>
 
 <details>
   <summary> Study Group</summary>
 
     * Details will be added later.
+
 </details>
 
 &nbsp;
@@ -84,11 +95,15 @@
 <!-- <a href="https://github.com/Ahsan40/CourseAssistant/releases"><img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/downloads-pre/Ahsan40/CourseAssistant/latest/total?color=red&label=Download%20latest&style=for-the-badge"></a> -->
 
 &nbsp;
+
 ## 🖼️ **Screenshots**
+
 <strong><a href="https://google.com" target="_blank" rel="noopener">Click Here to View All Screenshots</a></strong>
 
 &nbsp;
+
 ## ⁉️ **FAQ**
+
 <details>
   <summary> ✔️ Will be added later.</summary>
 <br>
@@ -97,7 +112,9 @@
 </details>
 
 &nbsp;
+
 ## 🔆 **Need Help?**
+
 **Email (Ehsan):** [makhan201122@bscse.uiu.ac.bd](mailto:makhan201122@bscse.uiu.ac.bd)\
 **Email (Ashik):** [mashik201123@bscse.uiu.ac.bd](mailto:mashik201123@bscse.uiu.ac.bd)\
 **Email (Kamran):** [mkamran201039@bscse.uiu.ac.bd](mailto:mkamran201039@bscse.uiu.ac.bd)\

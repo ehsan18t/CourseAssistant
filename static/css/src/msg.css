@@ -1,7 +1,7 @@
-#border-people li:not(:last-child){
+#border-people li:not(:last-child) {
     border-bottom-width: 1px;
-  }
+}
 
-  #border-group li:not(:last-child){
+#border-group li:not(:last-child) {
     border-bottom-width: 1px;
-  }
+}
