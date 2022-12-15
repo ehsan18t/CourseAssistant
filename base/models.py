@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CustomAccountManager(BaseUserManager):
-    def create_superuser(self, email, first_name, last_name, passwords, **other_fields):
+    def create_superuser(self, email, first_name, last_name, **other_fields):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
         other_fields.setdefault('is_active', True)
@@ -14,9 +14,9 @@ class CustomAccountManager(BaseUserManager):
         if other_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self.create_user(email, first_name, last_name, passwords, **other_fields)
+        return self.create_user(email, first_name, last_name, **other_fields)
 
-    def create_user(self, email, first_name, last_name, passwords, s_id, department, university, **other_fields):
+    def create_user(self, email, first_name, last_name, s_id, department, university, **other_fields):
         # Validations
         if not email:
             raise ValueError(_('You must provide an email address'))
@@ -29,7 +29,7 @@ class CustomAccountManager(BaseUserManager):
 
         # Normalizations and creation 
         email = self.normalize_email(email)
-        user = self.model(email=email, s_id=s_id, first_name=first_name, last_name=last_name, passwords=passwords,
+        user = self.model(email=email, first_name=first_name, last_name=last_name, s_id=s_id,
                           department=department, university=university, **other_fields)
         user.save()
         return user
@@ -68,7 +68,6 @@ class User(AbstractUser, PermissionsMixin):
     s_id = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    passwords = models.CharField(max_length=300)
     profile_picture = models.FileField(upload_to='profile_pictures')
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -78,7 +77,7 @@ class User(AbstractUser, PermissionsMixin):
     register_date = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['s_id', 'first_name', 'last_name', 'passwords', 'department', 'university']
+    REQUIRED_FIELDS = ['s_id', 'first_name', 'last_name', 'department', 'university']
 
     objects = CustomAccountManager()
 
