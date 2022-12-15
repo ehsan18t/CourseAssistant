@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .forms import CreateUserForm as UserCreationForm
@@ -8,6 +9,7 @@ from .models import User
 
 
 # Create your views here.
+@login_required(login_url='login')
 def home(request):
     data = User.objects.all()
     return render(request, 'home.html', {'data': data})
@@ -42,10 +44,10 @@ def signup(request):
             return redirect('login')
     return render(request, 'signup.html', {'form': form})
 
-
+@login_required(login_url='login')
 def messages_page(request):
     return render(request, 'messages.html')
 
-
+@login_required(login_url='login')
 def chat(request):
     return render(request, 'chat.html')
