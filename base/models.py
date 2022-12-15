@@ -43,10 +43,12 @@ class University(models.Model):
     sid_pattern = models.CharField(max_length=100)  # student id pattern
 
     def validate_email(self, email):
-        return email.endswith(self.email_pattern)
+        return True
+        # return email.endswith(self.email_pattern)
 
     def validate_sid(self, sid):
-        return sid.startswith(self.sid_pattern)
+        return True
+        # return sid.startswith(self.sid_pattern)
 
     def __str__(self):
         return f'{self.name} {self.domain} ({self.email_pattern}) - {self.sid_pattern}'
