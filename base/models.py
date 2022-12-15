@@ -16,20 +16,20 @@ class CustomAccountManager(BaseUserManager):
 
         return self.create_user(email, first_name, last_name, **other_fields)
 
-    def create_user(self, email, first_name, last_name, s_id, department, university, **other_fields):
+    def create_user(self, email, first_name, last_name, student_id, department, university, **other_fields):
         # Validations
         if not email:
             raise ValueError(_('You must provide an email address'))
         if university.validate_email(email) is False:
             raise ValueError(_('You must provide a valid email address'))
-        if not s_id:
+        if not student_id:
             raise ValueError(_('You must provide a student ID'))
-        if university.validate_sid(s_id) is False:
+        if university.validate_sid(student_id) is False:
             raise ValueError(_('You must provide a valid student ID'))
 
         # Normalizations and creation 
         email = self.normalize_email(email)
-        user = self.model(email=email, first_name=first_name, last_name=last_name, s_id=s_id,
+        user = self.model(email=email, first_name=first_name, last_name=last_name, s_id=student_id,
                           department=department, university=university, **other_fields)
         user.save()
         return user
@@ -64,10 +64,10 @@ class Department(models.Model):
 # Create user extending default user model
 class User(AbstractUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
-    email = models.EmailField(_('email address'), max_length=100, unique=True)
-    s_id = models.CharField(max_length=20, unique=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    email = models.EmailField(_('Email Address'), max_length=100, unique=True)
+    student_id = models.CharField(_('Student ID'), max_length=20, unique=True)
+    first_name = models.CharField(_('First Name'),  max_length=100)
+    last_name = models.CharField(_('Last Name'), max_length=100)
     profile_picture = models.FileField(upload_to='profile_pictures')
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -77,7 +77,7 @@ class User(AbstractUser, PermissionsMixin):
     register_date = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['s_id', 'first_name', 'last_name', 'department', 'university']
+    REQUIRED_FIELDS = ['student_id', 'first_name', 'last_name', 'department', 'university']
 
     objects = CustomAccountManager()
 
