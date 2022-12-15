@@ -1,7 +1,7 @@
-from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .forms import CreateUserForm as UserCreationForm
 from .forms import LoginForm
@@ -44,11 +44,9 @@ def signup(request):
             return redirect('login')
     return render(request, 'signup.html', {'form': form})
 
-
 @login_required(login_url='login')
 def messages_page(request):
     return render(request, 'messages.html')
-
 
 @login_required(login_url='login')
 def chat(request):
