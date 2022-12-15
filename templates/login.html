@@ -1,8 +1,19 @@
 <h1>login</h1>
 
 <form action="/login" method="POST">
-  {% csrf_token %} {{ form.as_p }}
+  {% csrf_token %}
+
+  <label for="email"> Email Address: </label>
+  <input type="text" name="email" />
+  <br />
+  <label for="passwords"> Passwords: </label>
+  <input type="password" name="passwords" />
+  <br />
   <input type="submit" value="Login" />
 </form>
 
-<p>Don't have an account? <a href="/signup">Signup here</a></p>
+{% if messages %} {% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %} {% endif %}
+
+<p>Don't have an account? <a href="{% url 'signup' %}">Signup here</a></p>
