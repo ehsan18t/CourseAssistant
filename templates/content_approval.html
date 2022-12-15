@@ -1,5 +1,91 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<div class="bg-gray-700">Content approval</div>
+<link rel="stylesheet" href="static/css/dist/content_approval.css">
+<div class="mx-32 pt-20 space-y-10 pb-10">
+    <div class=""><label class="text-xl font-medium text-gray-900">Files Pending for Approval</label> </div>
+    <div class=" shadow-md max-h-90 overflow-hidden" id="uploaded-content">
+        <!-- title --> 
+        <ul class="flex p-3 bg-[#FF5F1F]  list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 ">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 ">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 ">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 ">Description</label></li>
+        </ul>
+
+        <!-- contents -->
+       <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+        <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+        <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+        <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+        <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+        <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+        <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+        <ul class="flex p-3 list-style-none">
+            <li class="ml-2"><input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></li>
+            <li class="ml-4"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Course Name</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Contributor</label></li>
+            <li class="ml-28"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Uploaded File</label></li>
+            <li class="ml-40"><label for="default-checkbox" class=" text-sm font-medium text-gray-900 dark:text-gray-300">Description</label></li>
+        </ul>
+       
+        
+    </div>
+    <div class="flex">
+        <button class="bg-[#f78548] hover:bg-[#FF5F1F] text-sm p-1 text-white font-bold rounded">
+            Approve Selected
+        </button>
+        <button class="ml-6 bg-[#f78548] hover:bg-[#FF5F1F] text-sm p-1 text-white font-bold rounded">
+            Delete Selected
+        </button>
+        
+        <ul class="flex my-1 ml-64 space-x-4">
+            <li class="w-7 h-7 bg-[#f78548] hover:bg-[#FF5F1F] rounded-tl-xl rounded-br-xl"> <a class="px-2" href="#">1</a></li>
+            <li class="w-7 h-7 bg-[#f78548] hover:bg-[#FF5F1F] rounded-tl-xl rounded-br-xl"> <a class="px-2" href="#">2</a></li>
+        </ul>
+    </div>
+</div>
 {% endblock content %}
