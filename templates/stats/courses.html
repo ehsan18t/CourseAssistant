@@ -42,12 +42,10 @@
 
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
-      ["Course Code", "GPA"],
-
-      {% for item, gpa in data %}
-      ["{{item.course_code}}", "{{gpa.obtained}}"],
-      {% endfor %}
-    ]);
+      ["Course", "Marks"],
+      {% for x, y in chart %}
+      ['{{x}}', {{y}}],
+      {% endfor %}]);
 
     var options = {
       title: "Courses",
