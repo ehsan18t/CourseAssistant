@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 
 from .models import Semester
 
+
 @login_required(login_url='login')
 def stats(request):
     if request.method == 'POST':
@@ -31,11 +32,13 @@ def add_semester(request):
         auto_add_to_group = True
     else:
         auto_add_to_group = False
-    
+
     user = request.user
 
-    obj = Semester(name=semester, start_date=start_date, end_date=end_date, is_running=is_running, auto_add_to_group=auto_add_to_group, user=user)
+    obj = Semester(name=semester, start_date=start_date, end_date=end_date, is_running=is_running,
+                   auto_add_to_group=auto_add_to_group, user=user)
     obj.save()
+
 
 def delete_semester(request):
     semester_id = request.POST.get('semester_id')
