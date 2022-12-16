@@ -1,9 +1,8 @@
-{% extends 'main.html' %} {% load static %} {% block content %} {% block head %}
-<title>Educational Progress</title>
+{% extends 'main.html' %} {% load static %} {% block head %}
+<title>Semester | Educational Progress</title>
 <link rel="stylesheet" href="{% static '/css/dist/modal.css' %}" />
 <link rel="stylesheet" href="{% static '/css/dist/stats.css' %}" />
-{% endblock head %}
-
+{% endblock head %} {% block content %}
 <!-- Modal for New Semester -->
 <center>
   <button type="submit" onclick="toggleVisibility('open_semester_creator_window')" class="new-post-btn">
@@ -55,7 +54,7 @@
 <div class="post-container">
   <br />
   {% if data %} {% for val in data %}
-  <a href="{% url 'stats' %} {{val.id}}">
+  <a href="{% url 'courses' pk=val.id %}">
     <div class="post-card">
       <div class="post-text-container">
         <div class="post-title-style">{{ val.name}}</div>
