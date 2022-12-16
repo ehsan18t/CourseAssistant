@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from .models import Semester, Course
+from .models import Semester, Course, Assessment, Assessment_Type
 
 
 @login_required(login_url='login')
@@ -61,6 +61,7 @@ def courses(request, pk):
     data = Course.objects.filter(semester=pk)
     return render(request, 'stats/courses.html', {'data': data, 'semester': pk})
 
+
 def add_course(request):
     course = request.POST.get('course_name')
     course_code = request.POST.get('course_code')
@@ -77,6 +78,7 @@ def add_course(request):
     obj = Course(name=course, course_code=course_code, section=course_section, credit=end_date, semester_id=semester, is_retake=is_retake)
     obj.save()
 
+
 def delete_course(request):
     course_id = request.POST.get('course_id')
     course = Course.objects.filter(id=course_id)[0]
@@ -86,10 +88,70 @@ def delete_course(request):
     else:
         print('Error: User not authorized to delete this course')
 
+
 @login_required(login_url='login')
 def assessments(request, s_pk, c_pk):
+    if request.method == 'POST':
+        if 'add_assessment' in request.POST:
+            add_assessment(request)
+        if 'delete_assessment' in request.POST:
+            delete_assessment(request)
+        return redirect('assessments', s_pk=s_pk, c_pk=c_pk)
     return render(request, 'stats/assessments.html', {'semester': s_pk, 'course': c_pk})
+
+
+def add_assessment(request):
+    name = request.POST.get('assessment_name')
+    assessment_type = request.POST.get('assessment_type')
+    total_marks = request.POST.get('total_marks')
+    expected_marks = request.POST.get('expected_marks')
+    obtained_marks = request.POST.get('obtained_marks')
+    course = request.POST.get('course_id')
+
+    obj = Assessment(name=name, assessment_type=assessment_type, total_marks=total_marks, expected_marks=expected_marks, obtained_marks=obtained_marks, course=course)
+    obj.save()
+
+
+def delete_assessment(request):
+    assessment_id = request.POST.get('assessment_id')
+    assessment = Assessment.objects.filter(id=assessment_id)
+    course = Course.objects.filter(id=assessment.course_id)[0]
+    semester = Semester.objects.filter(id=course.semester_id)[0]
+    if request.user == semester.user:
+        assessment.delete()
+    else:
+        print('Error: User not authorized to delete this assessment')
+
 
 @login_required(login_url='login')
 def assessment_types(request, s_pk, c_pk):
-    return render(request, 'stats/assessment_types.html', {'semester': s_pk, 'course': c_pk})
+    if request.method == 'POST':
+        if 'add_assessment_type' in request.POST:
+            add_assessment_type(request)
+        if 'delete_assessment_type' in request.POST:
+            delete_assessment_type(request)
+        return redirect('assessment-types', s_pk=s_pk, c_pk=c_pk)
+
+    data = Assessment_Type.objects.filter(course=c_pk)
+    return render(request, 'stats/assessment_types.html', {'data': data, 'semester': s_pk, 'course': c_pk})
+
+
+def add_assessment_type(request):
+    name = request.POST.get('assessment_name')
+    mark_percentage = request.POST.get('mark_percentage')
+    best_of = request.POST.get('best_of')
+    course = request.POST.get('course_id')
+
+    obj = Assessment_Type(name=name, mark_percentage=mark_percentage, best_of=best_of, course=course)
+    obj.save()
+
+
+def delete_assessment_type(request):
+    assessment_type_id = request.POST.get('assessment_type_id')
+    assessment_type = Assessment_Type.objects.filter(id=assessment_type_id)[0]
+    course = Course.objects.filter(id=assessment_type.course)[0]
+    semester = Semester.objects.filter(id=course.semester_id)[0]
+    if request.user == semester.user:
+        assessment_type.delete()
+    else:
+        print('Error: User not authorized to delete this assessment type')
