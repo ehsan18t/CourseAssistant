@@ -53,15 +53,15 @@
 <!-- Semester Card -->
 <div class="post-container">
   <br />
-  {% if data %} {% for val in data %}
+  {% if data %} {% for val, gpa in data %}
   <a href="{% url 'courses' pk=val.id %}">
     <div class="post-card">
       <div class="post-text-container">
         <div class="post-title-style">{{ val.name}}</div>
         <span class="post-tag">{{ val.start_date }} - {{ val.end_date }}</span>
-        <div class="post-author">Expected CGPA: 0.0</div>
+        <div class="post-author">Expected CGPA: {{gpa.expected}}/4.00</div>
         <div>
-          <p class="post-text-style">Actual CGPA: 0.0</p>
+          <p class="post-text-style">Actual CGPA: {{gpa.obtained}}/4.00</p>
         </div>
         {% comment %} Edit / Delete Semester {% endcomment %}
         <form action="{% url 'stats' %}" method="POST">

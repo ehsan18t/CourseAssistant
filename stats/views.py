@@ -4,6 +4,13 @@ from django.shortcuts import render, redirect
 from .models import Semester, Course, Assessment, Assessment_Type
 
 
+def marks_to_gpa(marks):
+    gpa = {'55': 00, '58': 1.00, '62': 1.33, '66': 1.67, '70': 2.00, '74': 2.33, '78': 2.67, '82': 3.00, '83': 3.33, '86': 3.33, '90': 3.67, '101': 4.00}
+    for i in gpa:
+        if int(marks) <= int(i):
+            return gpa[i]
+
+
 @login_required(login_url='login')
 def stats(request):
     if request.method == 'POST':
@@ -12,7 +19,19 @@ def stats(request):
         if 'delete_semester' in request.POST:
             delete_semester(request)
         return redirect('stats')
-    data = Semester.objects.filter(user=request.user)
+    semester = Semester.objects.filter(user=request.user)
+    gpa = []
+    for sem in semester:
+        courses = Course.objects.filter(semester=sem.id)
+        ex = 0.0
+        ob = 0.0
+        for course in courses:
+            parts = Assessment.objects.filter(course=course.id)
+            for p in parts:
+                ex += (p.expected_marks/p.total_marks)*100
+                ob += (p.obtained_marks/p.total_marks)*100
+        gpa.append({'expected': marks_to_gpa(ex), 'obtained': marks_to_gpa(ob)})
+    data = zip(semester, gpa)
     return render(request, 'stats/stats.html', {'data': data})
 
 
@@ -59,6 +78,16 @@ def courses(request, pk):
         return redirect('courses', pk=pk)
 
     data = Course.objects.filter(semester=pk)
+    assessments = []
+    for course in data:
+        parts = Assessment.objects.filter(course=course.id)
+        ex = 0.0
+        ob = 0.0
+        for p in parts:
+            ex += (p.expected_marks/p.total_marks)*100
+            ob += (p.obtained_marks/p.total_marks)*100
+        assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
+    data = zip(data, assessments)
     return render(request, 'stats/courses.html', {'data': data, 'semester': pk})
 
 

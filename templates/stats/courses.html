@@ -37,15 +37,15 @@
 <!-- Courses Card -->
 <div class="post-container">
   <br />
-  {% if data %} {% for item in data %}
+  {% if data %} {% for item, marks in data %}
   <a href="{% url 'assessments' s_pk=semester c_pk=item.id %}">
     <div class="post-card">
       <div class="post-text-container">
         <div class="post-title-style">{{ item.name }} [{{ item.section }}]</div>
         <span class="post-tag">{{item.course_code}}</span>
-        <div class="post-author">Expected: 00/00</div>
+        <div class="post-author">Expected: {{marks.expected}}/100</div>
         <div>
-          <p class="post-text-style">Obtained: 00/00</p>
+          <p class="post-text-style">Obtained: {{marks.obtained}}/100</p>
         </div>
         <form action="{% url 'courses' pk=semester %}" method="POST">
           {% csrf_token %}
