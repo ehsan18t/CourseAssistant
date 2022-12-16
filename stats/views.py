@@ -75,7 +75,8 @@ def add_course(request):
     else:
         is_retake = False
 
-    obj = Course(name=course, course_code=course_code, section=course_section, credit=end_date, semester_id=semester, is_retake=is_retake)
+    obj = Course(name=course, course_code=course_code, section=course_section, credit=end_date, semester_id=semester,
+                 is_retake=is_retake)
     obj.save()
 
 
@@ -99,7 +100,8 @@ def assessments(request, s_pk, c_pk):
         return redirect('assessments', s_pk=s_pk, c_pk=c_pk)
     data = Assessment.objects.filter(course=c_pk)
     assessment_types = Assessment_Type.objects.filter(course=c_pk)
-    return render(request, 'stats/assessments.html', {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk})
+    return render(request, 'stats/assessments.html',
+                  {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk})
 
 
 def add_assessment(request):
@@ -110,7 +112,8 @@ def add_assessment(request):
     obtained_marks = request.POST.get('obtained_marks')
     course = Course.objects.filter(id=request.POST.get('course_id'))[0]
 
-    obj = Assessment(name=name, assessment_type=assessment_type, total_marks=total_marks, expected_marks=expected_marks, obtained_marks=obtained_marks, course=course)
+    obj = Assessment(name=name, assessment_type=assessment_type, total_marks=total_marks, expected_marks=expected_marks,
+                     obtained_marks=obtained_marks, course=course)
     obj.save()
 
 
