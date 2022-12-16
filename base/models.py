@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
@@ -69,7 +69,7 @@ class User(AbstractUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     email = models.EmailField(_('Email Address'), max_length=100, unique=True)
     username = models.CharField(_('Student ID'), max_length=20, unique=True)
-    first_name = models.CharField(_('First Name'),  max_length=100)
+    first_name = models.CharField(_('First Name'), max_length=100)
     last_name = models.CharField(_('Last Name'), max_length=100)
     profile_picture = models.FileField(upload_to='profile_pictures')
     is_staff = models.BooleanField(default=False)

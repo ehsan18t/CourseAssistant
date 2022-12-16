@@ -1,0 +1,83 @@
+{% extends 'main.html' %} {% load static %} {% block content %} {% block head %}
+<title>Educational Progress</title>
+<link rel="stylesheet" href="{% static '/css/dist/modal.css' %}" />
+<link rel="stylesheet" href="{% static '/css/dist/stats.css' %}" />
+{% endblock head %}
+
+<!-- Modal for New Semester -->
+<center>
+  <button type="submit" onclick="toggleVisibility('open_semester_creator_window')" class="new-post-btn">
+    <b>Create New Semester</b>
+  </button>
+</center>
+
+<div id="open_semester_creator_window" class="hide">
+  <div class="modal-content">
+    <a href="#" class="close" onclick="toggleVisibility('open_semester_creator_window')">Close</a>
+    <form action="{% url 'stats' %}" method="POST">
+      {% csrf_token %}
+      <label for="is_semester_running"> Name </label>
+      <input type="text" name="semester_name" placeholder="Enter Semester Title" />
+      <span class="checkbox-container">
+        <label id="is_semester_running_label" class="checkbox-label" for="is_semester_running">
+          <input type="checkbox" onchange="check_is_running()" id="is_semester_running" name="is_semester_running" />
+          Currently Running
+        </label>
+        <label style="display: none" id="auto_add_to_group_label" class="checkbox-label" for="auto_add_to_group">
+          <input id="auto_add_to_group" type="checkbox" name="auto_add_to_group" />
+          Auto Add to Group
+        </label>
+      </span>
+      <script>
+        function check_is_running() {
+          // hide auto_add_to_group_label when is_semester_running is not checked
+          if (document.getElementById("is_semester_running").checked) {
+            document.getElementById("auto_add_to_group_label").style.display = "block";
+          } else {
+            document.getElementById("auto_add_to_group_label").style.display = "none";
+            document.getElementById("auto_add_to_group").checked = false;
+          }
+        }
+      </script>
+
+      <label for="semester_start_date">Start Date </label>
+      <input type="date" name="semester_start_date" />
+
+      <label for="semester_end_date">End Date </label>
+      <input type="date" name="semester_end_date" />
+
+      <input type="submit" name="add_semester" value="Add" />
+    </form>
+  </div>
+</div>
+
+<!-- Semester Card -->
+<div class="post-container">
+  <br />
+  {% if data %} {% for val in data %}
+  <a href="{% url 'stats' %} {{val.id}}">
+    <div class="post-card">
+      <div class="post-text-container">
+        <div class="post-title-style">{{ val.name}}</div>
+        <span class="post-tag">{{ val.start_date }} - {{ val.end_date }}</span>
+        <div class="post-author">Expected CGPA: 0.0</div>
+        <div>
+          <p class="post-text-style">Actual CGPA: 0.0</p>
+        </div>
+        {% comment %} Edit / Delete Semester {% endcomment %}
+        <form action="{% url 'stats' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="semester_id" value="{{ val.id }}" />
+          <input class="post-cm-btn" onclick='toggleVisibility(\"edit-post-popup\")' type="submit" value="Edit" />
+          <input class="post-cm-btn" style="margin-left: 0.25rem" onclick="return confirm('Are you sure you want to delete this item?')" type="submit" name="delete_semester" value="Delete" />
+        </form>
+      </div>
+    </div>
+  </a>
+  {% endfor %} {% else %}
+  <center><b>No data found...</b></center>
+  {% endif %}
+  <br />
+</div>
+
+{% endblock content %}
