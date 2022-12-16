@@ -1,3 +1,4 @@
+import copy
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -20,7 +21,11 @@ def stats(request):
             delete_semester(request)
         return redirect('stats')
     semester = Semester.objects.filter(user=request.user)
+    semester2 = []
+    for sem in semester:
+        semester2.append(sem.name)
     gpa = []
+    gpa2 = []
     for sem in semester:
         courses = Course.objects.filter(semester=sem.id)
         ex = 0.0
@@ -31,8 +36,10 @@ def stats(request):
                 ex += (p.expected_marks/p.total_marks)*100
                 ob += (p.obtained_marks/p.total_marks)*100
         gpa.append({'expected': marks_to_gpa(ex), 'obtained': marks_to_gpa(ob)})
+        gpa2.append(marks_to_gpa(ob))
     data = zip(semester, gpa)
-    return render(request, 'stats/stats.html', {'data': data})
+    chart = zip(semester2, gpa2)
+    return render(request, 'stats/stats.html', {'data': data, 'chart': chart})
 
 
 def add_semester(request):
@@ -78,7 +85,11 @@ def courses(request, pk):
         return redirect('courses', pk=pk)
 
     data = Course.objects.filter(semester=pk)
+    names = []
+    for course in data:
+        names.append(course.name)
     assessments = []
+    marks = []
     for course in data:
         parts = Assessment.objects.filter(course=course.id)
         ex = 0.0
@@ -87,8 +98,10 @@ def courses(request, pk):
             ex += (p.expected_marks/p.total_marks)*100
             ob += (p.obtained_marks/p.total_marks)*100
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
+        marks.append(round(ob, 2))
     data = zip(data, assessments)
-    return render(request, 'stats/courses.html', {'data': data, 'semester': pk})
+    chart = zip(names, marks)
+    return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'chart': chart})
 
 
 def add_course(request):
