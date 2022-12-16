@@ -89,3 +89,7 @@ def delete_course(request):
 @login_required(login_url='login')
 def assessments(request, s_pk, c_pk):
     return render(request, 'stats/assessments.html', {'semester': s_pk, 'course': c_pk})
+
+@login_required(login_url='login')
+def assessment_types(request, s_pk, c_pk):
+    return render(request, 'stats/assessment_types.html', {'semester': s_pk, 'course': c_pk})
