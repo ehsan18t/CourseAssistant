@@ -35,7 +35,8 @@ class Assessment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     total_marks = models.FloatField()
     expected_marks = models.FloatField()
-    date = models.DateField()  # not using now, but maybe in future
+    obtained_marks = models.FloatField()
+    date = models.DateField(auto_now_add=True)  # not using now, but maybe in future
 
     def __unicode__(self):
         return self.name
