@@ -98,16 +98,17 @@ def assessments(request, s_pk, c_pk):
             delete_assessment(request)
         return redirect('assessments', s_pk=s_pk, c_pk=c_pk)
     data = Assessment.objects.filter(course=c_pk)
-    return render(request, 'stats/assessments.html', {'data': data, 'semester': s_pk, 'course': c_pk})
+    assessment_types = Assessment_Type.objects.filter(course=c_pk)
+    return render(request, 'stats/assessments.html', {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk})
 
 
 def add_assessment(request):
     name = request.POST.get('assessment_name')
-    assessment_type = request.POST.get('assessment_type')
+    assessment_type = Assessment_Type.objects.filter(id=request.POST.get('assessment_type'))[0]
     total_marks = request.POST.get('total_marks')
     expected_marks = request.POST.get('expected_marks')
     obtained_marks = request.POST.get('obtained_marks')
-    course = request.POST.get('course_id')
+    course = Course.objects.filter(id=request.POST.get('course_id'))[0]
 
     obj = Assessment(name=name, assessment_type=assessment_type, total_marks=total_marks, expected_marks=expected_marks, obtained_marks=obtained_marks, course=course)
     obj.save()
