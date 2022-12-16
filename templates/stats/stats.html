@@ -20,25 +20,25 @@
       <input type="text" name="semester_name" placeholder="Enter Semester Title" />
       <span class="checkbox-container">
         <label id="is_semester_running_label" class="checkbox-label" for="is_semester_running">
-          <input type="checkbox" checked="true" onchange="check_is_running()" id="is_semester_running" name="is_semester_running" />
+          <input type="checkbox" onchange="check_is_running()" id="is_semester_running" name="is_semester_running" />
           Currently Running
         </label>
-        <script>
-          function check_is_running() {
-            // hide auto_add_to_group_label when is_semester_running is not checked
-            if (document.getElementById("is_semester_running").checked) {
-              document.getElementById("auto_add_to_group_label").style.display = "block";
-            } else {
-              document.getElementById("auto_add_to_group_label").style.display = "none";
-              document.getElementById("auto_add_to_group").checked = false;
-            }
-          }
-        </script>
-        <label id="auto_add_to_group_label" class="checkbox-label" for="auto_add_to_group">
-          <input id="auto_add_to_group" type="checkbox" checked="false" name="auto_add_to_group" />
+        <label style="display: none" id="auto_add_to_group_label" class="checkbox-label" for="auto_add_to_group">
+          <input id="auto_add_to_group" type="checkbox" name="auto_add_to_group" />
           Auto Add to Group
         </label>
       </span>
+      <script>
+        function check_is_running() {
+          // hide auto_add_to_group_label when is_semester_running is not checked
+          if (document.getElementById("is_semester_running").checked) {
+            document.getElementById("auto_add_to_group_label").style.display = "block";
+          } else {
+            document.getElementById("auto_add_to_group_label").style.display = "none";
+            document.getElementById("auto_add_to_group").checked = false;
+          }
+        }
+      </script>
 
       <label for="semester_start_date">Start Date </label>
       <input type="date" name="semester_start_date" />
