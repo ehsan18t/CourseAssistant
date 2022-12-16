@@ -49,6 +49,7 @@ def delete_semester(request):
         print('Error: User not authorized to delete this semester')
 
 
+@login_required(login_url='login')
 def courses(request, pk):
     if request.method == 'POST':
         if 'add_course' in request.POST:
@@ -85,5 +86,6 @@ def delete_course(request):
     else:
         print('Error: User not authorized to delete this course')
 
+@login_required(login_url='login')
 def assessments(request, s_pk, c_pk):
     return render(request, 'stats/assessments.html', {'semester': s_pk, 'course': c_pk})
