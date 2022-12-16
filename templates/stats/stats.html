@@ -1,7 +1,9 @@
-{% extends 'main.html' %} {% load static %} {% block content %}
-
+{% extends 'main.html' %} {% load static %} {% block content %} {% block head %}
+<title>Educational Progress</title>
 <link rel="stylesheet" href="{% static '/css/dist/modal.css' %}" />
 <link rel="stylesheet" href="{% static '/css/dist/stats.css' %}" />
+{% endblock head %}
+
 <!-- Modal for New Trimester -->
 <center>
   <button type="submit" onclick="toggleVisibility('open_trimester_creator_window')" class="new-post-btn">
