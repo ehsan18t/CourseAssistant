@@ -50,5 +50,26 @@ def delete_semester(request):
 
 
 def courses(request, pk):
+    if request.method == 'POST':
+        if 'add_course' in request.POST:
+            add_course(request)
+        return redirect('courses', pk=pk)
+
     data = Course.objects.filter(semester=pk)
     return render(request, 'stats/courses.html', {'data': data, 'semester': pk})
+
+def add_course(request):
+    course = request.POST.get('course_name')
+    course_code = request.POST.get('course_code')
+    course_section = request.POST.get('course_section')
+    end_date = request.POST.get('course_credit')
+    semester = request.POST.get('semester_id')
+
+    is_retake = request.POST.get('is_retake')
+    if is_retake == 'on':
+        is_retake = True
+    else:
+        is_retake = False
+
+    obj = Course(name=course, course_code=course_code, section=course_section, credit=end_date, semester_id=semester, is_retake=is_retake)
+    obj.save()

@@ -16,10 +16,18 @@
     <div class="modal-content">
       <button onclick="toggleVisibility('add-course-popup')" class="close">Close</button>
       <form action="{% url 'courses' pk=semester %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="semester_id" value="{{semester}}" />
         <input type="text" class="input-box" name="course_name" placeholder="Course Name" />
         <input type="text" name="course_code" placeholder="Course Code" />
         <input type="text" name="course_credit" placeholder="Credit" />
-        <input type="text" name="course_section" placeholder="Section (Optional)" />
+        <input type="text" name="course_section" placeholder="Section" />
+        <span class="checkbox-container">
+          <label id="is_retake_label" class="checkbox-label" for="is_retake">
+            <input type="checkbox" id="is_retake" name="is_retake" />
+            Is Retake?
+          </label>
+        </span>
         <input type="submit" name="add_course" value="Add" />
       </form>
     </div>
@@ -30,10 +38,10 @@
 <div class="post-container">
   <br />
   {% if data %} {% for item in data %}
-  <a href="#">
+  <a href="{% url 'assessments' s_pk=semester c_pk=item.id %}">
     <div class="post-card">
       <div class="post-text-container">
-        <div class="post-title-style">{{ item.name }} {{ item.section }}]</div>
+        <div class="post-title-style">{{ item.name }} [{{ item.section }}]</div>
         <span class="post-tag">{{item.course_code}}</span>
         <div class="post-author">Expected: 00/00</div>
         <div>
