@@ -5,9 +5,11 @@ from .models import Semester
 
 @login_required(login_url='login')
 def stats(request):
-    if request.method == 'POST' and 'add_semester' in request.POST:
-        add_semester(request)
-        return redirect('stats')
+    if request.method == 'POST':
+        if 'add_semester' in request.POST:
+            add_semester(request)
+        if 'delete_semester' in request.POST:
+            delete_semester(request)
     data = Semester.objects.filter(user=request.user)
     return render(request, 'stats/stats.html', {'data': data})
 
@@ -33,3 +35,9 @@ def add_semester(request):
 
     obj = Semester(name=semester, start_date=start_date, end_date=end_date, is_running=is_running, auto_add_to_group=auto_add_to_group, user=user)
     obj.save()
+    return redirect('stats')
+
+def delete_semester(request):
+    semester_id = request.POST.get('semester_id')
+    Semester.objects.filter(id=semester_id).delete()
+    return redirect('stats')
