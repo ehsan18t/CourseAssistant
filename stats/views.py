@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from .models import Semester
+from .models import Semester, Course
 
 
 @login_required(login_url='login')
@@ -47,3 +47,13 @@ def delete_semester(request):
         sem.delete()
     else:
         print('Error: User not authorized to delete this semester')
+
+
+def courses(request, pk):
+    # data = Course.objects.filter(semester=pk)
+    data = [
+        {'name': 'CSE 101', 'course_code': 'CSE 101', 'credit': 3, 'section': 'A', 'semester': 'Spring 2020', 'is_retake': False},
+        {'name': 'CSE 102', 'course_code': 'CSE 102', 'credit': 3, 'section': 'B', 'semester': 'Spring 2020', 'is_retake': False},
+        {'name': 'CSE 103', 'course_code': 'CSE 103', 'credit': 3, 'section': 'C', 'semester': 'Spring 2020', 'is_retake': False},
+    ]
+    return render(request, 'stats/courses.html', {'data': data})

@@ -1,0 +1,11 @@
+{% extends 'main.html' %} {% load static %} {% block head %}
+<title>Educational Progress</title>
+<link rel="stylesheet" href="{% static '/css/dist/modal.css' %}" />
+<link rel="stylesheet" href="{% static '/css/dist/stats.css' %}" />
+{% endblock head %} {% block content %}
+
+<!-- Modal for New Semester -->
+{% if data %} {% for item in data %} {{ item }} {% endfor %} {% endif %}
+
+<!-- Modal for New Semester -->
+{% endblock content %}
