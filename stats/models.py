@@ -31,6 +31,7 @@ class Course(models.Model):
 class Assessment(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
+    assessment_type = models.ForeignKey('Assessment_Type', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     total_marks = models.FloatField()
     expected_marks = models.FloatField()
