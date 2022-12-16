@@ -138,10 +138,10 @@ def assessment_types(request, s_pk, c_pk):
 
 
 def add_assessment_type(request):
-    name = request.POST.get('assessment_name')
+    name = request.POST.get('assessment_type_name')
     mark_percentage = request.POST.get('mark_percentage')
     best_of = request.POST.get('best_of')
-    course = request.POST.get('course_id')
+    course = Course.objects.filter(id=request.POST.get('course_id'))[0]
 
     obj = Assessment_Type(name=name, mark_percentage=mark_percentage, best_of=best_of, course=course)
     obj.save()
@@ -150,7 +150,7 @@ def add_assessment_type(request):
 def delete_assessment_type(request):
     assessment_type_id = request.POST.get('assessment_type_id')
     assessment_type = Assessment_Type.objects.filter(id=assessment_type_id)[0]
-    course = Course.objects.filter(id=assessment_type.course)[0]
+    course = assessment_type.course
     semester = Semester.objects.filter(id=course.semester_id)[0]
     if request.user == semester.user:
         assessment_type.delete()
