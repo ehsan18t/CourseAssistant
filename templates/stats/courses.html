@@ -34,6 +34,35 @@
   </div>
 </div>
 
+<!--PIE CHART START-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ["Course Code", "GPA"],
+
+      {% for item, gpa in data %}
+      ["{{item.course_code}}", "{{gpa.obtained}}"],
+      {% endfor %}
+    ]);
+
+    var options = {
+      title: "Courses",
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById("course_piechart"));
+
+    chart.draw(data, options);
+  }
+</script>
+<!--     Actual Chart       -->
+<div id="course_piechart"></div>
+
+<!--PIE CHART END-->
+
 <!-- Courses Card -->
 <div class="post-container">
   <br />
