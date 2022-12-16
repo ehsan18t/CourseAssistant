@@ -1,5 +1,5 @@
 from django.db import models
-from base.models import User
+from django.conf import settings
 
 class Semester(models.Model):
     id = models.AutoField(primary_key=True)
@@ -8,7 +8,7 @@ class Semester(models.Model):
     end_date = models.DateField()
     is_running = models.BooleanField(default=False)
     auto_add_to_group = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.name
