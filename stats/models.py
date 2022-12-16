@@ -17,7 +17,7 @@ class Course(models.Model):
     course_code = models.CharField(max_length=20)
     credit = models.IntegerField()
     section = models.CharField(max_length=20)
-    semester = models.ForeignKey(Semester)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     is_retake = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -26,7 +26,7 @@ class Course(models.Model):
 class Assessment(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     total_marks = models.FloatField()
     expected_marks = models.FloatField()
     date = models.DateField()   # not using now, but maybe in future
@@ -39,7 +39,7 @@ class Assessment_Type(models.Model):
     name = models.CharField(max_length=20)
     mark_percentage = models.FloatField()
     best_of = models.IntegerField()
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.name
