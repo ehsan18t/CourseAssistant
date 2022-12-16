@@ -97,7 +97,8 @@ def assessments(request, s_pk, c_pk):
         if 'delete_assessment' in request.POST:
             delete_assessment(request)
         return redirect('assessments', s_pk=s_pk, c_pk=c_pk)
-    return render(request, 'stats/assessments.html', {'semester': s_pk, 'course': c_pk})
+    data = Assessment.objects.filter(course=c_pk)
+    return render(request, 'stats/assessments.html', {'data': data, 'semester': s_pk, 'course': c_pk})
 
 
 def add_assessment(request):
