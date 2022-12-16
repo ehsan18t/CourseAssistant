@@ -50,10 +50,5 @@ def delete_semester(request):
 
 
 def courses(request, pk):
-    # data = Course.objects.filter(semester=pk)
-    data = [
-        {'name': 'CSE 101', 'course_code': 'CSE 101', 'credit': 3, 'section': 'A', 'semester': 'Spring 2020', 'is_retake': False},
-        {'name': 'CSE 102', 'course_code': 'CSE 102', 'credit': 3, 'section': 'B', 'semester': 'Spring 2020', 'is_retake': False},
-        {'name': 'CSE 103', 'course_code': 'CSE 103', 'credit': 3, 'section': 'C', 'semester': 'Spring 2020', 'is_retake': False},
-    ]
-    return render(request, 'stats/courses.html', {'data': data})
+    data = Course.objects.filter(semester=pk)
+    return render(request, 'stats/courses.html', {'data': data, 'semester': pk})
