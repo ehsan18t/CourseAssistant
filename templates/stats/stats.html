@@ -51,12 +51,11 @@
   </div>
 </div>
 
-<!-- Modal for Edit Semester -->
+<!-- Semester Card -->
 <div class="post-container">
   <br />
-
-  {% if data %} {% for key, val in data.items %}
-  <a href="#">
+  {% if data %} {% for val in data %}
+  <a href="{% url 'stats' %} {{val.id}}">
     <div class="post-card">
       <div class="post-text-container">
         <div class="post-title-style">{{ val.name}}</div>
