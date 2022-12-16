@@ -53,6 +53,8 @@ def courses(request, pk):
     if request.method == 'POST':
         if 'add_course' in request.POST:
             add_course(request)
+        if 'delete_course' in request.POST:
+            delete_course(request)
         return redirect('courses', pk=pk)
 
     data = Course.objects.filter(semester=pk)
@@ -73,3 +75,15 @@ def add_course(request):
 
     obj = Course(name=course, course_code=course_code, section=course_section, credit=end_date, semester_id=semester, is_retake=is_retake)
     obj.save()
+
+def delete_course(request):
+    course_id = request.POST.get('course_id')
+    course = Course.objects.filter(id=course_id)[0]
+    semester = Semester.objects.filter(id=course.semester_id)[0]
+    if request.user == semester.user:
+        course.delete()
+    else:
+        print('Error: User not authorized to delete this course')
+
+def assessments(request, s_pk, c_pk):
+    return render(request, 'stats/assessments.html', {'semester': s_pk, 'course': c_pk})
