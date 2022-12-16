@@ -15,11 +15,27 @@
     <form action="index.php" method="POST">
       <label for="is_trimester_running"> Name </label>
       <input type="text" name="trimester_name" placeholder="Enter Trimester Title" />
-
-      <label class="checkbox-label" for="is_trimester_running">
-        <input type="checkbox" value="0" name="is_trimester_running" />
-        Currently Running
-      </label>
+      <span class="checkbox-container">
+        <label id="is_trimester_running_label" class="checkbox-label" for="is_trimester_running">
+          <input type="checkbox" onchange="check_is_running()" id="is_trimester_running" name="is_trimester_running" />
+          Currently Running
+        </label>
+        <script>
+          function check_is_running() {
+            // hide auto_add_to_group_label when is_trimester_running is not checked
+            if (document.getElementById("is_trimester_running").checked) {
+              document.getElementById("auto_add_to_group_label").style.display = "block";
+            } else {
+              document.getElementById("auto_add_to_group_label").style.display = "none";
+              document.getElementById("auto_add_to_group").checked = false;
+            }
+          }
+        </script>
+        <label id="auto_add_to_group_label" class="checkbox-label" for="auto_add_to_group">
+          <input id="auto_add_to_group" type="checkbox" checked="false" name="auto_add_to_group" />
+          Auto Add to Group
+        </label>
+      </span>
 
       <label for="trimester_start_date">Start Date </label>
       <input type="date" name="trimester_start_date" />
