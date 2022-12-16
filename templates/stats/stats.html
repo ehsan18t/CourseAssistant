@@ -4,28 +4,29 @@
 <link rel="stylesheet" href="{% static '/css/dist/stats.css' %}" />
 {% endblock head %}
 
-<!-- Modal for New Trimester -->
+<!-- Modal for New Semester -->
 <center>
-  <button type="submit" onclick="toggleVisibility('open_trimester_creator_window')" class="new-post-btn">
-    <b>Create New Trimester</b>
+  <button type="submit" onclick="toggleVisibility('open_semester_creator_window')" class="new-post-btn">
+    <b>Create New Semester</b>
   </button>
 </center>
 
-<div id="open_trimester_creator_window" class="hide">
+<div id="open_semester_creator_window" class="hide">
   <div class="modal-content">
-    <a href="#" class="close" onclick="toggleVisibility('open_trimester_creator_window')">Close</a>
-    <form action="index.php" method="POST">
-      <label for="is_trimester_running"> Name </label>
-      <input type="text" name="trimester_name" placeholder="Enter Trimester Title" />
+    <a href="#" class="close" onclick="toggleVisibility('open_semester_creator_window')">Close</a>
+    <form action="{% url 'stats' %}" method="POST">
+      {% csrf_token %}
+      <label for="is_semester_running"> Name </label>
+      <input type="text" name="semester_name" placeholder="Enter Semester Title" />
       <span class="checkbox-container">
-        <label id="is_trimester_running_label" class="checkbox-label" for="is_trimester_running">
-          <input type="checkbox" onchange="check_is_running()" id="is_trimester_running" name="is_trimester_running" />
+        <label id="is_semester_running_label" class="checkbox-label" for="is_semester_running">
+          <input type="checkbox" checked="true" onchange="check_is_running()" id="is_semester_running" name="is_semester_running" />
           Currently Running
         </label>
         <script>
           function check_is_running() {
-            // hide auto_add_to_group_label when is_trimester_running is not checked
-            if (document.getElementById("is_trimester_running").checked) {
+            // hide auto_add_to_group_label when is_semester_running is not checked
+            if (document.getElementById("is_semester_running").checked) {
               document.getElementById("auto_add_to_group_label").style.display = "block";
             } else {
               document.getElementById("auto_add_to_group_label").style.display = "none";
@@ -39,18 +40,18 @@
         </label>
       </span>
 
-      <label for="trimester_start_date">Start Date </label>
-      <input type="date" name="trimester_start_date" />
+      <label for="semester_start_date">Start Date </label>
+      <input type="date" name="semester_start_date" />
 
-      <label for="trimester_end_date">End Date </label>
-      <input type="date" name="trimester_end_date" />
+      <label for="semester_end_date">End Date </label>
+      <input type="date" name="semester_end_date" />
 
-      <input type="submit" name="submit_trimester" value="Add" />
+      <input type="submit" name="add_semester" value="Add" />
     </form>
   </div>
 </div>
 
-<!-- Modal for Edit Trimester -->
+<!-- Modal for Edit Semester -->
 <div class="post-container">
   <br />
 
