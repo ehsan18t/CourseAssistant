@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 
 from .models import Semester
 
-
+@login_required(login_url='login')
 def stats(request):
     if request.method == 'POST' and 'add_semester' in request.POST:
         add_semester(request)
+        return redirect('stats')
     data = Semester.objects.all()
     return render(request, 'stats/stats.html', {'data': data})
 
