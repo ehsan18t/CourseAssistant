@@ -8,7 +8,7 @@ def stats(request):
     if request.method == 'POST' and 'add_semester' in request.POST:
         add_semester(request)
         return redirect('stats')
-    data = Semester.objects.all()
+    data = Semester.objects.filter(user=request.user)
     return render(request, 'stats/stats.html', {'data': data})
 
 
@@ -28,6 +28,8 @@ def add_semester(request):
         auto_add_to_group = True
     else:
         auto_add_to_group = False
+    
+    user = request.user
 
-    obj = Semester(name=semester, start_date=start_date, end_date=end_date, is_running=is_running, auto_add_to_group=auto_add_to_group)
+    obj = Semester(name=semester, start_date=start_date, end_date=end_date, is_running=is_running, auto_add_to_group=auto_add_to_group, user=user)
     obj.save()
