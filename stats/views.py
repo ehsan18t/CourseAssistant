@@ -30,11 +30,16 @@ def stats(request):
         courses = Course.objects.filter(semester=sem.id)
         ex = 0.0
         ob = 0.0
+        to = 0.0
         for course in courses:
             parts = Assessment.objects.filter(course=course.id)
             for p in parts:
-                ex += (p.expected_marks/p.total_marks)*100
-                ob += (p.obtained_marks/p.total_marks)*100
+                ex += p.expected_marks
+                ob += p.obtained_marks
+                to += p.total_marks
+        if to != 0:
+            ex = (ex/to)*100
+            ob = (ob/to)*100
         gpa.append({'expected': marks_to_gpa(ex), 'obtained': marks_to_gpa(ob)})
         gpa2.append(marks_to_gpa(ob))
     data = zip(semester, gpa)
@@ -94,9 +99,14 @@ def courses(request, pk):
         parts = Assessment.objects.filter(course=course.id)
         ex = 0.0
         ob = 0.0
+        to = 0.0
         for p in parts:
-            ex += (p.expected_marks/p.total_marks)*100
-            ob += (p.obtained_marks/p.total_marks)*100
+            ex += p.expected_marks
+            ob += p.obtained_marks
+            to += p.total_marks
+        if to != 0:
+            ex = (ex/to)*100
+            ob = (ob/to)*100
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
         marks.append(round(ob, 2))
     data = zip(data, assessments)
