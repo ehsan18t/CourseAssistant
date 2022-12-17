@@ -13,6 +13,22 @@
     {% include 'nav/nav.html' %}
     <script src="static/js/toggle.js"></script>
 
+    <div class="flex justify-end">
+        <div class= " shadow-skin-shadow pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center" >
+            <button type="submit" class="mr-4 h-5 w-5">
+              <img src="static/img/search-icon.svg" alt="" />
+            </button>
+            <div>
+              <input
+                class="border-skin-text bg-skin-sidebar h-8 px-5 pr-20 rounded-2xl text-sm focus:outline-none"
+                type="search"
+                name="search"
+                placeholder="Search"
+              />
+            </div>
+          </div>
+    </div>
+    
     <section class="content">
         {% block content %}
         {% endblock content %}
