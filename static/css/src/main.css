@@ -204,3 +204,7 @@ header .image-text header-text {
 .row {
   display: flex;
 }
+
+.pull-class {
+  @apply mr-4;
+}
