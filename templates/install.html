@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,11 +9,55 @@
       sizes="any"
       type="image/svg+xml"
     />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Intallation Page</title>
+    <link rel="stylesheet" href="{% static '/css/dist/install.css' %}" />
   </head>
   <body>
-    <h1>INSTALL</h1>
+    <div class="container">
+      <h1>Installation</h1>
+      <form action="{% url 'install' %}" method="POST">
+        {% csrf_token %}
+        <div class="shadow-class flex-container">
+          <div class="p-10 flex-item-left">
+            <!-- Admin Form -->
+            <div class="header">Admin</div>
+            <label for="id_first_name">First Name</label>
+            <input type="text" name="first_name" maxlength="100" required id="id_first_name" />
+
+            <label for="id_last_name">Last Name</label>
+            <input type="text" name="last_name" maxlength="100" required id="id_last_name" />
+
+            <label for="id_email">Email Address</label>
+            <input type="email" name="email" maxlength="100" autofocus required id="id_email" />
+
+            <label for="id_password1">Passwords</label>
+            <input type="password" name="password1" autocomplete="new-password" required id="id_password1" />
+
+            <label for="id_password2">Confirm Passwords</label>
+            <input type="password" name="password2" autocomplete="new-password" required id="id_password2" />
+          </div>
+          <div class="p-10 flex-item-right">
+            <!-- University Form -->
+            <div class="header">University</div>
+            <label for="uni_name">Name</label>
+            <input type="text" name="uni_name" maxlength="100" required id="id_uni_name" />
+
+            <label for="id_domain">Domain</label>
+            <input type="text" name="domain" maxlength="100" required id="id_domain" />
+
+            <label for="email_pattern">Email Pattern</label>
+            <input type="text" name="email_pattern" maxlength="100" required id="id_email_pattern" />
+
+            <label for="sid_pattern">Student ID Pattern</label>
+            <input type="text" name="sid_pattern" maxlength="100" required id="sid_pattern" />
+
+            <!-- Department Form -->
+            <label for="dept">Department Name</label>
+            <input type="text" name="dept" maxlength="100" required id="id_dept" />
+          </div>
+          <input class="m-4" type="submit" value="Install" />
+        </div>
+      </form>
+    </div>
   </body>
 </html>
