@@ -15,7 +15,7 @@ def install_page(request):
 
 
 def check_uni_for_admin_creation():
-    return 'install.html' if University.objects.first() is None else 'error.html'
+    return 'install.html' if University.objects.first() is not None else 'error.html'
 
 
 @login_required(login_url='login')
