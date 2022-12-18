@@ -6,10 +6,18 @@ from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm as UserCreationForm
 from .forms import LoginForm
-from .models import User
+from .models import User, University
 
 
 # Create your views here.
+def install_page(request):
+    return render(request, check_uni_for_admin_creation())
+
+
+def check_uni_for_admin_creation():
+    return 'install.html' if University.objects.first() is None else 'error.html'
+
+
 @login_required(login_url='login')
 def home(request):
     data = User.objects.all()
