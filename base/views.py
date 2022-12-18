@@ -6,11 +6,39 @@ from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm as UserCreationForm
 from .forms import LoginForm
-from .models import User, University
+from .models import User, University, Department
 
 
 # Create your views here.
 def install_page(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        uni_name = request.POST.get('uni_name')
+        domain = request.POST.get('domain')
+        sid = request.POST.get('sid_pattern')
+        email_pattern = request.POST.get('email_pattern')
+        dept = request.POST.get('dept')
+        
+        #  Create University
+        uni = University.objects.create(name=uni_name, domain=domain, sid_pattern=sid, email_pattern=email_pattern)
+        uni.save()
+        uni = University.objects.first()
+
+        # Create Department
+        dept = Department.objects.create(name=dept, university=uni)
+        dept.save()
+        dept = Department.objects.first()
+
+        # Create Admin
+        user = User.objects.create_superuser(email=email, password=password1, first_name=first_name, last_name=last_name, username=sid, department=dept, university=uni, is_staff=True, is_superuser=True, is_active=True)
+        user.save()
+
+        return redirect('login')
+
     return render(request, check_uni_for_admin_creation())
 
 
