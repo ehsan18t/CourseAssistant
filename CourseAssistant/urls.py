@@ -6,5 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('base.urls')),
     path('stats/', include('stats.urls')),
-    path('install/',  install_page),
+    path('install/',  install_page, name='install'),
 ]
