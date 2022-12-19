@@ -4,6 +4,8 @@ from base.models import User
 
 # Models for the chat app
 
+# If private chat, 'chat' and 'receiver' field will be filled and 'group' field will be null
+# If group chat, 'group' field will be filled and 'chat' and 'receiver' field will be null
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipient')
