@@ -1,38 +1,34 @@
 from django.db import models
 from base.models import User
 
-# Models for the chat app
-class Chat(models.Model):
-    id = models.AutoField(primary_key=True)
-    user1 = models.ForeignKey(User, on_delete=models.CASCADE)
-    user2 = models.ForeignKey(User, on_delete=models.CASCADE)
-    last_message = models.CharField(max_length=1000, blank=True, null=True)
-    last_message_time = models.DateTimeField(auto_now=True)
+
+# Models for the private chat and the group chat
+class PrivateChat(models.Model):
+    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user1')
+    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user2')
+    messages = models.ManyToManyField('Message', blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    last_message = models.ForeignKey('Message', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.user1} and {self.user2}'
+        return str(self.user1) + ' - ' + str(self.user2)
 
-class Group(models.Model):
-    id = models.AutoField(primary_key=True)
+
+class GroupChat(models.Model):
     name = models.CharField(max_length=100)
-    last_message = models.CharField(max_length=1000, blank=True, null=True)
-    last_message_time = models.DateTimeField(auto_now=True)
+    users = models.ManyToManyField(User, blank=True)
+    messages = models.ManyToManyField('Message', blank=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return self.name
 
-# If private chat, 'chat' and 'receiver' field will be filled and 'group' field will be null
-# If group chat, 'group' field will be filled and 'chat' and 'receiver' field will be null
+
 class Message(models.Model):
-    id = models.AutoField(primary_key=True)
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, blank=True, null=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.CharField(max_length=1000)
-    time = models.DateTimeField(auto_now=True)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.sender} : {self.message}'
+        return str(self.sender) + ' - ' + str(self.timestamp)
 
 
