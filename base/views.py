@@ -169,11 +169,11 @@ def home(request):
     #fetch data from database
 
     from django.core import serializers
-    contentss=serializers.serialize("python",content.objects.all()) 
+    contents=serializers.serialize("python",Content.objects.all()) 
 
     context = {
         
-        'c': contentss,
+        'c': contents,
     }
     
 
@@ -194,7 +194,7 @@ def request_content(request):
         
 
         if len(title)!=0 and len(code)!=0  and len(semester)!=0  and len(description)!=0 :
-          obj=Content_request()  
+          obj=Content_Request()  
           obj.course_name=title
           obj.course_code=code
           obj.semester=semester
