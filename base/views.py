@@ -6,14 +6,15 @@ from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm as UserCreationForm
 from .forms import LoginForm
-from .models import User
+from .models import User,Content,Content_Request
 
-
+"""
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
     data = User.objects.all()
     return render(request, 'home.html', {'data': data})
+"""    
 
 
 def login_page(request):
@@ -163,7 +164,7 @@ def content_approval(request):
 
 
 
-"""
+
 
 def home(request):
     #fetch data from database
@@ -178,9 +179,9 @@ def home(request):
     
 
 
-    return render(request, 'homepage.html',context)
+    return render(request, 'home.html',context)
 
-"""
+
 
 def request_content(request):
     #save data in  database

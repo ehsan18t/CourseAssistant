@@ -106,3 +106,5 @@ class Content_Request(models.Model):
     course_code = models.CharField(max_length=100,default='',null=False) 
     semester = models.CharField(max_length=100,default='',null=False) 
     description = models.CharField(max_length=300,default='',null=False)
+    requester = models.CharField(max_length=100,default='',null=False) 
+    contributor = models.CharField(max_length=100,default='',null=False) 
