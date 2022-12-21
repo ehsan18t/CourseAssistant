@@ -86,3 +86,22 @@ class User(AbstractUser, PermissionsMixin):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} ({self.email})'
+
+
+
+
+
+
+
+class Content(models.Model):
+    course_name = models.CharField(max_length=100,default='',null=False) 
+    course_code = models.CharField(max_length=100,default='',null=False) 
+    contributor = models.CharField(max_length=100,default='',null=False) 
+    image = models.CharField(max_length=100,default='',null=False) 
+
+
+class Content_request(models.Model):
+    course_name = models.CharField(max_length=100,default='',null=False) 
+    course_code = models.CharField(max_length=100,default='',null=False) 
+    semester = models.CharField(max_length=100,default='',null=False) 
+    description = models.CharField(max_length=300,default='',null=False)
