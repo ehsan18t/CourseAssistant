@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 class MessagesListView(LoginRequiredMixin, ListView):
     model = Message
-    template_name = 'chat/messages_list.html'
+    template_name = 'prMessages_list.html'
     login_url = 'login'
 
     # context data for latest message to display
@@ -37,7 +37,7 @@ class MessagesListView(LoginRequiredMixin, ListView):
 
 class InboxView(LoginRequiredMixin, DetailView):
     model = Message
-    template_name = 'chat/inbox.html'
+    template_name = 'prInbox.html'
     login_url = 'login'
     queryset = User.objects.all()
 
@@ -93,14 +93,14 @@ class InboxView(LoginRequiredMixin, DetailView):
             if request.method == 'POST':
                 if message:
                     Message.objects.create(sender=sender, recipient=recipient, message=message)
-            return redirect('chat:inbox', username=recipient.username)  # redirect to the inbox of the recipient
+            return redirect('prInbox', username=recipient.username)  # redirect to the inbox of the recipient
 
         else:
-            return render(request, 'auth/login.html')
+            return render(request, 'login.html')
 
 class UserListsView(LoginRequiredMixin, ListView):
     model = User
-    template_name = 'chat/users_list.html'
+    template_name = 'prUsers_list.html'
     context_object_name = 'users'
     login_url = 'login'
 

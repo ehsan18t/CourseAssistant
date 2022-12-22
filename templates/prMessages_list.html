@@ -1,14 +1,16 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="static/css/dist/msg.css" />
+<link rel="stylesheet" href="static/css/dist/prCss.css" />
 
-<div class="flex space-x-9 h-auto">
-  <div class="bg-skin-sidebar space-y-2 p-2">
-    <!-- search bar -->
+<div class="flex space-x h-auto">
+  <div class="space-y-2 p-2">
+
+    <!-- search bar start -->
     <div class="shadow-md shadow-skin-shadow pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center" >
       <button type="submit" class="h-5 w-5">
-        <img src="static/img/search-icon.svg" alt="" />
+        <img src="/static/img/search-icon.svg" alt="" />
       </button>
       <div>
         <input
@@ -19,101 +21,21 @@
         />
       </div>
     </div>
+    <!-- search bar end -->
 
-    <!-- study Group -->
-    <div
-      id="border-group"
-      class="rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2"
-    >
-      <p class="font-bold font-['Roboto'] text-lg text-skin-svg">Study Groups</p>
+    <!-- private chat start -->
+    <div id="border-people" class="rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2">
+      <p class="font-bold font-['Roboto'] text-lg text-skin-svg">Inbox</p>
+      
 
-      <!-- group 1 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img
-          class="rounded-full w-8 h-8"
-          src="static/img/Ellipse 3.png"
-          alt="People image"
-        />
-        <div class="">
-          <p class="font-bold font-['Roboto'] text-skin-svg">SAD Lab [A]</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
-            Django tutorialdf link dsfaadf adf
-          </p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Wednesday, 9.52pm
-            </p>
-          </div>
-          <div
-            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
-          >
-            <p class="text-sm text-skin-muted">4</p>
-          </div>
-        </div>
-      </li>
+      <!-- contact box 1-->
+      {% for message in messages_list %}
 
-      <!-- group 2 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img
-          class="rounded-full w-8 h-8"
-          src="static/img/Ellipse 4.png"
-          alt="People image"
-        />
-        <div class="">
-          <p class="font-bold font-['Roboto'] text-skin-svg">Electronics</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
-            CMOS technology is one of
-          </p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Today, 9.52pm
-            </p>
-          </div>
-          <div class="pl-10">
-            <img src="static/img/charm_tick-double.png" alt="" />
-          </div>
-        </div>
-      </li>
+      {% for us in other_users %}
+      {% if us.pk == message.recipient.pk or us.pk == message.sender.pk  %}
 
-      <!-- group 3 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img
-          class="rounded-full w-8 h-8"
-          src="static/img/Ellipse 5.png"
-          alt="People image"
-        />
-        <div class="">
-          <p class="font-bold font-['Roboto'] text-skin-svg">SAD</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
-            It is not going to happen
-          </p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Today, 9.52pm
-            </p>
-          </div>
-          <div class="pl-10">
-            <img src="static/img/charm_tick-double.png" alt="" />
-          </div>
-        </div>
-      </li>
-    </div>
-
-    <!-- people -->
-    <div
-      id="border-people"
-      class="rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2"
-    >
-      <p class="font-bold font-['Roboto'] text-lg text-skin-svg">People</p>
-
-      <!-- people 1 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
+      <li class="flex space-x-3 justify-between place-items-center pb-2"
+        onclick="location.href='{% url 'prInbox' us %}';">
         <img
           class="rounded-full w-8 h-8"
           src="static/img/avatar/ashan.png"
@@ -247,7 +169,21 @@
 
   <section>
     <div>
-      <h1>Chat History</h1>
+      
+      {% block inboxSection %}
+        <div class=" bg-gray-300 h-auto">
+        
+          <!-- welcome alert -->
+          <div class="flex h-full w-full">
+            <div class="bg-slate-400 rounded-md font-medium">
+              <!-- image -->
+              <img class=" flex h-full w-full" src="{% static '/img/welcome_img.png' %}" alt="Welcome">
+              <!-- image end -->
+            </div>
+          </div>
+          <!-- welcome alert end -->
+        </div>
+      {% endblock inboxSection %}
     </div>
   </section>
 </div>
