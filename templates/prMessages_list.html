@@ -6,6 +6,8 @@
 
 <div class="flex space-x h-auto">
   <div class="space-y-2 p-2">
+    
+    <h1>logged in : {{you.first_name}} {{you.last_name}}</h1>
 
     <!-- search bar start -->
     <div class="shadow-md shadow-skin-shadow pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center" >
@@ -23,7 +25,7 @@
     </div>
     <!-- search bar end -->
 
-    <!-- private chat start -->
+    <!-- private chat contacts -->
     <div id="border-people" class="rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2">
       <p class="font-bold font-['Roboto'] text-lg text-skin-svg">Inbox</p>
       
@@ -34,141 +36,51 @@
       {% for us in other_users %}
       {% if us.pk == message.recipient.pk or us.pk == message.sender.pk  %}
 
-      <li class="flex space-x-3 justify-between place-items-center pb-2"
-        onclick="location.href='{% url 'prInbox' us %}';">
+      <li class="flex space-x-3 justify-between place-items-center pb-2 cursor-pointer"
+        onclick="location.href='{% url 'chat:inbox' us %}';">
+        <!-- user image -->
         <img
           class="rounded-full w-8 h-8"
           src="static/img/avatar/ashan.png"
           alt="People image"
         />
+        <!-- user image end -->
+
+        <!-- user name and message -->
         <div>
-          <p class="font-semibold font-['Roboto'] text-skin-svg">Ahsan</p>
+          <p class="font-semibold font-['Roboto'] text-skin-svg">{{us.first_name}} {{us.last_name}}</p>
           <p class="truncate w-36 text-sm text-skin-text font-light">
-            Django is latest froamework
+            {{message.message}}
           </p>
         </div>
+        <!-- user name and message end-->
+
         <div class="grid justify-items-end w-40">
+          
+          <!-- date -->
           <div>
             <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Today, 9.52pm
+              {{message.date|date:"m/d/Y" }}
             </p>
           </div>
+          <!-- date end -->
+
           <div class="pl-10">
             <img src="static/img/charm_tick-double.png" alt="" />
           </div>
         </div>
       </li>
+      <!-- contact box 1 end -->
 
-      <!-- people 2 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img
-          class="rounded-full w-8 h-8"
-          src="static/img/avatar/shafi.png"
-          alt="People image"
-        />
-        <div class="">
-          <p class="font-semibold font-['Roboto'] text-skin-svg">Shafi</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
-            Figma is awesome!
-          </p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Today, 12.52am
-            </p>
-          </div>
-          <div
-            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
-          >
-            <p class="text-sm text-skin-muted">1</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- people 3 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img
-          class="rounded-full w-8 h-8"
-          src="static/img/avatar/ashik.jpg"
-          alt="People image"
-        />
-        <div class="">
-          <p class="font-semibold font-['Roboto'] text-skin-svg">Ashik</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
-            Tailwind makes life easy!
-          </p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Wednesday 12.52pm
-            </p>
-          </div>
-          <div
-            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
-          >
-            <p class="text-sm text-skin-muted">1</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- people 4 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img
-          class="rounded-full w-8 h-8"
-          src="static/img/avatar/jeorj.png"
-          alt="People image"
-        />
-        <div class="">
-          <p class="font-semibold font-['Roboto'] text-skin-svg">Jeorge</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
-            Python is easy
-          </p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Yesterday, 9.52pm
-            </p>
-          </div>
-          <div
-            class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl"
-          >
-            <p class="text-sm text-skin-muted">5</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- people 5 -->
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img
-          class="rounded-full w-8 h-8"
-          src="static/img/avatar/amina.png"
-          alt="People image"
-        />
-        <div class="">
-          <p class="font-semibold font-['Roboto'] text-skin-svg">Amina</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
-            SAD lab is nice
-          </p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">
-              Today, 9.52pm
-            </p>
-          </div>
-          <div class="pl-10">
-            <img src="static/img/charm_tick-double.png" alt="" />
-          </div>
-        </div>
-      </li>
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+     
     </div>
   </div>
 
-  <section>
-    <div>
+  <section class="">
+    
       
       {% block inboxSection %}
         <div class=" bg-gray-300 h-auto">
@@ -184,7 +96,7 @@
           <!-- welcome alert end -->
         </div>
       {% endblock inboxSection %}
-    </div>
+    
   </section>
 </div>
 {% endblock content %}

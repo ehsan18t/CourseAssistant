@@ -93,7 +93,7 @@ class InboxView(LoginRequiredMixin, DetailView):
             if request.method == 'POST':
                 if message:
                     Message.objects.create(sender=sender, recipient=recipient, message=message)
-            return redirect('prInbox', username=recipient.username)  # redirect to the inbox of the recipient
+            return redirect('chat:inbox', username=recipient.username)  # redirect to the inbox of the recipient
 
         else:
             return render(request, 'login.html')
