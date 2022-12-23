@@ -104,7 +104,11 @@ class Study_Group(models.Model):
     # function gets all chats a user is in (requires user pk)
     @staticmethod
     def get_chats(id):
-        return Participant.objects.filter(user=id)
+        p = Participant.objects.filter(user=id)
+        chats = []
+        for i in p:
+            chats.append(Study_Group.objects.get(id=i.study_group.id))
+        return chats
 
     # function gets all messages in a Study_Group (requires Study_Group pk)
     @staticmethod
