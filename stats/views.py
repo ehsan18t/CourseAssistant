@@ -101,8 +101,11 @@ def courses(request, pk):
     assessments = []
     groups = []
     marks = []
+    user_exists_in_group = []
     for course in data:
-        groups.append(if_group_exists(course))
+        g  = if_group_exists(course)
+        groups.append(g)
+        user_exists_in_group.append(if_user_in_group(request.user, g))
         parts = Assessment.objects.filter(course=course.id)
         ex = 0.0
         ob = 0.0
@@ -116,11 +119,17 @@ def courses(request, pk):
             ob = (ob/to)*100
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
         marks.append(round(ob, 2))
-    data = zip(data, assessments, groups)
+    data = zip(data, assessments, groups, user_exists_in_group)
     chart = zip(names, marks)
     semester_obj = Semester.objects.filter(id=pk)[0]
     return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'semester_obj': semester_obj, 'chart': chart})
 
+
+def if_user_in_group(user, group):
+    if group is None:
+        return False
+    else:
+        return len(Participant.objects.filter(user=user, study_group=group)) != 0
 
 
 def  if_group_exists(course):

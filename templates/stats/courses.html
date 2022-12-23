@@ -64,7 +64,7 @@
 <!-- Courses Card -->
 <div class="post-container">
   <br />
-  {% if data %} {% for item, marks, group in data %}
+  {% if data %} {% for item, marks, group, exist in data %}
   <a href="{% url 'assessments' s_pk=semester c_pk=item.id %}">
     <div class="post-card">
       <div class="post-text-container">
@@ -83,7 +83,7 @@
           <input class="post-cm-btn" style="margin-left: 0.25rem" onclick="return confirm('Are you sure you want to delete this item?')" type="submit" name="delete_course" value="Delete" />
 
           <!-- Create Group -->
-          {% if semester_obj.is_running %} {% if group %}
+          {% if semester_obj.is_running and not exist %} {% if group %}
           <input class="post-cm-btn" style="margin-left: 0.25rem" onclick="return confirm('Are you sure you want create a group?')" type="submit" name="join_group" value="Join Group" />
           {% else %}
           <input class="post-cm-btn" style="margin-left: 0.25rem" onclick="return confirm('Are you sure you want create a group?')" type="submit" name="create_group" value="Create Group" />
