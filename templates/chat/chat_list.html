@@ -19,21 +19,23 @@
 
       <!-- group 1 -->
       {% for c, m, cnt in chat %}
-      <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img class="rounded-full w-8 h-8" src="{% static '/img/Ellipse 3.png' %}" alt="People image" />
-        <div class="">
-          <p class="font-bold font-['Roboto'] text-skin-svg">{{c.name}}</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">{{m}}</p>
-        </div>
-        <div class="grid justify-items-end w-40">
-          <div>
-            <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">{{m.date}}</p>
+      <a href="{% url 'group_chat' pk=c.id %}">
+        <li class="flex space-x-3 justify-between place-items-center pb-2">
+          <img class="rounded-full w-8 h-8" src="{% static '/img/Ellipse 3.png' %}" alt="People image" />
+          <div class="">
+            <p class="font-bold font-['Roboto'] text-skin-svg">{{c.name}}</p>
+            <p class="truncate w-36 text-sm text-skin-text font-light">{{m}}</p>
           </div>
-          <div class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl">
-            <p class="text-sm text-skin-muted">{{cnt}}</p>
+          <div class="grid justify-items-end w-40">
+            <div>
+              <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">{{m.date}}</p>
+            </div>
+            <div class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl">
+              <p class="text-sm text-skin-muted">{{cnt}}</p>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      </a>
       {% endfor %}
     </div>
 

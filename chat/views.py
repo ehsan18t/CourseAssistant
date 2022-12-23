@@ -40,6 +40,6 @@ def group_chat(request, pk):
     user = request.user
 
     # group chat
-    g_msg = Study_Group.get_all_messages(pk)
-    return render(request, 'group_chat.html', {'g_msg': g_msg})
+    g_msg = Study_Group.get_all_messages(pk, user)
+    return render(request, 'chat/conversation.html', {'messages': g_msg})
 

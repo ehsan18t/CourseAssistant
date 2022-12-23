@@ -1,8 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'chat'
-
 urlpatterns = [
     path('', views.chat_list, name='message_list'),
+    path('group=<int:pk>', views.group_chat, name='group_chat'),
 ]
