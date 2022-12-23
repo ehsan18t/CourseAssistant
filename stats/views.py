@@ -143,9 +143,10 @@ def create_study_group(request):
 
 
 def join_study_group(request):
-    group_id = request.POST.get('group_id')
-    group = Study_Group.objects.filter(id=group_id)[0]
-    obj = Participant(user=request.user, group=group)
+    course_id = request.POST.get('course_id')
+    course = Course.objects.filter(id=course_id)[0]
+    group = Study_Group.objects.filter(course_code=course.course_code, section=course.section)[0]
+    obj = Participant(user=request.user, study_group=group)
     obj.save()
 
 
