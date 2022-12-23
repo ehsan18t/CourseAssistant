@@ -71,7 +71,7 @@ class User(AbstractUser, PermissionsMixin):
     username = models.CharField(_('Student ID'), max_length=20, unique=True)
     first_name = models.CharField(_('First Name'), max_length=100)
     last_name = models.CharField(_('Last Name'), max_length=100)
-    profile_picture = models.FileField(upload_to='profile_pictures')
+    profile_picture = models.FileField(upload_to='uploads/profile_pictures/', default='profile_pictures/avatar-male.png')
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -85,4 +85,4 @@ class User(AbstractUser, PermissionsMixin):
     objects = CustomAccountManager()
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} ({self.email})'
+        return self.username
