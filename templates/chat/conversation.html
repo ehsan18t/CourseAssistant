@@ -28,7 +28,7 @@
     border-radius: 50%;
   }
   main header img:last-child {
-    width: 24px;
+    width: 96px;
     margin-top: 8px;
   }
   main header div {
@@ -138,12 +138,10 @@
 <div id="container">
   <main>
     <header>
-      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+      <img src="{% static 'img/avatar/avatar-male.png' %}" class="h-10 w-10" alt="" />
       <div>
-        <br />
         <h2>{{group}}</h2>
       </div>
-      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="" />
     </header>
     <ul id="chat">
       {% for m in messages %}
