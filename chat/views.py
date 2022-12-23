@@ -23,10 +23,11 @@ def chat_list(request):
     # group chat
     chat_list = Study_Group.get_chats(user.id)
     message = []
+    counts = []
     for c in chat_list:
-        m = Study_Group.get_last_message(c.id)
-        message.append(m)
-    chat = zip(chat_list, message)
+        message.append(Study_Group.get_last_message(c.id))
+        counts.append(Study_Group.get_unread_count(c.id, user.id))
+    chat = zip(chat_list, message, counts)
     return render(request, 'chat/chat_list.html', {'chat':  chat, 'private': private})
 
 @login_required(login_url='login')

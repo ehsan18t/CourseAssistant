@@ -112,9 +112,28 @@ class Study_Group(models.Model):
 
     # function gets all messages in a Study_Group (requires Study_Group pk)
     @staticmethod
-    def get_all_messages(id):
+    def get_all_messages(id, current_user):
         # get messages in the chat, sort them by date(reverse) and add them to the list
-        return Group_Message.objects.filter(study_group=id).order_by('-date')
+        messages = Group_Message.objects.filter(study_group=id).order_by('-date')
+
+        # because the function is called when viewing the chat, we'll return all messages as read
+        for m in messages:
+            rr = Read_Report.objects.create(user=current_user, message=m)
+            rr.save()
+        
+        return messages
+
+    @staticmethod
+    def get_unread_count(g_id, current_user):
+        messages = Group_Message.objects.filter(study_group=g_id).order_by('-date')
+        count = 0
+        for m in messages:
+            # it's not possible to have a message without a read report after the first seen message
+            if not Read_Report.objects.filter(user=current_user, message=m).exists():
+                count += 1
+            else:
+                break
+        return count
 
     # function gets last messages in a Study_Group (requires Study_Group pk)
     @staticmethod
@@ -157,4 +176,19 @@ class Group_Message(models.Model):
         db_table = 'chat_group_messages'
         verbose_name = 'Group Message'
         verbose_name_plural = 'Group Messages'
+        ordering = ('-date',)
+
+class Read_Report(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.ForeignKey(Group_Message, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return ' seen on ' + self.date
+
+    class Meta:
+        db_table = 'chat_read_reports'
+        verbose_name = 'Read Report'
+        verbose_name_plural = 'Read Reports'
         ordering = ('-date',)
