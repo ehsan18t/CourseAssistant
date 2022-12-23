@@ -79,10 +79,12 @@ class Participant(models.Model):
         ordering = ('-date_joined',)
 
     # function gets all participants in a chat (requires chat pk)
+    @staticmethod
     def get_participants(id):
         return Participant.objects.filter(study_group=id)
 
     # function gets all chats a user is in (requires user pk)
+    @staticmethod
     def get_chats(id):
         return Participant.objects.filter(user=id)
 
@@ -116,6 +118,7 @@ class Group_Message(models.Model):
         ordering = ('-date',)
 
     # function gets all messages in a chat (requires chat pk)
+    @staticmethod
     def get_all_messages(id):
         # get messages in the chat, sort them by date(reverse) and add them to the list
         messages = Group_Message.objects.filter(study_group=id).order_by('-date')
