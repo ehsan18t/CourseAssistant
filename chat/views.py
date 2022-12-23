@@ -59,4 +59,6 @@ def send_message_gc(request, user, pk):
     msg = request.POST['message']
     study_group = Study_Group.objects.get(id=pk)
     m = Group_Message.objects.create(sender=user, study_group=study_group, message=msg)
+    rr = Read_Report.objects.create(user=user, message=m)
     m.save()
+    rr.save()
