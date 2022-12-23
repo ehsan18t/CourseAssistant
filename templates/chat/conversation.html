@@ -1,0 +1,5 @@
+{% for m in messages %}
+<p>{{ m.sender.first_name }} {{ m.sender.last_name }}</p>
+<p>{{ m.message }}</p>
+<br />
+{% endfor %}
