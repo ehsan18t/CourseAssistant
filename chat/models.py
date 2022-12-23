@@ -120,7 +120,7 @@ class Study_Group(models.Model):
         for m in messages:
             rr = Read_Report.objects.create(user=current_user, message=m)
             rr.save()
-        
+
         return messages
 
     @staticmethod

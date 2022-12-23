@@ -48,7 +48,7 @@
       <!-- people 1 -->
       {% for u, m in private %}
       <li class="flex space-x-3 justify-between place-items-center pb-2">
-        <img class="rounded-full w-8 h-8" src="static/img/avatar/ashan.png" alt="People image" />
+        <img class="rounded-full w-8 h-8" src="{{u.profile_picture}}" alt="People image" />
         <div>
           <p class="font-semibold font-['Roboto'] text-skin-svg">{{u.first_name}} {{u.last_name}}</p>
           <p class="truncate w-36 text-sm text-skin-text font-light">{{m}}</p>
