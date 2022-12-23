@@ -4,10 +4,7 @@ from base.models import User
 from django.shortcuts import render
 
 # Create your views here.
-@login_required(login_url='login')
-def chat_list(request):
-    user = request.user  # get your primary key
-    
+def get_chat_list_data(user):
     # Private chat
     user_list = Message.get_connected_users(user.id)
     message = []
@@ -24,6 +21,14 @@ def chat_list(request):
         message.append(Study_Group.get_last_message(c.id))
         counts.append(Study_Group.get_unread_count(c.id, user.id))
     chat = zip(chat_list, message, counts)
+
+    return chat, private
+
+
+@login_required(login_url='login')
+def chat_list(request):
+    user = request.user  # get your primary key
+    chat, private = get_chat_list_data(user)
     return render(request, 'chat/chat_list.html', {'chat':  chat, 'private': private})
 
 @login_required(login_url='login')
@@ -38,8 +43,10 @@ def private_chat(request, pk):
 @login_required(login_url='login')
 def group_chat(request, pk):
     user = request.user
+    group = Study_Group.objects.get(id=pk)
+    chat, private = get_chat_list_data(user)
 
     # group chat
     g_msg = Study_Group.get_all_messages(pk, user)
-    return render(request, 'chat/conversation.html', {'messages': g_msg})
+    return render(request, 'chat/conversation.html', {'messages': g_msg, 'group': group, 'chat':  chat, 'private': private, 'me': user})
 
