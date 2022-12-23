@@ -30,9 +30,11 @@
             <div>
               <p class="skin-sidebarspace-nowrap text-sm text-skin-text font-light">{{m.date}}</p>
             </div>
+            {% if cnt > 0 %}
             <div class="bg-skin-primary rounded-full w-5 h-5 flex justify-center items-center shadow-xl">
               <p class="text-sm text-skin-muted">{{cnt}}</p>
             </div>
+            {% endif %}
           </div>
         </li>
       </a>
