@@ -103,7 +103,7 @@ def courses(request, pk):
     marks = []
     user_exists_in_group = []
     for course in data:
-        g  = if_group_exists(course)
+        g = if_group_exists(course)
         groups.append(g)
         user_exists_in_group.append(if_user_in_group(request.user, g))
         parts = Assessment.objects.filter(course=course.id)
@@ -132,7 +132,7 @@ def if_user_in_group(user, group):
         return len(Participant.objects.filter(user=user, study_group=group)) != 0
 
 
-def  if_group_exists(course):
+def if_group_exists(course):
     group = Study_Group.objects.filter(course_code=course.course_code, section=course.section)
     if len(group) == 0:
         return None
