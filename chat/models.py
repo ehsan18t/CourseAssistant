@@ -114,15 +114,7 @@ class Study_Group(models.Model):
     @staticmethod
     def get_all_messages(id):
         # get messages in the chat, sort them by date(reverse) and add them to the list
-        messages = Group_Message.objects.filter(study_group=id).order_by('-date')
-
-        # because the function is called when viewing the chat, we'll return all messages as read
-        for x in range(len(messages)):
-            if messages[x].is_read == False:
-                messages[x].is_read = True
-                messages[x].save()
-        
-        return messages
+        return Group_Message.objects.filter(study_group=id).order_by('-date')
 
     # function gets last messages in a Study_Group (requires Study_Group pk)
     @staticmethod
@@ -157,7 +149,6 @@ class Group_Message(models.Model):
     study_group = models.ForeignKey(Study_Group, on_delete=models.CASCADE)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return self.message
