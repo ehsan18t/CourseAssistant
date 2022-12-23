@@ -140,6 +140,17 @@ def if_group_exists(course):
         return group[0]
 
 
+def auto_add_people_to_group(course, group):
+    courses = Course.objects.filter(course_code=course.course_code, section=course.section)
+    accepted = []
+    for  c in courses:
+        if c.semester.auto_add_to_group and c.semester.is_running:
+            accepted.append(c.semester.user)
+    for user in accepted:
+        obj = Participant(user=user, study_group=group)
+        obj.save()
+
+
 def create_study_group(request):
     course_id = request.POST.get('course_id')
     course = Course.objects.filter(id=course_id)[0]
@@ -149,6 +160,7 @@ def create_study_group(request):
     obj.save()
     obj = Participant(user=request.user, study_group=obj)
     obj.save()
+    auto_add_people_to_group(course, obj.study_group)
 
 
 def join_study_group(request):
