@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from .models import Semester, Course, Assessment, Assessment_Type
+from chat.models import Study_Group, Participant
 
 
 def marks_to_gpa(marks):
@@ -87,6 +88,10 @@ def courses(request, pk):
             add_course(request)
         if 'delete_course' in request.POST:
             delete_course(request)
+        if 'create_study_group' in request.POST:
+            create_study_group(request)
+        if 'join_study_group' in request.POST:
+            join_study_group(request)
         return redirect('courses', pk=pk)
 
     data = Course.objects.filter(semester=pk)
@@ -94,8 +99,10 @@ def courses(request, pk):
     for course in data:
         names.append(course.name)
     assessments = []
+    groups = []
     marks = []
     for course in data:
+        groups.append(if_group_exists(course))
         parts = Assessment.objects.filter(course=course.id)
         ex = 0.0
         ob = 0.0
@@ -109,9 +116,37 @@ def courses(request, pk):
             ob = (ob/to)*100
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
         marks.append(round(ob, 2))
-    data = zip(data, assessments)
+    data = zip(data, assessments, groups)
     chart = zip(names, marks)
-    return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'chart': chart})
+    semester_obj = Semester.objects.filter(id=pk)
+    return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'semester_obj': semester_obj, 'chart': chart})
+
+
+
+def  if_group_exists(course):
+    group = Study_Group.objects.filter(course_code=course.course_code, section=course.section)
+    if len(group) == 0:
+        return None
+    else:
+        return group[0]
+
+
+def create_study_group(request):
+    course_id = request.POST.get('course_id')
+    course = Course.objects.filter(id=course_id)[0]
+    group = Study_Group.objects.filter(course=course_id)
+    if len(group) == 0:
+        obj = Study_Group(name=f'{course.code} {course.name} {course.section}', course_code=course.course_code, section=course.section)
+        obj.save()
+        obj = Participant(user=request.user, group=obj)
+        obj.save()
+
+
+def join_study_group(request):
+    group_id = request.POST.get('group_id')
+    group = Study_Group.objects.filter(id=group_id)[0]
+    obj = Participant(user=request.user, group=group)
+    obj.save()
 
 
 def add_course(request):
