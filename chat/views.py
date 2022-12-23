@@ -22,7 +22,7 @@ class MessagesListView(LoginRequiredMixin, ListView):
 
         other_users = [] # list of other users
 
-        # getting the other person's name fromthe message list and adding them to a list
+        # getting the other person's name from the message list and adding them to a list
         for i in range(len(messages)):
             if messages[i].sender != user:
                 other_users.append(messages[i].sender)
@@ -46,7 +46,7 @@ class InboxView(LoginRequiredMixin, DetailView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(self.request, *args, **kwargs)
 
-    # overide detailview default request pk or slug to get username instead
+    # override detailview default request pk or slug to get username instead
     def get_object(self):
         UserName= self.kwargs.get("username")
         return get_object_or_404(User, username=UserName)
