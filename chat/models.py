@@ -62,3 +62,68 @@ class Message(models.Model):
                 k.append(i)
 
         return k
+
+
+class Participant(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    study_group = models.ForeignKey('Study_Group', on_delete=models.CASCADE, related_name='study_group')
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        db_table = 'chat_participants'
+        verbose_name = 'Participant'
+        verbose_name_plural = 'Participants'
+        ordering = ('-date_joined',)
+
+    # function gets all participants in a chat (requires chat pk)
+    def get_participants(id):
+        return Participant.objects.filter(study_group=id)
+
+    # function gets all chats a user is in (requires user pk)
+    def get_chats(id):
+        return Participant.objects.filter(user=id)
+
+class Study_Group(models.Model):
+    name = models.CharField(max_length=50)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'chat_study_groups'
+        verbose_name = 'Study Group'
+        verbose_name_plural = 'Study Groups'
+        ordering = ('-date_created',)
+
+class Group_Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
+    study_group = models.ForeignKey(Study_Group, on_delete=models.CASCADE, related_name='study_group')
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.message
+
+    class Meta:
+        db_table = 'chat_group_messages'
+        verbose_name = 'Group Message'
+        verbose_name_plural = 'Group Messages'
+        ordering = ('-date',)
+
+    # function gets all messages in a chat (requires chat pk)
+    def get_all_messages(id):
+        # get messages in the chat, sort them by date(reverse) and add them to the list
+        messages = Group_Message.objects.filter(study_group=id).order_by('-date')
+
+        # because the function is called when viewing the chat, we'll return all messages as read
+        for x in range(len(messages)):
+            if messages[x].is_read == False:
+                messages[x].is_read = True
+                messages[x].save()
+        
+        return messages
