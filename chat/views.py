@@ -27,7 +27,7 @@ def chat_list(request):
         m = Study_Group.get_last_message(c.id)
         message.append(m)
     chat = zip(chat_list, message)
-    return render(request, 'messages.html', {'chat':  chat, 'private': private})
+    return render(request, 'chat/chat_list.html', {'chat':  chat, 'private': private})
 
 @login_required(login_url='login')
 def private_chat(request, pk):
