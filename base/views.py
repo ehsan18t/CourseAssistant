@@ -82,9 +82,9 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-@login_required(login_url='login')
-def messages_page(request):
-    return render(request, 'messages.html')
+# @login_required(login_url='login')
+# def messages_page(request):
+#     return render(request, 'messages.html')
 
 
 @login_required(login_url='login')
