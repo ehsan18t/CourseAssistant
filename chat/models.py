@@ -59,9 +59,31 @@ class Message(models.Model):
                 k.append(i)
 
         return k
+    
+    # u == user_pk
+    @staticmethod
+    def get_connected_users(u):
+        users = Message.objects.filter(sender=u)
+        users2 = Message.objects.filter(recipient=u)
+        l = set()
+        for u in users:
+            l.add(u.recipient)
+        for u in users2:
+            l.add(u.sender)
+        #  convert set to list
+        return list(l)
+        
+    # u == other user pk
+    @staticmethod
+    def get_last_message(current_user, u):
+        messages = Message.objects.filter(sender=current_user).filter(recipient=u) | Message.objects.filter(sender=u).filter(recipient=current_user)
+        messages = messages.order_by('-date')
+        return messages[0]
+
 
 
 class Study_Group(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
 
@@ -98,8 +120,19 @@ class Study_Group(models.Model):
         
         return messages
 
+    # function gets last messages in a Study_Group (requires Study_Group pk)
+    @staticmethod
+    def get_last_message(id):
+        # get messages in the chat, sort them by date(reverse) and add them to the list
+        messages = Group_Message.objects.filter(study_group=id).order_by('-date')
+        if len(messages) > 0:
+            return messages[0]
+        else:
+            return None
+
 
 class Participant(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     study_group = models.ForeignKey('Study_Group', on_delete=models.CASCADE)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -115,6 +148,7 @@ class Participant(models.Model):
 
 
 class Group_Message(models.Model):
+    id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     study_group = models.ForeignKey(Study_Group, on_delete=models.CASCADE)
     message = models.TextField()

@@ -1,12 +1,50 @@
 from django.http import JsonResponse
 from django.contrib.auth import login
-from .models import Message
+from django.contrib.auth.decorators import login_required
+from .models import *
 from base.models import User
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
+@login_required(login_url='login')
+def chat_list(request):
+    user = request.user  # get your primary key
+    
+    # Private chat
+    user_list = Message.get_connected_users(user.id)
+    message = []
+    for u in user_list:
+        m = Message.get_last_message(user.id, u.id)
+        message.append(m)
+    private = zip(user_list, message)
+
+    # group chat
+    chat_list = Study_Group.get_chats(user.id)
+    message = []
+    for c in chat_list:
+        m = Study_Group.get_last_message(c.id)
+        message.append(m)
+    chat = zip(chat_list, message)
+    return render(request, 'messages.html', {'chat':  chat, 'private': private})
+
+@login_required(login_url='login')
+def private_chat(request, pk):
+    user = request.user
+    user2 = User.objects.get(username = pk)
+    
+    # Private chat
+    messages = Message.get_all_messages(user.id, user2.id)
+    return render(request, 'p_inbox.html', {'messages': messages})
+
+@login_required(login_url='login')
+def group_chat(request, pk):
+    user = request.user
+
+    # group chat
+    g_msg = Study_Group.get_all_messages(pk)
+    return render(request, 'group_chat.html', {'g_msg': g_msg})
 
 
 class MessagesListView(LoginRequiredMixin, ListView):
