@@ -88,9 +88,9 @@ def courses(request, pk):
             add_course(request)
         if 'delete_course' in request.POST:
             delete_course(request)
-        if 'create_study_group' in request.POST:
+        if 'create_group' in request.POST:
             create_study_group(request)
-        if 'join_study_group' in request.POST:
+        if 'join_group' in request.POST:
             join_study_group(request)
         return redirect('courses', pk=pk)
 
@@ -118,7 +118,7 @@ def courses(request, pk):
         marks.append(round(ob, 2))
     data = zip(data, assessments, groups)
     chart = zip(names, marks)
-    semester_obj = Semester.objects.filter(id=pk)
+    semester_obj = Semester.objects.filter(id=pk)[0]
     return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'semester_obj': semester_obj, 'chart': chart})
 
 
@@ -134,12 +134,12 @@ def  if_group_exists(course):
 def create_study_group(request):
     course_id = request.POST.get('course_id')
     course = Course.objects.filter(id=course_id)[0]
-    group = Study_Group.objects.filter(course=course_id)
-    if len(group) == 0:
-        obj = Study_Group(name=f'{course.code} {course.name} {course.section}', course_code=course.course_code, section=course.section)
-        obj.save()
-        obj = Participant(user=request.user, group=obj)
-        obj.save()
+    # group = Study_Group.objects.filter(course=course_id)
+    # if len(group) == 0:
+    obj = Study_Group(name=f'{course.course_code} - {course.name} [{course.section}]', course_code=course.course_code, section=course.section)
+    obj.save()
+    obj = Participant(user=request.user, study_group=obj)
+    obj.save()
 
 
 def join_study_group(request):
