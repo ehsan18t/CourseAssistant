@@ -61,21 +61,6 @@ class Message(models.Model):
         return k
 
 
-class Participant(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    study_group = models.ForeignKey('Study_Group', on_delete=models.CASCADE, related_name='study_group')
-    date_joined = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.user.username
-
-    class Meta:
-        db_table = 'chat_participants'
-        verbose_name = 'Participant'
-        verbose_name_plural = 'Participants'
-        ordering = ('-date_joined',)
-
-
 class Study_Group(models.Model):
     name = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -114,9 +99,24 @@ class Study_Group(models.Model):
         return messages
 
 
+class Participant(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    study_group = models.ForeignKey('Study_Group', on_delete=models.CASCADE)
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        db_table = 'chat_participants'
+        verbose_name = 'Participant'
+        verbose_name_plural = 'Participants'
+        ordering = ('-date_joined',)
+
+
 class Group_Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
-    study_group = models.ForeignKey(Study_Group, on_delete=models.CASCADE, related_name='study_group')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    study_group = models.ForeignKey(Study_Group, on_delete=models.CASCADE)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
