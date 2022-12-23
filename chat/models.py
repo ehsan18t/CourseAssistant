@@ -85,6 +85,8 @@ class Message(models.Model):
 class Study_Group(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
+    course_code = models.CharField(max_length=50)
+    section = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -122,6 +124,10 @@ class Study_Group(models.Model):
             rr.save()
 
         return messages
+
+    # return study group if exist from course object
+    def get_study_group(course):
+        return Study_Group.objects.filter(course_code=course.course_code, section=course.section)[0]
 
     @staticmethod
     def get_unread_count(g_id, current_user):
