@@ -4,10 +4,10 @@
 {% block content %}
 <link rel="stylesheet" href="static/css/dist/prCss.css" />
 
-<div class="flex space-x h-auto">
-  <div class="space-y-2 p-2">
+<div class="flex space-x ">
+  <div class="space-y-2 p-2 overflow-x-hidden overflow-y-scroll  h-[600px] bg-gray-300"> 
     
-    <h1>logged in : {{you.first_name}} {{you.last_name}}</h1>
+    <h1>{{you.first_name}} {{you.last_name}}</h1>
 
     <!-- search bar start -->
     <div class="shadow-md shadow-skin-shadow pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center" >
@@ -41,15 +41,15 @@
         <!-- user image -->
         <img
           class="rounded-full w-8 h-8"
-          src="static/img/avatar/ashan.png"
+          src="/static/img/avatar/ashan.png"
           alt="People image"
         />
         <!-- user image end -->
 
         <!-- user name and message -->
         <div>
-          <p class="font-semibold font-['Roboto'] text-skin-svg">{{us.first_name}} {{us.last_name}}</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">
+          <p class="font-semibold font-['Roboto'] ">{{us.first_name}} {{us.last_name}}</p>
+          <p class="truncate w-36 text-sm  font-light">
             {{message.message}}
           </p>
         </div>
@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <section class="">
+  <div class="flex-auto w-auto h-96 pr-4"> 
     
       
       {% block inboxSection %}
@@ -97,6 +97,6 @@
         </div>
       {% endblock inboxSection %}
     
-  </section>
+  </div>
 </div>
 {% endblock content %}
