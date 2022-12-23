@@ -78,15 +78,6 @@ class Participant(models.Model):
         verbose_name_plural = 'Participants'
         ordering = ('-date_joined',)
 
-    # function gets all participants in a chat (requires chat pk)
-    @staticmethod
-    def get_participants(id):
-        return Participant.objects.filter(study_group=id)
-
-    # function gets all chats a user is in (requires user pk)
-    @staticmethod
-    def get_chats(id):
-        return Participant.objects.filter(user=id)
 
 class Study_Group(models.Model):
     name = models.CharField(max_length=50)
@@ -100,6 +91,31 @@ class Study_Group(models.Model):
         verbose_name = 'Study Group'
         verbose_name_plural = 'Study Groups'
         ordering = ('-date_created',)
+
+    # function gets all participants in a Study_Group (requires Study_Group pk)
+    @staticmethod
+    def get_participants(id):
+        return Participant.objects.filter(study_group=id)
+
+    # function gets all chats a user is in (requires user pk)
+    @staticmethod
+    def get_chats(id):
+        return Participant.objects.filter(user=id)
+
+    # function gets all messages in a Study_Group (requires Study_Group pk)
+    @staticmethod
+    def get_all_messages(id):
+        # get messages in the chat, sort them by date(reverse) and add them to the list
+        messages = Group_Message.objects.filter(study_group=id).order_by('-date')
+
+        # because the function is called when viewing the chat, we'll return all messages as read
+        for x in range(len(messages)):
+            if messages[x].is_read == False:
+                messages[x].is_read = True
+                messages[x].save()
+        
+        return messages
+
 
 class Group_Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
@@ -116,17 +132,3 @@ class Group_Message(models.Model):
         verbose_name = 'Group Message'
         verbose_name_plural = 'Group Messages'
         ordering = ('-date',)
-
-    # function gets all messages in a chat (requires chat pk)
-    @staticmethod
-    def get_all_messages(id):
-        # get messages in the chat, sort them by date(reverse) and add them to the list
-        messages = Group_Message.objects.filter(study_group=id).order_by('-date')
-
-        # because the function is called when viewing the chat, we'll return all messages as read
-        for x in range(len(messages)):
-            if messages[x].is_read == False:
-                messages[x].is_read = True
-                messages[x].save()
-        
-        return messages
