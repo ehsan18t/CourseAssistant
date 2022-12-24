@@ -3,6 +3,12 @@ from base.models import User
 
 
 # Models for the chat app
+class Ditch(models.Model):
+    id = models.AutoField(primary_key=True)
+    u1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='u1')
+    u2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='u2')
+    ditched = models.BooleanField()
+
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipient')
@@ -34,7 +40,7 @@ class Message(models.Model):
         for x in range(len(messages)):
             messages[x].is_read = True
         # sort the messages by date
-        messages.sort(key=lambda x: x.date, reverse=False)
+        messages.sort(key=lambda x: x.date, reverse=True)
         return messages
 
     # function gets all messages between 'any' two users (requires your pk)
