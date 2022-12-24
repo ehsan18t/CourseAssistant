@@ -67,12 +67,15 @@ def private_chat(request, pk):
     
     # Private chat
     messages = Message.get_all_messages(user.id, user2.id)
+    chat, private = get_chat_list_data(user)
     
     return render(request, 'chat/con_private.html', 
     {'messages' : messages,
         'other_user' : user2,
         'you' : user,
-        'ditch' : ditched
+        'ditch' : ditched,
+        'chat':  chat,
+        'private': private
     })
 
 @login_required(login_url='login')
