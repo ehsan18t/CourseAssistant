@@ -52,13 +52,14 @@ def private_chat(request, pk):
         if d == 'Block':
             ditched = 'Unblock'
             if not o:
-                t = Ditch.objects.create(u1=user,u2=user2,ditched=True)
-                t.save()
+                Ditch.objects.create(u1=user,u2=user2,ditched=True)
             else :
                 o[0].ditched = True
+                o[0].save()
         elif d == 'Unblock' :
             o[0].ditched = False
             ditched = 'Block'
+            o[0].save()
         else : 
             msg = request.POST['message']
             Message.objects.create(sender=user, recipient=user2, message=msg)
