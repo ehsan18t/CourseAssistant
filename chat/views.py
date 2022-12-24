@@ -34,11 +34,49 @@ def chat_list(request):
 @login_required(login_url='login')
 def private_chat(request, pk):
     user = request.user
-    user2 = User.objects.get(username = pk)
+    user2 = User.objects.get(id = pk)
+    o = Ditch.objects.filter(u1_id=user.id,u2_id=user2.id)
+    
+    
+    if not o:
+        ditched = 'Block'
+        Ditch.objects.create(u1=user,u2=user2,ditched=False)
+    elif o[0].ditched == False:
+        ditched = 'Block'
+    else :
+        ditched = 'Unblock'
+
+
+    if request.method == 'POST':
+        d = request.POST.get('click')
+        if d == 'Block':
+            ditched = 'Unblock'
+            if not o:
+                Ditch.objects.create(u1=user,u2=user2,ditched=True)
+            else :
+                o[0].ditched = True
+                o[0].save()
+        elif d == 'Unblock' :
+            o[0].ditched = False
+            ditched = 'Block'
+            o[0].save()
+        else : 
+            msg = request.POST['message']
+            Message.objects.create(sender=user, recipient=user2, message=msg)
+            return redirect('private_chat', pk=pk)
     
     # Private chat
     messages = Message.get_all_messages(user.id, user2.id)
-    return render(request, 'p_inbox.html', {'messages': messages})
+    chat, private = get_chat_list_data(user)
+    
+    return render(request, 'chat/con_private.html', 
+    {'messages' : messages,
+        'other_user' : user2,
+        'you' : user,
+        'ditch' : ditched,
+        'chat':  chat,
+        'private': private
+    })
 
 @login_required(login_url='login')
 def group_chat(request, pk):

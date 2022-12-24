@@ -1,9 +1,10 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
 <link rel="stylesheet" href="{% static '/css/dist/prCss.css' %}" />
 
-<div class="flex space-x h-auto">
-  <div class="space-y-2 p-2">
-    <h1>logged in : {{you.first_name}} {{you.last_name}}</h1>
+<div class="flex space-x ">
+  <div class="space-y-2 p-2 overflow-x-hidden overflow-y-scroll  h-[600px] bg-gray-300"> 
+    
+    <h1>{{you.first_name}} {{you.last_name}}</h1>
 
     <!-- search bar start -->
     <div class="shadow-md shadow-skin-shadow pt-3 pb-2 pl-3 pr-4 rounded-2xl flex place-items-center">
@@ -30,8 +31,10 @@
 
         <!-- user name and message -->
         <div>
-          <p class="font-semibold font-['Roboto'] text-skin-svg">{{us.first_name}} {{us.last_name}}</p>
-          <p class="truncate w-36 text-sm text-skin-text font-light">{{message.message}}</p>
+          <p class="font-semibold font-['Roboto'] ">{{us.first_name}} {{us.last_name}}</p>
+          <p class="truncate w-36 text-sm  font-light">
+            {{message.message}}
+          </p>
         </div>
         <!-- user name and message end-->
 
@@ -53,20 +56,24 @@
     </div>
   </div>
 
-  <section class="">
-    {% block inboxSection %}
-    <div class="bg-gray-300 h-auto">
-      <!-- welcome alert -->
-      <div class="flex h-full w-full">
-        <div class="bg-slate-400 rounded-md font-medium">
-          <!-- image -->
-          <img class="flex h-full w-full" src="{% static '/img/welcome_img.png' %}" alt="Welcome" />
-          <!-- image end -->
+  <div class="flex-auto w-auto h-96 pr-4"> 
+    
+      
+      {% block inboxSection %}
+        <div class=" bg-gray-300 h-auto">
+        
+          <!-- welcome alert -->
+          <div class="flex h-full w-full">
+            <div class="bg-slate-400 rounded-md font-medium">
+              <!-- image -->
+              <img class=" flex h-full w-full" src="{% static '/img/welcome_img.png' %}" alt="Welcome">
+              <!-- image end -->
+            </div>
+          </div>
+          <!-- welcome alert end -->
         </div>
-      </div>
-      <!-- welcome alert end -->
-    </div>
-    {% endblock inboxSection %}
-  </section>
+      {% endblock inboxSection %}
+    
+  </div>
 </div>
 {% endblock content %}

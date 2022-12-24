@@ -10,7 +10,7 @@
     </h2>
 </div>
 <!-- message head end -->
-<div class=" bg-gray-300 h-[600px] w-full">
+<div class=" bg-gray-300 h-[600px] w-auto">
     <!-- read the messages  -->
     <div class="flex flex-col-reverse h-[90%] w-full">
         <!-- conversation -->
@@ -60,12 +60,12 @@
     <form action="{% url 'chat:inbox' other_person.username %}" method="POST">
         {% csrf_token %}
         <!-- type a message -->
-        <footer class=" h-[10%] border-t-2 flex-row">
+        <footer class=" h-[10%] border-t-2 flex items-center space-x-2">
             <!-- emoji icon -->
-            <i class="fa-solid fa-face-smile-beam text-[20px] px-2 pl-3"></i>
+            <i class="fa-solid fa-face-smile-beam text-[20px] pl-3"></i>
             <!-- emoji icon end -->
             <!-- attachment icon -->
-            <i class="fa-solid fa-link text-[20px] px-2"></i>
+            <i class="fa-solid fa-link text-[20px] "></i>
             <!-- attachment icon end -->
 
             <!--passing the person that sent the message as the recipient to the message form -->
@@ -96,7 +96,7 @@
                 placeholder="Type a message...">
             <!-- input box end -->
             <!-- send button -->
-            <button aria-hidden="true" type="submit">
+            <button aria-hidden="true" type="submit" class="pr-3">
                 <i class="fa fa-paper-plane text-[20px]"></i>
             </button>
 
