@@ -16,7 +16,7 @@
 
     <div id="border-group" class="relative h-screen rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2">
       <!-- study Group -->
-      <div role="tabpanel" id="panel-1" class="tab-panel p-6 transition duration-300">
+      <div role="tabpanel" id="panel-1" class="tab-panel pr-6 transition duration-300">
         <!-- group 1 -->
         {% for c, m, cnt in chat %}
           <li class="border-b-[1px] border-slate-300 [&:last-child]:border-b-0 flex space-x-3 justify-between place-items-center pt-3 pb-3 cursor-pointer" onclick="location.href='{% url 'group_chat' pk=c.id %}';">
