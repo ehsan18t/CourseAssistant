@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-#border-people li:not(:last-child){
-    border-bottom-width: 1px;
-  }
+#border-people li:not(:last-child) {
+  border-bottom-width: 1px;
+}
 
-  #border-group li:not(:last-child){
-    border-bottom-width: 1px;
-  }
+#border-group li:not(:last-child) {
+  border-bottom-width: 1px solid #e2e8f0 !important;
+}
