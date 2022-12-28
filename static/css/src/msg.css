@@ -7,5 +7,5 @@
 }
 
 #border-group li:not(:last-child) {
-  border-bottom-width: 1px;
+  border-bottom-width: 1px solid #e2e8f0 !important;
 }
