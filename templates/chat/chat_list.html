@@ -19,8 +19,7 @@
       <div role="tabpanel" id="panel-1" class="tab-panel p-6 transition duration-300">
         <!-- group 1 -->
         {% for c, m, cnt in chat %}
-        <a href="{% url 'group_chat' pk=c.id %}">
-          <li class="flex space-x-3 justify-between place-items-center pb-2">
+          <li class="border-b-[1px] border-slate-300 [&:last-child]:border-b-0 flex space-x-3 justify-between place-items-center pt-3 pb-3 cursor-pointer" onclick="location.href='{% url 'group_chat' pk=c.id %}">
             <img class="rounded-full w-8 h-8" src="{% static '/img/Ellipse 3.png' %}" alt="People image" />
             <div class="">
               <p class="font-semibold text-sm text-skin-svg">{{c.name}}</p>
@@ -37,7 +36,6 @@
               {% endif %}
             </div>
           </li>
-        </a>
         {% endfor %}
       </div>
 
@@ -45,7 +43,7 @@
       <div role="tabpanel" id="panel-2" class="absolute top-0 invisible opacity-0 tab-panel p-6 transition duration-300">
         <!-- people 1 -->
         {% for u, m in private %}
-        <li class="flex space-x-3 justify-between place-items-center pb-2 cursor-pointer" onclick="location.href='{% url 'private_chat' u.id %}';">
+        <li class="border-b-[1px] border-slate-300 [&:last-child]:border-b-0 flex space-x-3 justify-between place-items-center pt-3 pb-3 cursor-pointer" onclick="location.href='{% url 'private_chat' u.id %}';">
           <img class="rounded-full w-8 h-8" src="{% static 'img/avatar/avatar-male.png' %}" alt="People image" />
           <div>
             <p class="font-semibold text-sm text-skin-svg">{{u.first_name}} {{u.last_name}}</p>
