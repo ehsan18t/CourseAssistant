@@ -33,8 +33,13 @@
       {% for m in messages %}
       <li class="{% if m.sender == user %} me {% else %} you {% endif %}">
         <div class="entete">
-          <h2>{{ m.sender.first_name }} {{ m.sender.last_name }}</h2>
+          {% if m.sender == user %}
           <h3>{{m.date}}</h3>
+          {% endif %}
+          <h2>{{ m.sender.first_name }} {{ m.sender.last_name }}</h2>
+          {% if m.sender != user %}
+          <h3>{{m.date}}</h3>
+          {% endif %}
         </div>
         <div class="message">{{m.message}}</div>
       </li>
