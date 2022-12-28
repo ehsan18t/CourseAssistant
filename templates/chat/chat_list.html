@@ -22,7 +22,7 @@
           <li class="border-b-[1px] border-slate-300 [&:last-child]:border-b-0 flex space-x-3 justify-between place-items-center pt-3 pb-3 cursor-pointer" onclick="location.href='{% url 'group_chat' pk=c.id %}">
             <img class="rounded-full w-8 h-8" src="{% static '/img/Ellipse 3.png' %}" alt="People image" />
             <div class="">
-              <p class="font-semibold text-sm text-skin-svg">{{c.name}}</p>
+              <p class="{% if cnt > 0 %} font-semibold {% endif %} text-sm text-skin-svg">{{c.name}}</p>
               <p class="truncate w-36 text-sm text-skin-text font-light">{{m}}</p>
             </div>
             <div class="grid justify-items-end w-40">
@@ -46,7 +46,7 @@
         <li class="border-b-[1px] border-slate-300 [&:last-child]:border-b-0 flex space-x-3 justify-between place-items-center pt-3 pb-3 cursor-pointer" onclick="location.href='{% url 'private_chat' u.id %}';">
           <img class="rounded-full w-8 h-8" src="{% static 'img/avatar/avatar-male.png' %}" alt="People image" />
           <div>
-            <p class="font-semibold text-sm text-skin-svg">{{u.first_name}} {{u.last_name}}</p>
+            <p class="{% if cnt > 0 %} font-semibold {% endif %} text-sm text-skin-svg">{{u.first_name}} {{u.last_name}}</p>
             <p class="truncate w-36 text-sm text-skin-text font-light">{{m}}</p>
           </div>
           <div class="grid justify-items-end w-40">
