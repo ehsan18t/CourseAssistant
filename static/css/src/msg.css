@@ -4,7 +4,6 @@
 
 #container {
   width: 100%;
-  height: 800px;
   background: #eff3f7;
   font-size: 0;
   overflow: hidden;
@@ -12,14 +11,13 @@
 
 main {
   width: 100%;
-  height: 800px;
   display: inline-block;
   font-size: 15px;
   vertical-align: top;
 }
 
 main header {
-  height: 110px;
+  height: 80px;
   padding: 30px 20px 30px 40px;
 }
 
@@ -53,7 +51,7 @@ main header h3 {
   flex-direction: column-reverse;
   overflow-y: scroll;
   scrollbar-width: none;
-  height: 400px;
+  height: 450px;
   border-top: 2px solid #fff;
   border-bottom: 2px solid #fff;
 }
