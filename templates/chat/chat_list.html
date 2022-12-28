@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{% static '/css/dist/msg.css' %}" />
 {% endblock head %} {% block content %}
 <div class="flex space-x-2 h-screen overflow-hidden">
-  <div class="bg-skin-sidebar space-y-2 p-2 overflow-scroll">
+  <div class="bg-skin-sidebar space-y-2 pt-2 overflow-scroll">
     <!-- Tab bar -->
     <div role="tablist" aria-label="tabs" class="relative w-max mx-auto h-12 grid grid-cols-2 items-center px-[3px] rounded-full bg-gray-900/20 overflow-hidden shadow-2xl shadow-900/20 transition">
       <div class="absolute indicator h-11 my-auto top-0 bottom-0 left-0 rounded-full bg-white shadow-md"></div>
@@ -23,7 +23,7 @@
           <li class="flex space-x-3 justify-between place-items-center pb-2">
             <img class="rounded-full w-8 h-8" src="{% static '/img/Ellipse 3.png' %}" alt="People image" />
             <div class="">
-              <p class="font-bold font-['Roboto'] text-skin-svg">{{c.name}}</p>
+              <p class="font-semibold text-sm text-skin-svg">{{c.name}}</p>
               <p class="truncate w-36 text-sm text-skin-text font-light">{{m}}</p>
             </div>
             <div class="grid justify-items-end w-40">
@@ -48,7 +48,7 @@
         <li class="flex space-x-3 justify-between place-items-center pb-2 cursor-pointer" onclick="location.href='{% url 'private_chat' u.id %}';">
           <img class="rounded-full w-8 h-8" src="{% static 'img/avatar/avatar-male.png' %}" alt="People image" />
           <div>
-            <p class="font-semibold font-['Roboto'] text-skin-svg">{{u.first_name}} {{u.last_name}}</p>
+            <p class="font-semibold text-sm text-skin-svg">{{u.first_name}} {{u.last_name}}</p>
             <p class="truncate w-36 text-sm text-skin-text font-light">{{m}}</p>
           </div>
           <div class="grid justify-items-end w-40">
