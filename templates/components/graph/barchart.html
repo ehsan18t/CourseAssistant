@@ -3,6 +3,9 @@
 
 <div class="chartCard">
   <div class="chartBox">
+    {% if title %}
+    <h1 class="center">{{title}}</h1>
+    {% endif %}
     <canvas id="myChart"></canvas>
   </div>
 </div>
