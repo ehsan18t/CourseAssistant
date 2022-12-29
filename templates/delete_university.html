@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin setting</title>
+    <script src="https://kit.fontawesome.com/a676914d6c.js" crossorigin="anonymous"></script>
+
+    <style>
+
+        .flex-container{
+            
+            background-color: white;
+            display: flex;
+             flex-wrap: wrap; 
+            flex-direction: row;  
+             flex-flow: row wrap;
+            justify-content: center; 
+            align-items: center;
+            height: auto;
+            width:70%;
+            margin:auto;
+          
+        }
+
+        .flex-container > div {
+            background-color: white;
+            margin: 15px;
+          
+            font-size: 30px;
+            width: 40%; 
+            height: 400px;
+            
+        }
+
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+          }
+          
+          input[type=submit] {
+            background-color: #3DA8E4;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left:35%;
+          }
+          
+          input[type=submit]:hover {
+            background-color: #3DA8E4;
+          }
+          
+          .container {
+            border-radius: 5px;
+            background-color: white;
+            padding: 20px;
+          }
+
+       
+    
+    </style>
+
+    <script>
+
+        function show()
+        {  
+          let university=document.getElementById('university').value;
+          
+      
+          if(university=="")
+            alert("No university to delete")
+          else  
+            alert("University deleted successfully");
+           
+         
+           
+        }
+      
+      
+      
+      
+      </script>    
+
+</head>
+<body>
+  
+    <div class="flex-container">
+        
+        <div class="div1" style="width: 90% ; height:150px;" >
+            
+                <i class="fa fa-university" aria-hidden="true" style="margin-left: 45%; font-size:80px"></i> <br>
+                <h4 style="margin-left: 42%;margin-top:0px;margin-bottom:0px">University</h4>
+                <span style="margin-left: 43%;margin-top:0px;margin-bottom:0px;font-size:15px;color:gray">Remove University</span>
+       
+          
+
+         
+        </div>
+
+        
+
+
+
+
+
+
+        
+
+        <div class="div3" >
+                             
+            <div class="container">
+                <form action="" method="POST">
+
+                  {% csrf_token %}
+                 
+                  
+                  
+                  <select id="university" name="university">
+                    {% for i in c %}
+                    <option value="{{i.fields.name}}">{{i.fields.name}}</option>
+                    {% endfor %} 
+                  </select>
+              
+                  
+              
+                  <input type="submit" value="Disapprove University" style="margin-left: 30%;background-color:red"onclick="show()">
+                  
+                </form>
+              </div>
+          </div>
+
+        
+
+        
+    
+       
+
+    </div>
+    
+</body>
+</html>

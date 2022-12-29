@@ -209,3 +209,126 @@ def request_content(request):
 
 
     return render(request, 'content_request.html')
+
+
+
+
+
+
+def site_setting(request):
+  
+    if request.method=="POST" :
+        name=request.POST['name']
+        email_pattern=request.POST['email_pattern']
+        sid_pattern=request.POST['sid_pattern']
+        
+       
+
+        
+
+        if len(name)!=0 and len(sid_pattern)!=0  and len(email_pattern)!=0  :
+          obj=University()  
+          obj.name=name
+          obj.email_pattern=email_pattern
+          obj.sid_pattern=sid_pattern
+          
+
+          obj.save() 
+
+    
+       
+        
+        
+        
+          
+
+                
+
+
+
+
+    #fetch data from database
+
+    from django.core import serializers
+    contentss=serializers.serialize("python",University.objects.all()) 
+
+    context = {
+        
+        'c': contentss,
+    }
+    
+
+
+    return render(request, 'site_settings.html',context)
+
+
+
+
+
+
+def delete_university(request):
+    print("I am here in delete university")
+    
+    if request.method=="POST" :
+       selected_name=request.POST['university']
+       from django.core import serializers
+       University.objects.filter(name=selected_name).delete()
+       print("finally deleted")
+       
+       
+    #fetch data from database
+
+    from django.core import serializers
+    contentss=serializers.serialize("python",University.objects.all()) 
+
+    context = {
+        
+        'c': contentss,
+    }
+    
+    
+    
+
+
+    return render(request, 'delete_university.html',context)
+
+
+
+
+
+
+
+
+
+
+
+
+   
+     
+def content_view(request):
+
+    if request.method == 'POST':
+        c = request.POST['comment']
+       
+        obj=comment()  
+        obj.comment=c
+        obj.save()
+        
+
+    from django.core import serializers
+    contentss=serializers.serialize("python",content.objects.all()) 
+    comments=serializers.serialize("python",comment.objects.all()) 
+     
+
+    context = {
+        
+        'c': contentss,
+        'cmnt': comments,
+    }
+    
+
+
+
+    return render(request, 'content_view.html',context)
+
+
