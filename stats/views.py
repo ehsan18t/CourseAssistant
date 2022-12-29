@@ -11,6 +11,7 @@ def marks_to_gpa(marks):
     for i in gpa:
         if int(marks) <= int(i):
             return gpa[i]
+    return 0.0
 
 
 @login_required(login_url='login')
