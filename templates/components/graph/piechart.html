@@ -10,6 +10,16 @@
     align-items: center;
     justify-content: center;
   }
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chartBox h1 {
+    font-size: 30px;
+    font-weight: 500;
+    color: rgba(54, 162, 235, 1);
+  }
   .chartBox {
     width: 450px;
     padding: 20px;
@@ -18,12 +28,15 @@
     background: white;
   }
 </style>
+
 <div class="chartCard">
   <div class="chartBox">
+    <h1 class="center">{{title}}</h1>
     <canvas id="myChart"></canvas>
   </div>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script>
   // setup
   const data = {
@@ -43,7 +56,34 @@
   const config = {
     type: "pie",
     data,
-    options: {},
+    options: {
+      plugins: {
+        datalabels: {
+          font: {
+            {% if fontWight %}
+            weight: "{{fontWight}}",
+            {% endif %}
+            {% if fontsize %}
+            size: {{fontsize}},
+            {% endif %}
+          },
+          // formatter with name and percentage
+          formatter: (value, ctx) => {
+            let sum = 0;
+            let dataArr = data.datasets[0].data;
+            dataArr.map((data) => {
+              sum += data;
+            });
+            let percentage = value;
+            {% if dataLabels %}
+            let name = ctx.chart.data.labels[ctx.dataIndex];
+            {% endif %}
+            return name + " " + percentage + {% if lastText %} "{{lastText}}" {% else %} "" {% endif %};
+          },
+        }
+      }
+    },
+    plugins: [ChartDataLabels],
   };
 
   // render init block
