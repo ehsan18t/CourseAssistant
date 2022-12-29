@@ -35,12 +35,17 @@ def chat_list(request):
 def private_chat(request, pk):
     user = request.user
     user2 = User.objects.get(id = pk)
-    o = Ditch.objects.filter(u1_id=user.id,u2_id=user2.id)
+    o = Ditch.objects.filter(blocker_id=user.id,blocked_id=user2.id)
+    other_blocked_you = Ditch.objects.filter(blocker_id=user2.id,blocked_id=user.id)
     
+    blocked_you = False
+    if other_blocked_you :
+        blocked_you = other_blocked_you[0].ditched
+
     
     if not o:
         ditched = 'Block'
-        Ditch.objects.create(u1=user,u2=user2,ditched=False)
+        Ditch.objects.create(blocker=user,blocked=user2,ditched=False)
     elif o[0].ditched == False:
         ditched = 'Block'
     else :
@@ -52,7 +57,7 @@ def private_chat(request, pk):
         if d == 'Block':
             ditched = 'Unblock'
             if not o:
-                Ditch.objects.create(u1=user,u2=user2,ditched=True)
+                Ditch.objects.create(blocker=user,blocked=user2,ditched=True)
             else :
                 o[0].ditched = True
                 o[0].save()
@@ -62,7 +67,10 @@ def private_chat(request, pk):
             o[0].save()
         else : 
             msg = request.POST['message']
-            Message.objects.create(sender=user, recipient=user2, message=msg)
+            attachment = request.FILES.get('attachment')
+            if msg is None:
+                msg = ''
+            Message.objects.create(sender=user, recipient=user2, message=msg, attachment=attachment)
             return redirect('private_chat', pk=pk)
     
     # Private chat
@@ -75,7 +83,8 @@ def private_chat(request, pk):
         'you' : user,
         'ditch' : ditched,
         'chat':  chat,
-        'private': private
+        'private': private,
+        'blocked_you' : blocked_you
     })
 
 @login_required(login_url='login')
