@@ -13,6 +13,7 @@
     --color-body: #e4e9f7;
     --color-sidebar: #ffffff;
     --color-primary: rgb(13 148 136);
+    --color-primary-muted: rgb(13 148 136 / 80%);
     --color-primary-light: rgb(243 244 246);
     --color-toggle: #dddddd;
     --color-text: #707070;
@@ -25,6 +26,7 @@
     --color-body: #393e46;
     --color-sidebar: #222831;
     --color-primary: #2f8886;
+    --color-primary-muted: rgb(13 148 136 / 80%);
     --color-primary-light: #28475c;
     --color-toggle: #303841;
     --color-text: #e7e7e7;

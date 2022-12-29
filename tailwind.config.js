@@ -13,6 +13,7 @@ module.exports = {
           body: "var(--color-body)",
           sidebar: "var(--color-sidebar)",
           primary: "var(--color-primary)",
+          primaryMuted: "var(--color-primary-muted)",
           primaryLight: "var(--color-primary-light)",
           toggle: "var(--color-toggle)",
           text: "var(--color-text)",
