@@ -62,7 +62,10 @@ def private_chat(request, pk):
             o[0].save()
         else : 
             msg = request.POST['message']
-            Message.objects.create(sender=user, recipient=user2, message=msg)
+            attachment = request.FILES.get('attachment')
+            if msg is None:
+                msg = ''
+            Message.objects.create(sender=user, recipient=user2, message=msg, attachment=attachment)
             return redirect('private_chat', pk=pk)
     
     # Private chat

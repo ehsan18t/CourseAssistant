@@ -15,6 +15,7 @@ class Message(models.Model):
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    attachment = models.FileField(upload_to='chat_attachments/', null=True, blank=True)
 
     def __str__(self):
         return self.message
