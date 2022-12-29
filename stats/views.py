@@ -122,7 +122,7 @@ def courses(request, pk):
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
         marks.append(round(ob, 2))
     data = zip(data, assessments, groups, user_exists_in_group)
-    chart = zip(names, marks)
+    chart = {'labels': names, 'marks': marks}
     semester_obj = Semester.objects.filter(id=pk)[0]
     return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'semester_obj': semester_obj, 'chart': chart})
 

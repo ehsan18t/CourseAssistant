@@ -1,7 +1,7 @@
 {% extends 'main.html' %} {% load static %} {% block head %}
 <title>Courses | Educational Progress</title>
-<link rel="stylesheet" href="{% static '/css/dist/modal.css' %}" />
-<link rel="stylesheet" href="{% static '/css/dist/stats.css' %}" />
+<link rel="stylesheet" href="{% static '/css/dist/modal.css' %}?{% now 'dwmYHsu' %}" />
+<link rel="stylesheet" href="{% static '/css/dist/stats.css' %}?{% now 'dwmYHsu' %}" />
 {% endblock head %} {% block content %}
 
 <!-- Modal for New Course -->
@@ -35,30 +35,7 @@
 </div>
 
 <!--PIE CHART START-->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
-  google.charts.load("current", { packages: ["corechart"] });
-  google.charts.setOnLoadCallback(drawChart);
-
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ["Course", "Marks"],
-      {% for x, y in chart %}
-      ['{{x}}', {{y}}],
-      {% endfor %}]);
-
-    var options = {
-      title: "Courses",
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById("course_piechart"));
-
-    chart.draw(data, options);
-  }
-</script>
-<!--     Actual Chart       -->
-<div id="course_piechart"></div>
-
+{% include 'components/graph/piechart.html' with data="{{chart}}" %}
 <!--PIE CHART END-->
 
 <!-- Courses Card -->
