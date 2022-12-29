@@ -3,7 +3,7 @@
 <div id="container">
   <main>
     <header>
-      <img src="{% static 'img/avatar/avatar-male.png' %}" class="h-10 w-10" alt="" />
+      <img src="{% if you.profile_picture %} {{you.profile_picture.url}}  {% else %} {% static 'img/avatar/avatar-male.png' %} {% endif %}" class="h-10 w-10" alt="" />
       <div>
         <h2>{{other_user.first_name}} {{other_user.last_name}}</h2>
       </div>
