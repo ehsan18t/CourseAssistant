@@ -43,7 +43,7 @@
 }
 
 .new-post-btn {
-  @apply m-6 w-1/5 rounded-full bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700;
+  @apply m-6 w-1/5 rounded-full bg-skin-primary py-2 px-4 font-bold text-white hover:bg-skin-primaryMuted hover:transition hover:duration-300;
 }
 
 .move-center {
