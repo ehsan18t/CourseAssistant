@@ -1,5 +1,5 @@
 from django.db import models
-from base.models import User
+from base.models import University, User
 
 
 # Models for the chat app
@@ -93,6 +93,7 @@ class Study_Group(models.Model):
     name = models.CharField(max_length=50)
     course_code = models.CharField(max_length=50)
     section = models.CharField(max_length=50)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
