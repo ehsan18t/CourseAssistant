@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{% static '/css/dist/msg.css' %}?{% now 'dwmYHsu' %}" />
 {% endblock head %} {% block content %}
 <div class="flex overflow-hidden">
-  <div class="bg-skin-sidebar pt-2 overflow-y-scroll" style="scrollbar-width: none;">
+  <div class="rounded-2xl shadow-md shadow-skin-shadow bg-skin-sidebar pt-2 overflow-y-scroll" style="scrollbar-width: none;">
     <!-- Tab bar -->
     <div role="tablist" aria-label="tabs" class="relative w-max mx-auto h-12 grid grid-cols-2 items-center px-[3px] rounded-full bg-gray-900/20 overflow-hidden shadow-2xl shadow-900/20 transition">
       <div class="absolute indicator h-11 my-auto top-0 bottom-0 left-0 rounded-full bg-white shadow-md"></div>
@@ -14,12 +14,12 @@
       </button>
     </div>
 
-    <div id="border-group" class="relative h-screen rounded-2xl shadow-md shadow-skin-shadow pt-4 pb-7 pl-3 pr-4 grid justify-between space-y-2">
+    <div id="border-group" class="relative h-screen pt-4 pb-7 pl-3 grid justify-between space-y-2">
       <!-- study Group -->
-      <div role="tabpanel" id="panel-1" class="tab-panel pr-10 transition duration-300">
+      <div role="tabpanel" id="panel-1" class="tab-panel pr-4 transition duration-300">
         <!-- group 1 -->
         {% for c, m, cnt in chat %}
-          <li class="border-b-[1px] border-slate-300 [&:last-child]:border-b-0 flex space-x-3 justify-between place-items-center mr-10 pt-3 pb-3 cursor-pointer" onclick="location.href='{% url 'group_chat' pk=c.id %}';">
+          <li class="border-b-[1px] border-slate-300 [&:last-child]:border-b-0 flex space-x-3 justify-between place-items-center pt-3 pb-3 cursor-pointer" onclick="location.href='{% url 'group_chat' pk=c.id %}';">
             <img class="rounded-full w-8 h-8" src="{% static '/img/Ellipse 3.png' %}" alt="People image" />
             <div class="">
               <p class="{% if cnt > 0 %} font-bold {% endif %} text-sm text-skin-svg">{{c.name}}</p>
