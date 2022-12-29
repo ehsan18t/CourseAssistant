@@ -98,6 +98,10 @@ def send_message_gc(request, user, pk):
     attachment = request.FILES.get('attachment')
     study_group = Study_Group.objects.get(id=pk)
 
+    # black sending completely empty messages 
+    if not attachment and not msg:
+        return
+
     if msg is None:
         msg = ''
 
