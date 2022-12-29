@@ -189,11 +189,11 @@ header .image-text header-text {
 }
 
 .content {
-  @apply relative left-64 h-screen w-[calc(100%-264px)] bg-skin-body transition-all duration-500 ease-in-out;
+  @apply relative left-64 w-[calc(100%-264px)] bg-skin-body transition-all duration-500 ease-in-out;
 }
 
 .sidebar.close ~ .content {
-  @apply left-24 h-screen w-[calc(100%-96px)];
+  @apply left-24 w-[calc(100%-96px)];
 }
 
 .column {
