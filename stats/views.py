@@ -21,32 +21,54 @@ def stats(request):
         if 'delete_semester' in request.POST:
             delete_semester(request)
         return redirect('stats')
-    semester = Semester.objects.filter(user=request.user)
+    semesters = Semester.objects.filter(user=request.user)
     labels = []
-    for sem in semester:
+    for sem in semesters:
         labels.append(sem.name)
     gpa = []
+    cgpa = []
     ex_gpa = []
     ob_gpa = []
-    for sem in semester:
+    continuous_credit = 0.0
+    continuous_o_x_c = 0.0
+    for sem in semesters:
         courses = Course.objects.filter(semester=sem.id)
+        e_x_c = 0.0 # expected gpa * credit
+        o_x_c = 0.0 # obtained gpa * credit
         ex = 0.0
         ob = 0.0
         to = 0.0
-        for course in courses:
+        credit = 0.0
+        for course in courses:  # courses of each semester
             parts = Assessment.objects.filter(course=course.id)
+            # Calculating all expected and obtained marks from assessments
             for p in parts:
                 ex += p.expected_marks
                 ob += p.obtained_marks
                 to += p.total_marks
-        if to != 0:
-            ex = (ex/to)*100
-            ob = (ob/to)*100
-        gpa.append({'expected': marks_to_gpa(ex), 'obtained': marks_to_gpa(ob)})
-        ex_gpa.append(marks_to_gpa(ex))
-        ob_gpa.append(marks_to_gpa(ob))
-    data = zip(semester, gpa)
-    chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa}
+
+            print(course.credit)
+            # Converting each course's marks to percentage
+            if to != 0:
+                ex = (ex/to)*100
+                ob = (ob/to)*100
+                credit += course.credit
+                # Converting each course's marks to gpa and multiplying with credits
+                e_x_c += marks_to_gpa(ex) * course.credit
+                o_x_c += marks_to_gpa(ob) * course.credit
+
+        # keep tracking continuous gpa*credit and total credit
+        continuous_o_x_c += o_x_c
+        continuous_credit += credit
+
+        # gpa or each trimester
+        ex_gpa.append(e_x_c/credit)
+        ob_gpa.append(o_x_c/credit)
+        gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
+        cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
+    
+    data = zip(semesters, gpa)
+    chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa, 'cgpa': cgpa}
     return render(request, 'stats/stats.html', {'data': data, 'chart': chart})
 
 
