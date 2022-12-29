@@ -22,11 +22,12 @@ def stats(request):
             delete_semester(request)
         return redirect('stats')
     semester = Semester.objects.filter(user=request.user)
-    semester2 = []
+    labels = []
     for sem in semester:
-        semester2.append(sem.name)
+        labels.append(sem.name)
     gpa = []
-    gpa2 = []
+    ex_gpa = []
+    ob_gpa = []
     for sem in semester:
         courses = Course.objects.filter(semester=sem.id)
         ex = 0.0
@@ -42,9 +43,10 @@ def stats(request):
             ex = (ex/to)*100
             ob = (ob/to)*100
         gpa.append({'expected': marks_to_gpa(ex), 'obtained': marks_to_gpa(ob)})
-        gpa2.append(marks_to_gpa(ob))
+        ex_gpa.append(marks_to_gpa(ex))
+        ob_gpa.append(marks_to_gpa(ob))
     data = zip(semester, gpa)
-    chart = zip(semester2, gpa2)
+    chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa}
     return render(request, 'stats/stats.html', {'data': data, 'chart': chart})
 
 
