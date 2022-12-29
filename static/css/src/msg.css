@@ -51,7 +51,7 @@ main header h3 {
   flex-direction: column-reverse;
   overflow-y: scroll;
   scrollbar-width: none;
-  height: 450px;
+  height: 420px;
   border-top: 2px solid #fff;
   border-bottom: 2px solid #fff;
 }

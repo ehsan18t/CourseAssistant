@@ -95,8 +95,17 @@ def group_chat(request, pk):
 
 def send_message_gc(request, user, pk):
     msg = request.POST['message']
+    attachment = request.FILES.get('attachment')
     study_group = Study_Group.objects.get(id=pk)
-    m = Group_Message.objects.create(sender=user, study_group=study_group, message=msg)
+
+    # black sending completely empty messages 
+    if not attachment and not msg:
+        return
+
+    if msg is None:
+        msg = ''
+
+    m = Group_Message.objects.create(sender=user, study_group=study_group, message=msg, attachment=attachment)
     rr = Read_Report.objects.create(user=user, message=m)
     m.save()
     rr.save()
