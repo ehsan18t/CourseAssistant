@@ -51,7 +51,7 @@ main header h3 {
   flex-direction: column-reverse;
   overflow-y: scroll;
   scrollbar-width: none;
-  height: 450px;
+  height: 420px;
   border-top: 2px solid #fff;
   border-bottom: 2px solid #fff;
 }
@@ -149,4 +149,40 @@ main footer input[type="submit"] {
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
+}
+
+.up {
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 200px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.fileName {
+  margin-top: 20px;
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  padding: 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  background-color: #7d61b4;
+  border: none;
+  width: 220px;
+}
+
+.custom-file-upload {
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  padding: 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  background-color: #7a166d;
+  border: none;
+}
+
+.file-search-button {
+  margin-top: 30px;
 }
