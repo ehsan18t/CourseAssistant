@@ -143,23 +143,24 @@ def if_group_exists(course):
 
 def auto_add_people_to_group(course, group):
     university  = course.semester.user.university
-    courses = Course.objects.filter(course_code=course.course_code, section=course.section, university=university)
+    courses = Course.objects.filter(course_code=course.course_code, section=course.section)
     accepted = []
     for  c in courses:
         if c.semester.auto_add_to_group and c.semester.is_running:
             accepted.append(c.semester.user)
     for user in accepted:
-        obj = Participant(user=user, study_group=group)
-        obj.save()
+        if user.university == university:
+            obj = Participant(user=user, study_group=group)
+            obj.save()
 
 
 def create_study_group(request):
-    user = request.user
+    university = request.user.university
     course_id = request.POST.get('course_id')
     course = Course.objects.filter(id=course_id)[0]
     # group = Study_Group.objects.filter(course=course_id)
     # if len(group) == 0:
-    obj = Study_Group(name=f'{course.course_code} - {course.name} [{course.section}]', course_code=course.course_code, university = user.university, section=course.section)
+    obj = Study_Group(name=f'{course.course_code} - {course.name} [{course.section}]', course_code=course.course_code, university = university, section=course.section)
     obj.save()
     obj = Participant(user=request.user, study_group=obj)
     obj.save()
