@@ -2,8 +2,10 @@
 <link rel="stylesheet" href="{% static '/css/dist/graph.css' %}" />
 
 <div class="chartCard">
-  <div class="chartBox">
+  <div class="chartBox" {% if chartSize%} style="width: {{chartSize}};" {%endif%}>
+    {% if title %}
     <h1 class="center">{{title}}</h1>
+    {% endif %}
     <canvas id="myChart"></canvas>
   </div>
 </div>
