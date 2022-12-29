@@ -93,6 +93,7 @@ class Study_Group(models.Model):
     name = models.CharField(max_length=50)
     course_code = models.CharField(max_length=50)
     section = models.CharField(max_length=50)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -180,7 +181,6 @@ class Group_Message(models.Model):
     study_group = models.ForeignKey(Study_Group, on_delete=models.CASCADE)
     message = models.TextField(null=True, blank=True)
     attachment = models.FileField(upload_to='chat_attachments/', null=True, blank=True)
-    university = models.ForeignKey(University, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
