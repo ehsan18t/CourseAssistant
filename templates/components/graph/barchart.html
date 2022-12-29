@@ -31,14 +31,14 @@
     labels: [{% for val in chart.labels %} '{{ val }}' {% endfor %}],
     datasets: [
       {
-        label: "Expected CGPA",
+        label: "Expected GPA",
         data: [{% for val in chart.expected %}{{ val }},{% endfor %}],
         backgroundColor: ["rgba(255, 26, 104, 0.2)"],
         borderColor: ["rgba(255, 26, 104, 1)"],
         borderWidth: 1,
       },
       {
-        label: "Actual CGPA",
+        label: "Actual GPA",
         data: [{% for val in chart.obtained %}{{ val }},{% endfor %}],
         backgroundColor: ["rgba(255, 159, 64, 0.2)"],
         borderColor: ["rgba(255, 159, 64, 1)"],
