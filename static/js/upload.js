@@ -1,8 +1,9 @@
-const fileName = document.querySelector(".fileName");
+function setfilename(val) {
+  var fileName = val.substr(val.lastIndexOf("\\") + 1, val.length);
+  document.getElementById("uploadFile").textContent = fileName;
+}
 
-const fileInput = document.querySelector("input[type=file]");
-fileInput.addEventListener("change", function () {
-  if (this.files && this.files[0]) {
-    fileName.innerHTML = this.files[0].name;
-  }
-});
+function clearUpload() {
+  document.getElementById("file-upload").value = "";
+  document.getElementById("uploadFile").textContent = "";
+}
