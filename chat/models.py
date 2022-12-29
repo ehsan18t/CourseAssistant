@@ -5,8 +5,8 @@ from base.models import University, User
 # Models for the chat app
 class Ditch(models.Model):
     id = models.AutoField(primary_key=True)
-    u1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='u1')
-    u2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='u2')
+    blocker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocker')
+    blocked = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked')
     ditched = models.BooleanField()
 
 class Message(models.Model):
