@@ -253,7 +253,13 @@ def assessment_types(request, s_pk, c_pk):
         return redirect('assessment-types', s_pk=s_pk, c_pk=c_pk)
 
     data = Assessment_Type.objects.filter(course=c_pk)
-    return render(request, 'stats/assessment_types.html', {'data': data, 'semester': s_pk, 'course': c_pk})
+    labels = []
+    marks = []
+    for d in data:
+        labels.append(d.name)
+        marks.append(d.mark_percentage)
+    chart = {'labels': labels, 'marks': marks }
+    return render(request, 'stats/assessment_types.html', {'data': data, 'semester': s_pk, 'course': c_pk, 'chart': chart})
 
 
 def add_assessment_type(request):
