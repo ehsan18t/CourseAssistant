@@ -19,7 +19,7 @@ class Course(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
     course_code = models.CharField(max_length=20)
-    credit = models.IntegerField()
+    credit = models.FloatField()
     section = models.CharField(max_length=20)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     is_retake = models.BooleanField(default=False)
