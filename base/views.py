@@ -200,7 +200,25 @@ def add_comment(request, pk):
     content = Content.objects.filter(id=pk)[0]
     user = request.user
     comment = request.POST.get('comment')
-    Comment.objects.create(content=content, user=user, text=comment)
+
+    # Mention Checking
+    if '@' in comment:
+        words = comment.split(' ')
+        users = []
+        for word in words:
+            if word.startswith('@'):
+                u = word.replace('@', '')
+                if User.objects.filter(username=u).exists():
+                    u = User.objects.filter(username=u)[0]
+                    users.append(u)
+                    comment = comment.replace(word, '<a href="/profile/'+str(u.id)+'">'+word+'</a>')    # Need to changed replace with link
+
+    comment_obj = Comment.objects.create(content=content, user=user, text=comment)
+    comment_obj.save()
+
+    # Notification
+    for u in users:
+        Notification.objects.create(user=u, content=content, comment=comment_obj, type=4)
 
 
 def add_reply(request, r_pk, pk):
@@ -209,3 +227,11 @@ def add_reply(request, r_pk, pk):
     user = request.user
     reply = request.POST.get('reply')
     Comment.objects.create(content=content, user=user, text=reply, parent=comment)
+
+
+def mention(request, pk, comment_id):
+    user = request.user
+    content = Content.objects.filter(id=pk)[0]
+    comment = Comment.objects.filter(id=comment_id)[0]
+    Notification.objects.create(user=user, content=content, comment=comment, type=4)
+    
