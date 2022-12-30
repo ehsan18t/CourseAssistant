@@ -1,4 +1,5 @@
 from base.models import Unread_Counts
+from chat.views import get_unread_messages_count
 
 
 def notifications(request):
@@ -9,5 +10,6 @@ def notifications(request):
 
     notifications_count = Unread_Counts.objects.filter(user=user)[0].notification
     return {
-        'notifications_count': notifications_count
+        'notifications_count': notifications_count,
+        'unread_messages_count': get_unread_messages_count(user),
     }
