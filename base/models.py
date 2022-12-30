@@ -146,4 +146,4 @@ class Unread_Counts(models.Model):
     message = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.count} ({self.user})'
+        return f'{self.id} ({self.user})'
