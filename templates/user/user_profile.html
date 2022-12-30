@@ -1,5 +1,4 @@
 {% extends 'main.html' %} {% load static %} {% block head %}
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Profile Page</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <link rel="stylesheet" href="{% static '/css/raw_css/user_profile.css' %}?{% now 'dwmYHsu' %}" />
@@ -11,23 +10,31 @@
         <p>Cover photo here</p>
 
 
-        <img src="image/pic_1.jpg" alt="">
+        <img src="{% if user.profile_picture %} {{user.profile_picture.url}}  {% else %} {% static 'img/avatar/avatar-male.png' %} {% endif %}" alt="">
 
     </div>
 
-    <div class="box" style="margin: 0px;">
-        <input type="text" placeholder="Name"><br>
-        <input type="text" placeholder="Department"><br>
-        <input type="text" placeholder="University"><br>
-        <input type="text" placeholder="Email">
-
-    </div>
-
-
-    <div class="container">
-        <button class="btn btn1"><i class="fa fa-pencil"></i> Edit profile</button><br>
-        <button class="btn btn2" style="margin-top:5px"><i class="fa fa-pencil"></i> Change profile</button>
-
+    <div style="flex: 1;">
+        <div class="box">
+            <input readonly type="text" placeholder="{{user.first_name}} {{user.last_name}}"><br>
+            <input readonly type="text" placeholder="{{user.department}}"><br>
+            <input readonly type="text" placeholder="{{user.university}}"><br>
+            <input  readonly type="text" placeholder="{{user.email}}">
+        
+        </div>
+        
+        
+        <div class="container">
+            <a href="{% url 'edit_profile' %}" class="btn btn1"><i class="fa fa-pencil"></i> Edit profile</a><br>
+            <!-- <a href="" class="btn btn2" style="margin-top:8px"><i class="fa fa-pencil"></i> Change profile</a> -->
+            <!-- <button type="submit" class="btn btn1"><i class="fa fa-pencil"></i> Edit profile</button><br> -->
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <input type="file" name="upload" accept="image/*" class="btn btn2" style="margin-top:8px"/>
+                <button class="btn btn2" style="margin-top:8px">Upload</button>
+            </form>
+        
+        </div>
     </div>
     <div class="flex-container" style="margin-top:50px ;">
 

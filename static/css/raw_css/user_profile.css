@@ -8,7 +8,7 @@
     width: 100%;
     position: static;
     margin:auto;
-    height: 30vh;
+    height: 25vh;
     background-color:#06CEDB ;
     text-align: center;
     flex-wrap: auto;
@@ -26,15 +26,7 @@
   
  }
 
-header{
-    width: 350px;
-    height: 450px;
-    position: left;
-    left: 57%;
-    background-color: white;
-    margin-top: 15px;
-   
-}
+
 hr.new1 {
     border-top: 1px solid #6C97EB;
     width:auto;
@@ -54,7 +46,7 @@ hr.new1 {
    }
  .container{
     text-align:left;
-    position:absolute;
+    position:relative;
     top: 40%;
     left:74%;
 }
@@ -63,7 +55,7 @@ hr.new1 {
     border: none;
     background: #7FD8EC;
     padding: 7px 10px;
-    font-size: 10px;
+    font-size: 11px;
     cursor: pointer;
     margin: 5px;
     margin-top:18px;
@@ -92,7 +84,7 @@ hr.new1 {
     border:none;
     font-weight: bold;
     padding: 6px 10px;
-    font-size: 10px;
+    font-size: 11px;
     cursor: pointer;
     margin-top: 10px;
     border-radius: 1px;
