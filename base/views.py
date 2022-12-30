@@ -202,10 +202,13 @@ def fetch_data_of_content(content):
 def home(request):
     user = request.user
     if request.method == 'POST':
+        # for i in request.POST:
+        #     print(i, request.POST[i])
         if 'add_reaction' in request.POST:
-            pk = request.POST.get('content_id')
+            pk = request.POST.get('pk')
             reaction = request.POST.get('reaction')
             add_reaction(request, pk, reaction)
+            print(pk)
             return redirect('home')
 
     content = Content.objects.filter(approved=True, university=user.university, department=user.department)
