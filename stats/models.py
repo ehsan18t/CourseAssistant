@@ -17,10 +17,10 @@ class Semester(models.Model):
 
 class Course(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
-    course_code = models.CharField(max_length=20)
-    credit = models.IntegerField()
-    section = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
+    course_code = models.CharField(max_length=10)
+    credit = models.FloatField()
+    section = models.CharField(max_length=5)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     is_retake = models.BooleanField(default=False)
 
@@ -30,7 +30,7 @@ class Course(models.Model):
 
 class Assessment(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     assessment_type = models.ForeignKey('Assessment_Type', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     total_marks = models.FloatField()

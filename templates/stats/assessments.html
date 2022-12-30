@@ -9,7 +9,7 @@
   <div class="trimester-control">
     <center>
       <button onclick="toggleVisibility('add-assessment-popup')" class="new-post-btn">Add Assessment</button>
-      <a href="{% url 'assessment-types' s_pk=semester c_pk=course %}" class="new-post-btn">Create Assessment Type</a>
+      <a href="{% url 'assessment-types' s_pk=semester c_pk=course %}" class="new-post-btn">Assessment Types</a>
     </center>
   </div>
 
@@ -35,6 +35,10 @@
     </div>
   </div>
 </div>
+
+<!-- Graph START -->
+{% include 'components/graph/double_barchart.html' with data="{{chart}}" chartSize="700px" %}
+<!-- Graph END -->
 
 <!-- Assessments Card -->
 <div class="post-container">

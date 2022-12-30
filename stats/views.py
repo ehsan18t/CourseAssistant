@@ -7,10 +7,11 @@ from chat.models import Study_Group, Participant
 
 
 def marks_to_gpa(marks):
-    gpa = {'55': 00, '58': 1.00, '62': 1.33, '66': 1.67, '70': 2.00, '74': 2.33, '78': 2.67, '82': 3.00, '83': 3.33, '86': 3.33, '90': 3.67, '101': 4.00}
+    gpa = {'55': 00, '58': 1.00, '62': 1.33, '66': 1.67, '70': 2.00, '74': 2.33, '78': 2.67, '82': 3.00, '86': 3.33, '90': 3.67, '101': 4.00}
     for i in gpa:
         if int(marks) <= int(i):
             return gpa[i]
+    return 0.0
 
 
 @login_required(login_url='login')
@@ -21,30 +22,54 @@ def stats(request):
         if 'delete_semester' in request.POST:
             delete_semester(request)
         return redirect('stats')
-    semester = Semester.objects.filter(user=request.user)
-    semester2 = []
-    for sem in semester:
-        semester2.append(sem.name)
+    semesters = Semester.objects.filter(user=request.user)
+    labels = []
+    for sem in semesters:
+        labels.append(sem.name)
     gpa = []
-    gpa2 = []
-    for sem in semester:
+    cgpa = []
+    ex_gpa = []
+    ob_gpa = []
+    continuous_credit = 0.0
+    continuous_o_x_c = 0.0
+    for sem in semesters:
         courses = Course.objects.filter(semester=sem.id)
+        e_x_c = 0.0 # expected gpa * credit
+        o_x_c = 0.0 # obtained gpa * credit
         ex = 0.0
         ob = 0.0
         to = 0.0
-        for course in courses:
+        credit = 0.0
+        for course in courses:  # courses of each semester
             parts = Assessment.objects.filter(course=course.id)
+            # Calculating all expected and obtained marks from assessments
             for p in parts:
                 ex += p.expected_marks
                 ob += p.obtained_marks
                 to += p.total_marks
-        if to != 0:
-            ex = (ex/to)*100
-            ob = (ob/to)*100
-        gpa.append({'expected': marks_to_gpa(ex), 'obtained': marks_to_gpa(ob)})
-        gpa2.append(marks_to_gpa(ob))
-    data = zip(semester, gpa)
-    chart = zip(semester2, gpa2)
+
+            print(course.credit)
+            # Converting each course's marks to percentage
+            if to != 0:
+                ex = (ex/to)*100
+                ob = (ob/to)*100
+                credit += course.credit
+                # Converting each course's marks to gpa and multiplying with credits
+                e_x_c += marks_to_gpa(ex) * course.credit
+                o_x_c += marks_to_gpa(ob) * course.credit
+
+        # keep tracking continuous gpa*credit and total credit
+        continuous_o_x_c += o_x_c
+        continuous_credit += credit
+
+        # gpa or each trimester
+        ex_gpa.append(e_x_c/credit)
+        ob_gpa.append(o_x_c/credit)
+        gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
+        cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
+    
+    data = zip(semesters, gpa)
+    chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa, 'cgpa': cgpa}
     return render(request, 'stats/stats.html', {'data': data, 'chart': chart})
 
 
@@ -120,7 +145,7 @@ def courses(request, pk):
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
         marks.append(round(ob, 2))
     data = zip(data, assessments, groups, user_exists_in_group)
-    chart = zip(names, marks)
+    chart = {'labels': names, 'marks': marks}
     semester_obj = Semester.objects.filter(id=pk)[0]
     return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'semester_obj': semester_obj, 'chart': chart})
 
@@ -203,6 +228,63 @@ def delete_course(request):
         print('Error: User not authorized to delete this course')
 
 
+def assessment_graph_value(c_pk):
+    assessments = Assessment.objects.filter(course=c_pk)
+    assessment_types = Assessment_Type.objects.filter(course=c_pk)
+    labels = []
+    total_marks = []
+    obtained_marks = []
+
+    # getting labels
+    for a in assessment_types:
+        # get objects with same reference
+        assess = assessments.filter(assessment_type=a)
+
+        if len(assess) == 0:
+            continue
+
+        labels.append(a.name)
+
+        ob = 0.0
+        selected_ex = []
+        selected_ob = []
+        for b in assess:
+            if b.obtained_marks > 0:
+                selected_ob.append((b.obtained_marks/b.total_marks) * a.mark_percentage)
+            else:
+                selected_ex.append((b.expected_marks/b.total_marks) * a.mark_percentage)
+
+        # sort in descending order
+        selected_ob.sort(reverse=True)
+        selected_ex.sort(reverse=True)
+
+        # get best of
+        count = 0
+        itr = a.best_of if a.best_of < len(selected_ob) else len(selected_ob)
+        for i in range(itr):
+            ob += selected_ob[i]
+            count += 1
+
+        # if not enough obtained marks
+        if len(selected_ob) < a.best_of:
+            for i in range(len(selected_ex)):
+                ob += selected_ex[i]
+                count += 1
+                if count == a.best_of:
+                    break
+
+        print(ob, count, a.best_of)
+        if a.best_of > count:
+            ob = round(ob/count, 2)
+        else:
+            ob = round(ob/a.best_of, 2)
+        obtained_marks.append(ob)
+        total_marks.append(a.mark_percentage)
+
+
+    return labels, total_marks, obtained_marks
+
+
 @login_required(login_url='login')
 def assessments(request, s_pk, c_pk):
     if request.method == 'POST':
@@ -213,8 +295,14 @@ def assessments(request, s_pk, c_pk):
         return redirect('assessments', s_pk=s_pk, c_pk=c_pk)
     data = Assessment.objects.filter(course=c_pk)
     assessment_types = Assessment_Type.objects.filter(course=c_pk)
+    labels, total_marks, obtained_marks = assessment_graph_value(c_pk)
+    chart = {
+        'labels': labels,
+        'total': total_marks,
+        'obtained': obtained_marks
+    }
     return render(request, 'stats/assessments.html',
-                  {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk})
+                  {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk, 'chart': chart})
 
 
 def add_assessment(request):
@@ -251,7 +339,13 @@ def assessment_types(request, s_pk, c_pk):
         return redirect('assessment-types', s_pk=s_pk, c_pk=c_pk)
 
     data = Assessment_Type.objects.filter(course=c_pk)
-    return render(request, 'stats/assessment_types.html', {'data': data, 'semester': s_pk, 'course': c_pk})
+    labels = []
+    marks = []
+    for d in data:
+        labels.append(d.name)
+        marks.append(d.mark_percentage)
+    chart = {'labels': labels, 'marks': marks }
+    return render(request, 'stats/assessment_types.html', {'data': data, 'semester': s_pk, 'course': c_pk, 'chart': chart})
 
 
 def add_assessment_type(request):
