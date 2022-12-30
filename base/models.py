@@ -92,7 +92,7 @@ class Content(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    thumbnail = models.FileField(upload_to='thumbnails/', default='thumbnails/default.png')
+    thumbnail = models.FileField(upload_to='thumbnails/', default='thumbnails/default.jpg')
     course_code = models.CharField(max_length=100)
     file = models.FileField(upload_to='content/')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
