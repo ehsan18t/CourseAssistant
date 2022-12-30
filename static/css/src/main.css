@@ -191,7 +191,7 @@ header .image-text header-text {
 }
 
 .content {
-  @apply relative left-[264px] w-[calc(w-screen-264px)] bg-skin-body transition-all duration-500 ease-in-out;
+  @apply relative left-24 w-[calc(100%-96px)] bg-skin-body transition-all duration-500 ease-in-out;
 }
 
 .sidebar.close ~ .content {
