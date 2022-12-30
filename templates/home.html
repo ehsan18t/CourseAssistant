@@ -7,7 +7,7 @@
     {% for item, r, c in data %}
     <!-- Include card.html -->
     <div class="transition duration-300 hover:scale-[1.02]">
-      {% include 'components/content/card.html' with thumbnail=item.thumbnail.url course_code=item.course_code title=item.title profile_picture=item.user.profile_picture.url description=item.description comment_count=c date=item.start_date dislike=r.dislike like=r.like %}
+      {% include 'components/content/card.html' with item=item thumbnail=item.thumbnail.url course_code=item.course_code title=item.title profile_picture=item.user.profile_picture.url description=item.description comment_count=c date=item.start_date dislike=r.dislike like=r.like %}
     </div>
     <!-- End Loop -->
     {% endfor %}

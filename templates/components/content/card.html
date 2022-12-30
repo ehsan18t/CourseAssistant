@@ -2,7 +2,7 @@
   <img class="mx-auto block w-4/12 h-40 rounded-lg" alt="art cover" loading="lazy" src="{{thumbnail}}" />
   <div class="sm:w-8/12 pl-0 p-5">
     <div class="space-y-2">
-      <a href="#">
+      <a href="{% url 'content_view' pk=item.id %}">
         <div class="space-y-4">
           <h4 class="text-md font-semibold text-cyan-900 hover:text-blue-500 text-justify"><span class="bg-gray-300 text-sm text-teal-900 p-2 rounded-2xl font-semibold">{{course_code}}</span> {{title}}</h4>
         </div>

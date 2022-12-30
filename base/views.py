@@ -188,6 +188,16 @@ def content_approval(request):
 
 
 
+def fetch_data_of_content(content):
+    reaction = Reaction.objects.filter(content=content)
+    like = reaction.filter(reaction=1).count()
+    dislike = reaction.filter(reaction=2).count()
+    reaction = {'like': like, 'dislike': dislike}
+    comments = Comment.objects.filter(content=content)
+    return reaction, comments
+
+
+
 @login_required(login_url='login')
 def home(request):
     user = request.user
@@ -203,3 +213,9 @@ def home(request):
     data = zip(content, reactions, comments)
     return render(request, 'home.html', {'data': data})
 
+
+@login_required(login_url='login')
+def content_view(request, pk):
+    content = Content.objects.filter(id=pk)[0]
+    reaction, comments = fetch_data_of_content(content)
+    return render(request, 'content_view.html', {'content': content, 'reaction': reaction, 'comments': comments})
