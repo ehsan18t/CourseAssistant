@@ -126,3 +126,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.content} ({self.user})'
+
+class Notification(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.IntegerField()    # 1: comment, 2: reaction, 3: reply, 4: mention, 5: content approved, 6: content rejected
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, null=True, blank=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
+    is_read = models.BooleanField(default=False)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.type} ({self.user})'
