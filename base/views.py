@@ -201,6 +201,13 @@ def fetch_data_of_content(content):
 @login_required(login_url='login')
 def home(request):
     user = request.user
+    if request.method == 'POST':
+        if 'add_reaction' in request.POST:
+            pk = request.POST.get('content_id')
+            reaction = request.POST.get('reaction')
+            add_reaction(request, pk, reaction)
+            return redirect('home')
+
     content = Content.objects.filter(approved=True, university=user.university, department=user.department)
     reactions = []
     comments = []
@@ -212,6 +219,23 @@ def home(request):
         comments.append(Comment.objects.filter(content=c).count())
     data = zip(content, reactions, comments)
     return render(request, 'home.html', {'data': data})
+
+
+def add_reaction(request, pk, reaction):
+    content = Content.objects.filter(id=pk)[0]
+    user = request.user
+
+    # if exist then check if same reaction or not
+    if Reaction.objects.filter(content=content, user=user).exists():
+        r = Reaction.objects.filter(content=content, user=user)[0]
+        if r.reaction == int(reaction): # if same reaction then delete
+            r.reaction = reaction
+            r.delete()
+        else:   # if not same reaction then update
+            r.reaction = reaction
+            r.save()
+    else:
+        Reaction.objects.create(content=content, user=user, reaction=reaction)
 
 
 @login_required(login_url='login')
