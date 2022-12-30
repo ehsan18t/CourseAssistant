@@ -193,3 +193,5 @@ def content_approval(request):
     return render(request, 'content_approval.html', {'page_obj': page_obj})
 
 
+def user_profile(request):
+    return render(request, 'user_profile.html')
