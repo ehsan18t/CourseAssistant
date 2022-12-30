@@ -1,3 +1,42 @@
-{{content.description}} <br />
-{{reaction}} <br />
-{{comments}}
+{% extends 'main.html' %}
+<!-- START BLOCK -->
+{% block content %}
+<!-- Loop -->
+
+<!-- Post View -->
+<div class="flex flex-col bg-skin-sidebar w-auto m-4 min-h-screen rounded-3xl p-10 shadow-md">
+  <div class="flex flex-row border-b-[1px] shadow-sm pb-6 border-gray-300">
+    <!-- Profile Picture -->
+    <img class="rounded-full h-32 w-32" src="{{content.user.profile_picture.url}}" alt="Profile Picture" />
+    <div>
+      <!-- Post Title -->
+      <div class="flex flex-row space-x-4 p-3">
+        <div class="p-3 bg-gray-200 rounded-3xl font-semibold text-teal-900 text-lg">{{content.course_code}}</div>
+        <div class="font-semibold text-teal-900 text-4xl">{{content.title}}</div>
+      </div>
+      <!-- Author Info -->
+      <a href="#">
+        <div class="hover:text-skin-primary pl-4 font-semibold text-teal-900 text-xl">{{content.user.first_name}} {{content.user.last_name}} <span class="font-light"> [{{content.user.username}}] </span></div>
+      </a>
+    </div>
+  </div>
+  <!-- Post Content -->
+  <!-- Post Text -->
+  <div class="min-h-[30rem] p-10 text-xl text-justify border-b-[1px] shadow-sm pb-6 border-gray-300">{{content.description}}</div>
+  <!-- Post Attachment -->
+  <div class="p-10 text-xl text-justify">
+    <a href="{{content.file.url}}"> <span class="hover:text-red-400"> {{content.file.name}}</span></a>
+  </div>
+</div>
+<!-- Comments Block -->
+
+<div class="flex flex-col bg-skin-sidebar w-auto m-4 rounded-3xl p-10 shadow-md">
+  {%for c in comments %}
+  <div class="flex flex-col">
+    <div>{{c.user.username}}</div>
+    <div>{{c.text}}</div>
+  </div>
+  {% endfor %}
+</div>
+<!-- END BLOCK -->
+{% endblock content %}
