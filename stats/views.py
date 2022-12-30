@@ -228,6 +228,63 @@ def delete_course(request):
         print('Error: User not authorized to delete this course')
 
 
+def assessment_graph_value(c_pk):
+    assessments = Assessment.objects.filter(course=c_pk)
+    assessment_types = Assessment_Type.objects.filter(course=c_pk)
+    labels = []
+    total_marks = []
+    obtained_marks = []
+
+    # getting labels
+    for a in assessment_types:
+        # get objects with same reference
+        assess = assessments.filter(assessment_type=a)
+
+        if len(assess) == 0:
+            continue
+
+        labels.append(a.name)
+
+        ob = 0.0
+        selected_ex = []
+        selected_ob = []
+        for b in assess:
+            if b.obtained_marks > 0:
+                selected_ob.append((b.obtained_marks/b.total_marks) * a.mark_percentage)
+            else:
+                selected_ex.append((b.expected_marks/b.total_marks) * a.mark_percentage)
+
+        # sort in descending order
+        selected_ob.sort(reverse=True)
+        selected_ex.sort(reverse=True)
+
+        # get best of
+        count = 0
+        itr = a.best_of if a.best_of < len(selected_ob) else len(selected_ob)
+        for i in range(itr):
+            ob += selected_ob[i]
+            count += 1
+
+        # if not enough obtained marks
+        if len(selected_ob) < a.best_of:
+            for i in range(len(selected_ex)):
+                ob += selected_ex[i]
+                count += 1
+                if count == a.best_of:
+                    break
+
+        print(ob, count, a.best_of)
+        if a.best_of > count:
+            ob = round(ob/count, 2)
+        else:
+            ob = round(ob/a.best_of, 2)
+        obtained_marks.append(ob)
+        total_marks.append(a.mark_percentage)
+
+
+    return labels, total_marks, obtained_marks
+
+
 @login_required(login_url='login')
 def assessments(request, s_pk, c_pk):
     if request.method == 'POST':
@@ -238,8 +295,14 @@ def assessments(request, s_pk, c_pk):
         return redirect('assessments', s_pk=s_pk, c_pk=c_pk)
     data = Assessment.objects.filter(course=c_pk)
     assessment_types = Assessment_Type.objects.filter(course=c_pk)
+    labels, total_marks, obtained_marks = assessment_graph_value(c_pk)
+    chart = {
+        'labels': labels,
+        'total': total_marks,
+        'obtained': obtained_marks
+    }
     return render(request, 'stats/assessments.html',
-                  {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk})
+                  {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk, 'chart': chart})
 
 
 def add_assessment(request):
