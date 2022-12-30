@@ -187,7 +187,10 @@ def content_view(request, pk):
     if request.method == 'POST':
         if 'add_comment' in request.POST:
             add_comment(request, pk)
-            return redirect('content_view', pk=pk)
+        if 'add_reply' in request.POST:
+            r_pk = request.POST.get('comment_id')
+            add_reply(request, r_pk, pk)
+        return redirect('content_view', pk=pk)
     content = Content.objects.filter(id=pk)[0]
     reaction, comments = fetch_data_of_content(content)
     return render(request, 'content_view.html', {'content': content, 'reaction': reaction, 'comments': comments})
@@ -199,3 +202,10 @@ def add_comment(request, pk):
     comment = request.POST.get('comment')
     Comment.objects.create(content=content, user=user, text=comment)
 
+
+def add_reply(request, r_pk, pk):
+    comment = Comment.objects.filter(id=r_pk)[0]
+    content = Content.objects.filter(id=pk)[0]
+    user = request.user
+    reply = request.POST.get('reply')
+    Comment.objects.create(content=content, user=user, text=reply, parent=comment)
