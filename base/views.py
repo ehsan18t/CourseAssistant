@@ -207,7 +207,6 @@ def home(request):
             reaction = request.POST.get('reaction')
             add_reaction(request, pk, reaction)
         if 'add_content' in request.POST:
-            print('got request')
             title = request.POST.get('title')
             course_code = request.POST.get('course_code')
             description = request.POST.get('description')
