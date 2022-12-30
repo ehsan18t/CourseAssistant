@@ -216,6 +216,18 @@ def home(request):
 
 @login_required(login_url='login')
 def content_view(request, pk):
+    if request.method == 'POST':
+        if 'add_comment' in request.POST:
+            add_comment(request, pk)
+            return redirect('content_view', pk=pk)
     content = Content.objects.filter(id=pk)[0]
     reaction, comments = fetch_data_of_content(content)
     return render(request, 'content_view.html', {'content': content, 'reaction': reaction, 'comments': comments})
+
+
+def add_comment(request, pk):
+    content = Content.objects.filter(id=pk)[0]
+    user = request.user
+    comment = request.POST.get('comment')
+    Comment.objects.create(content=content, user=user, text=comment)
+

@@ -52,15 +52,15 @@
 
 <!-- Comment Box -->
 <div class="bg-skin-sidebar w-auto m-4 rounded-3xl p-10 shadow-md">
-  <form class="flex flex-col w-full items-center content-center" action="" method="POST">
+  <form class="flex flex-col w-full items-center content-center" action="{% url 'content_view' pk=content.id %}" method="POST">
       {% csrf_token %}
       <label for="" class="mb-3 text-lg font-semibold text-gray-600">Write a comment</label>
-      <textarea rows="5" placeholder="Write your comment here..."
+      <textarea rows="5" name="comment" placeholder="Write your comment here..."
           class="w-full rounded-lg border-[1.5px] border-gray-300 py-3 px-5 font-medium text-body-color placeholder-body-color outline-none transition focus:border-skin-primary active:border-skin-primary disabled:cursor-default disabled:bg-[#F5F7FD]"
       ></textarea>
-      <a href="javascript:void(0)"
+      <input type="submit" value="Comment" name="add_comment"
       class="w-1/4 mt-5 rounded-full bg-skin-primary py-4 px-10 text-center text-base font-normal text-white hover:bg-skin-primaryMuted lg:px-8 xl:px-10"
-    > Comment </a>
+    />
   </form>
 </div>
 <!-- END BLOCK -->
