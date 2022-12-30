@@ -243,3 +243,11 @@ def mention(request, pk, comment_id):
     comment = Comment.objects.filter(id=comment_id)[0]
     Notification.objects.create(user=user, content=content, comment=comment, type=4)
     
+
+
+def notification_view(request):
+    user = request.user
+    notifications = Notification.objects.filter(user=user).order_by('-date')
+    unread_count = Unread_Counts.objects.filter(user=user)[0]
+    unread_count.notification = 0
+    return render(request, 'notification.html', {'notifications': notifications})
