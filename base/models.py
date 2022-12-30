@@ -138,3 +138,12 @@ class Notification(models.Model):
 
     def __str__(self):
         return f'{self.type} ({self.user})'
+
+class Unread_Counts(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    notification = models.IntegerField(default=0)
+    message = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.count} ({self.user})'
