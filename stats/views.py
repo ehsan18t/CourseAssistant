@@ -63,10 +63,11 @@ def stats(request):
         continuous_credit += credit
 
         # gpa or each trimester
-        ex_gpa.append(e_x_c/credit)
-        ob_gpa.append(o_x_c/credit)
-        gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
-        cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
+        if credit != 0:
+            ex_gpa.append(e_x_c/credit)
+            ob_gpa.append(o_x_c/credit)
+            gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
+            cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
     
     data = zip(semesters, gpa)
     chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa, 'cgpa': cgpa}
