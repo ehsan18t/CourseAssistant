@@ -138,5 +138,5 @@ GitHub.sublime-settings
 
 # Custom
 node_modules/
-uploads/
+uploads/*
 */migrations/*
