@@ -35,7 +35,7 @@
 </div>
 
 <!--PIE CHART START-->
-{% include 'components/graph/piechart.html' with data="{{chart}}" title="Contributions" fontWight="bold" %}
+{% if chart.labels %} {% include 'components/graph/piechart.html' with data="{{chart}}" title="Contributions" fontWight="bold" %} {% endif %}
 <!--PIE CHART END-->
 
 <!-- Courses Card -->

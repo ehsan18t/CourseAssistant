@@ -28,7 +28,7 @@
 </div>
 
 <!--PIE CHART START-->
-{% include 'components/graph/piechart.html' with data="{{chart}}" title="Mark Distributions" dataLabels="True" fontWight="bold" lastText="%" %}
+{% if chart.labels %} {% include 'components/graph/piechart.html' with data="{{chart}}" title="Mark Distributions" dataLabels="True" fontWight="bold" lastText="%" %} {% endif %}
 <!--PIE CHART END-->
 
 <!-- Assessment Types Card -->

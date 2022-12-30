@@ -37,7 +37,7 @@
 </div>
 
 <!-- Graph START -->
-{% include 'components/graph/double_barchart.html' with data="{{chart}}" chartSize="700px" %}
+{% if chart.labels %} {% include 'components/graph/double_barchart.html' with data="{{chart}}" chartSize="700px" %} {% endif %}
 <!-- Graph END -->
 
 <!-- Assessments Card -->

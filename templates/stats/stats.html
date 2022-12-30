@@ -51,7 +51,7 @@
 </div>
 
 <!-- Graph START -->
-{% include 'components/graph/barchart.html' with data="{{chart}}" chartSize="700px" %}
+{% if chart.labels %} {% include 'components/graph/barchart.html' with data="{{chart}}" chartSize="700px" %} {% endif %}
 <!-- Graph END -->
 
 <!-- Semester Card -->
