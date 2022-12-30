@@ -247,7 +247,8 @@ def mention(request, pk, comment_id):
 
 def notification_view(request):
     user = request.user
-    notifications = Notification.objects.filter(user=user).order_by('-date')
+    notifications = Notification.objects.filter(user=user).order_by('-start_date')
     unread_count = Unread_Counts.objects.filter(user=user)[0]
     unread_count.notification = 0
-    return render(request, 'notification.html', {'notifications': notifications})
+    unread_count.save()
+    return render(request, 'notification_view.html', {'notifications': notifications})
