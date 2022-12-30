@@ -2,12 +2,14 @@
   <img class="mx-auto block w-4/12 h-40 rounded-lg" alt="art cover" loading="lazy" src="{{thumbnail}}" />
   <div class="sm:w-8/12 pl-0 p-5">
     <div class="space-y-2">
-      <div class="space-y-4">
-        <h4 class="text-md font-semibold text-cyan-900 text-justify"><span class="bg-gray-300 text-sm text-teal-900 p-2 rounded-2xl font-semibold">{{course_code}}</span> {{title}}</h4>
-      </div>
+      <a href="#">
+        <div class="space-y-4">
+          <h4 class="text-md font-semibold text-cyan-900 hover:text-blue-500 text-justify"><span class="bg-gray-300 text-sm text-teal-900 p-2 rounded-2xl font-semibold">{{course_code}}</span> {{title}}</h4>
+        </div>
+      </a>
       <div class="flex items-center space-x-4 justify-between">
         <div class="flex gap-3 space-y-1">
-          <img src="{{profile_picture}}" class="rounded-full h-8 w-8" />
+          <a href="#"> <img src="{{profile_picture}}" class="transition duration-300 rounded-full h-8 w-8 hover:scale-150" /> </a>
           <span class="text-sm">{{description}}</span>
         </div>
         <div class="cursor-pointer text-center text-md justify-center items-center flex">
