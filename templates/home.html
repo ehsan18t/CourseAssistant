@@ -1,4 +1,15 @@
 {% extends 'main.html' %}
-
+<!-- START BLOCK -->
 {% block content %}
+<!-- Loop -->
+<div class="p-4 min-h-screen from-teal-50 via-teal-100 to-teal-300 bg-gradient-to-br">
+  <div class="grid lg:grid-cols-2 gap-2 sm:grid-cols-1 md:grid-cols-2">
+    {% for item, r, c in data %}
+    <!-- Include card.html -->
+    <div>{% include 'components/content/card.html' with thumbnail=item.thumbnail.url course_code=item.course_code title=item.title profile_picture=item.user.profile_picture.url description=item.description comment_count=c date=item.start_date dislike=r.dislike like=r.like %}</div>
+    <!-- End Loop -->
+    {% endfor %}
+  </div>
+</div>
+<!-- END BLOCK -->
 {% endblock content %}
