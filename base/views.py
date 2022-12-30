@@ -191,6 +191,15 @@ def content_approval(request):
 @login_required(login_url='login')
 def home(request):
     user = request.user
-    data = Content.objects.filter(approved=True, university=user.university, department=user.department)
+    content = Content.objects.filter(approved=True, university=user.university, department=user.department)
+    reactions = []
+    comments = []
+    for c in content:
+        reaction = Reaction.objects.filter(content=c)
+        like = reaction.filter(reaction=1).count()
+        dislike = reaction.filter(reaction=2).count()
+        reactions.append({'like': like, 'dislike': dislike})
+        comments.append(Comment.objects.filter(content=c).count())
+    data = zip(content, reactions, comments)
     return render(request, 'home.html', {'data': data})
 
