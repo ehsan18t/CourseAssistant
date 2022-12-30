@@ -98,6 +98,7 @@ class Content(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
     start_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
