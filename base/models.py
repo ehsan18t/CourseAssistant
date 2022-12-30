@@ -116,7 +116,7 @@ class Reaction(models.Model):
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
-    comment = models.TextField()
+    text = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
