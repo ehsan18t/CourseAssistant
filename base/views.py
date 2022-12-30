@@ -220,6 +220,14 @@ def add_comment(request, pk):
     for u in users:
         Notification.objects.create(user=u, content=content, comment=comment_obj, type=4)
 
+        # Store Unread Counts
+        if not Unread_Counts.objects.filter(user=u).exists():
+            Unread_Counts.objects.create(user=u)
+        
+        unread_count = Unread_Counts.objects.filter(user=u)[0]
+        unread_count.notification += 1
+        unread_count.save()
+
 
 def add_reply(request, r_pk, pk):
     comment = Comment.objects.filter(id=r_pk)[0]
