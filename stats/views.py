@@ -24,8 +24,6 @@ def stats(request):
         return redirect('stats')
     semesters = Semester.objects.filter(user=request.user)
     labels = []
-    for sem in semesters:
-        labels.append(sem.name)
     gpa = []
     cgpa = []
     ex_gpa = []
@@ -63,10 +61,14 @@ def stats(request):
         continuous_credit += credit
 
         # gpa or each trimester
-        ex_gpa.append(e_x_c/credit)
-        ob_gpa.append(o_x_c/credit)
-        gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
-        cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
+        if credit != 0:
+            ex_gpa.append(e_x_c/credit)
+            ob_gpa.append(o_x_c/credit)
+            cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
+            labels.append(sem.name)
+            gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
+        else:
+            gpa.append({'expected': 0, 'obtained': 0})
     
     data = zip(semesters, gpa)
     chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa, 'cgpa': cgpa}
