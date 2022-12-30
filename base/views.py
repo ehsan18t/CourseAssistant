@@ -242,7 +242,6 @@ def mention(request, pk, comment_id):
     content = Content.objects.filter(id=pk)[0]
     comment = Comment.objects.filter(id=comment_id)[0]
     Notification.objects.create(user=user, content=content, comment=comment, type=4)
-    
 
 
 def notification_view(request):
