@@ -47,13 +47,13 @@
   <!-- Post Content -->
   <!-- Post Text -->
   <div id="comment-{{c.id}}" class="p-6 pb-10 text-xl text-justify border-b-[1px]">{{c.text|safe}}</div>
-  <!-- <div class="p-6 text-xl flex content-end items-end justify-end">
+  <div class="p-6 text-xl flex content-end items-end justify-end">
     <form action="{% url 'content_view' pk=content.id %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="comment_id" value="{{c.id}}" />
       <input class="cursor-pointer text-skin-primary hover:text-skin-primaryMuted" type="submit" name="add_reply" value="Reply" />
     </form>
-  </div> -->
+  </div>
 </div>
 {% endfor %}
 
