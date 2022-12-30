@@ -71,7 +71,7 @@ class User(AbstractUser, PermissionsMixin):
     username = models.CharField(_('Student ID'), max_length=20, unique=True)
     first_name = models.CharField(_('First Name'), max_length=100)
     last_name = models.CharField(_('Last Name'), max_length=100)
-    profile_picture = models.FileField(upload_to='profile_pictures/', default='profile_pictures/avatar-male.png')
+    profile_picture = models.FileField(upload_to='profile_pictures/', null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
