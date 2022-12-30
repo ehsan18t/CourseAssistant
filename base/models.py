@@ -86,3 +86,41 @@ class User(AbstractUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+
+class Content(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    course_code = models.CharField(max_length=100)
+    file = models.FileField(upload_to='content/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.title} ({self.user})'
+
+
+class Reaction(models.Model):
+    id = models.AutoField(primary_key=True)
+    reaction = models.IntegerField()    # 1: like, 2: dislike
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.comment} ({self.user})'
+
+
+class Comment(models.Model):
+    id = models.AutoField(primary_key=True)
+    comment = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.content} ({self.user})'
