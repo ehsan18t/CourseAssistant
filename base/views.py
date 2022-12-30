@@ -206,7 +206,16 @@ def home(request):
             pk = request.POST.get('pk')
             reaction = request.POST.get('reaction')
             add_reaction(request, pk, reaction)
-            return redirect('home')
+        if 'add_content' in request.POST:
+            print('got request')
+            title = request.POST.get('title')
+            course_code = request.POST.get('course_code')
+            description = request.POST.get('description')
+            file = request.FILES.get('file')
+            thumbnail = request.FILES.get('thumbnail')
+            add_content(request, title, course_code, description, file, thumbnail)
+
+        return redirect('home')
 
     content = Content.objects.filter(approved=True, university=user.university, department=user.department)
     reactions = []
@@ -220,6 +229,13 @@ def home(request):
     data = zip(content, reactions, comments)
     return render(request, 'home.html', {'data': data})
 
+
+def add_content(request, title, course_code, description, file, thumbnail):
+    user = request.user
+    university = user.university
+    department = user.department
+    Content.objects.create(title=title, course_code=course_code, description=description, file=file, thumbnail=thumbnail,
+                           user=user, university=university, department=department)
 
 def add_reaction(request, pk, reaction):
     content = Content.objects.filter(id=pk)[0]
