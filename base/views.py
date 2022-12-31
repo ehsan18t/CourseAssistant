@@ -2,6 +2,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm as UserCreationForm
@@ -146,6 +147,17 @@ def home(request):
         return redirect('home')
 
     content = Content.objects.filter(approved=True, university=user.university, department=user.department)
+    new_content = []
+
+    # Search
+    if  request.method == 'GET':
+        if 'perform_search' in request.GET:
+            keys = request.GET.get('search').split(' ')
+
+            for key in keys:
+                new_content += content.filter(Q(title__icontains=key) | Q(course_code__icontains=key) | Q(description__icontains=key))
+            content = new_content
+    
     reactions = []
     comments = []
     for c in content:
