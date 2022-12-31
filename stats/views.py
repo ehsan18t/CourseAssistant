@@ -129,6 +129,8 @@ def courses(request, pk):
     groups = []
     marks = []
     user_exists_in_group = []
+    o_x_c = 0.0
+    temp_course = []
     for course in data:
         g = if_group_exists(course)
         groups.append(g)
@@ -145,7 +147,17 @@ def courses(request, pk):
             ex = (ex/to)*100
             ob = (ob/to)*100
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
-        marks.append(round(ob, 2))
+        o_x_c += marks_to_gpa(ob) * course.credit
+        temp_course.append({'course': course, 'gpa': marks_to_gpa(ob) * course.credit})
+    
+
+    # Contribution calculation
+    for course in temp_course:
+        if o_x_c != 0:
+            marks.append(round((course['gpa']/o_x_c)*100, 2))
+        else:
+            marks.append(0)
+
     data = zip(data, assessments, groups, user_exists_in_group)
     chart = {'labels': names, 'marks': marks}
     semester_obj = Semester.objects.filter(id=pk)[0]
