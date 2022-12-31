@@ -86,3 +86,64 @@ class User(AbstractUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+
+class Content(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    thumbnail = models.FileField(upload_to='thumbnails/', default='thumbnails/default.jpg')
+    course_code = models.CharField(max_length=100)
+    file = models.FileField(upload_to='content/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.title} ({self.user})'
+
+
+class Reaction(models.Model):
+    id = models.AutoField(primary_key=True)
+    reaction = models.IntegerField()    # 1: like, 2: dislike
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.reaction} ({self.user})'
+
+
+class Comment(models.Model):
+    id = models.AutoField(primary_key=True)
+    text = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.content} ({self.user})'
+
+class Notification(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.IntegerField()    # 1: comment, 2: reaction, 3: reply, 4: mention, 5: content approved, 6: content rejected
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, null=True, blank=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
+    is_read = models.BooleanField(default=False)
+    start_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.type} ({self.user})'
+
+class Unread_Counts(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    notification = models.IntegerField(default=0)
+    message = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.id} ({self.user})'

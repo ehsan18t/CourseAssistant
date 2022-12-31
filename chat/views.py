@@ -4,6 +4,14 @@ from base.models import User
 from django.shortcuts import render, redirect
 
 # Create your views here.
+def get_unread_messages_count(user):
+    chat, private = get_chat_list_data(user)
+    count = 0
+    for l, m, c in chat:
+        count += c
+    # private chat yet to be implemented 
+    return count
+
 def get_chat_list_data(user):
     # Private chat
     user_list = Message.get_connected_users(user.id)
