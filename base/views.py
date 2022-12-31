@@ -262,7 +262,7 @@ def notification_view(request):
     unread_count.notification = 0
     unread_count.save()
     return render(request, 'notification_view.html', {'notifications': notifications})
-=======
+
 def user_profile(request):
     if request.method == 'POST' :
         upload = request.FILES.get('upload')
