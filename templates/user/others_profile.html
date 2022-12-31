@@ -1,0 +1,89 @@
+{% extends 'main.html' %} {% load static %} {% block head %}
+<title>Profile Page</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link rel="stylesheet" href="{% static '/css/raw_css/user_profile.css' %}?{% now 'dwmYHsu' %}" />
+{% endblock head %} {% block content %}
+
+<div class="c">
+
+    <div class="user">
+        <p>Cover photo here</p>
+
+
+        <img src="{% if other_user.profile_picture %} {{other_user.profile_picture.url}}  {% else %} {% static 'img/avatar/avatar-male.png' %} {% endif %}" alt="">
+
+    </div>
+
+    <div style="flex: 1;">
+        <div class="box">
+            <input readonly type="text" placeholder="{{other_user.first_name}} {{other_user.last_name}}"/><br>
+            <input readonly type="text" placeholder="{{other_user.department}}"><br>
+            <input readonly type="text" placeholder="{{other_user.university}}"><br>
+            <input readonly type="text" placeholder="{{other_user.email}}">
+        
+        </div>
+        
+        
+        <div class="container">
+            <a href="{% url 'private_chat' other_user.id %}" class="btn btn1">Message</a><br>
+            
+        
+        </div>
+    </div>
+    <div class="flex-container" style="margin-top:50px ;">
+
+        <div class="div1">
+            <p>
+                <img src="image/amina.PNG" alt="image not found" style="height: 50px;width:50px; border-radius:50%">
+            </p>
+
+
+            <h3> System Analysis & Design</h3>
+            <i><b>CSE 2218</b></i><br>
+            <i style="font-size: 14px">Contributor: Amina Afroz</i>
+
+            <div class="icon-box">
+                <abbr title="Download Content"><i class="fa-solid fa-download" style="color:#86E385 ;"></i></abbr>
+                <abbr title="Edit"><i class="fa-solid fa-pen-to-square" style="color:#7093F0 ;"></i></abbr>
+                <abbr title="Comment"><i class="fa-solid fa-comments" style="color:#7093F0 ;"></i></abbr>
+                <abbr title="Delete"><i class="fa-solid fa-trash" style="color:#FF1D1D ;"></i></abbr>
+
+            </div>
+
+
+        </div>
+        <div class="div1">
+            <p>
+                <img src="image/amina.PNG" alt="image not found" style="height: 50px;width:50px; border-radius:50%">
+            </p>
+
+
+            <h3> System Analysis & Design</h3>
+            <i><b>CSE 2218</b></i><br>
+            <i style="font-size: 14px">Contributor: Amina Afroz</i>
+
+            <div class="icon-box">
+                <abbr title="Download Content"><i class="fa-solid fa-download" style="color:#86E385 ;"></i></abbr>
+                <abbr title="Edit"><i class="fa-solid fa-pen-to-square" style="color:#7093F0 ;"></i></abbr>
+                <abbr title="Comment"><i class="fa-solid fa-comments" style="color:#7093F0 ;"></i></abbr>
+                <abbr title="Delete"><i class="fa-solid fa-trash" style="color:#FF1D1D ;"></i></abbr>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="last" style="margin-top: 30px;">
+        <button class="btn0 btn3">1</button>
+        <button class="btn0 btn4">2</button>
+        <button class="btn0 btn5">3</button>
+        <button class="btn0 next round">&#8250;</button>
+
+    </div>
+
+
+</div>
+
+{% endblock content %}
