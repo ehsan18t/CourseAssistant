@@ -193,3 +193,28 @@ def content_approval(request):
     return render(request, 'content_approval.html', {'page_obj': page_obj})
 
 
+def user_profile(request):
+    if request.method == 'POST' :
+        upload = request.FILES.get('upload')
+        o = User.objects.get(id=request.user.id)
+        o.profile_picture = upload
+        o.save()
+        
+    return render(request, 'user/user_profile.html')
+
+def edit_profile(request):
+    if request.method == 'POST':
+        firstName = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        o = User.objects.get(id=request.user.id)
+        if firstName != '':
+            o.first_name = firstName
+        if lastName != '':
+            o.last_name = lastName
+        o.save()
+        return redirect('profile')
+    return render(request, 'user/edit_profile.html')
+
+def others_profile(request,pk):
+    other_user = User.objects.get(id=pk)
+    return render(request, 'user/others_profile.html', {'other_user':other_user})
