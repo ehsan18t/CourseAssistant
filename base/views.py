@@ -264,13 +264,11 @@ def user_profile(request, pk):
 def edit_profile(request):
     user = request.user
     if request.method == 'POST':
-        firstName = request.POST.get('firstName')
-        lastName = request.POST.get('lastName')
+        firstName = request.POST.get('first_name')
+        lastName = request.POST.get('last_name')
         if firstName and lastName:
-            user.first_name = firstName
-            user.last_name = lastName
-            user.save()
-        return redirect('profile')
+            User.objects.filter(id=user.id).update(first_name=firstName, last_name=lastName)
+        return redirect('profile', pk=user.id)
     return render(request, 'user/edit_profile.html', {'user': user})
 
 
