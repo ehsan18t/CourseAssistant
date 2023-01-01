@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+<!-- START BLOCK -->
+{% block content %}
+
+<style>
+  .msg-btn {
+    background-color: #4caf50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+</style>
+
+<div class="flex flex-col bg-skin-sidebar w-auto m-4 rounded-3xl shadow-md">
+  <!-- Cover Photo -->
+  <div class="flex flex-col items-center">
+    <img class="rounded-t-3xl w-full max-h-96" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fthewowstyle.com%2Fwp-content%2Fuploads%2F2015%2F01%2Ffacebook-cover-balloons-sunset-view-facebook-cover.jpg" alt="Cover Photo" />
+  </div>
+  <!-- Profile Picture on Right Side -->
+  <div class="flex flex-row justify-between mr-6">
+    <div class="flex w-full flex-row items-center content-end justify-end space-x-5 p-6">
+      <a class="msg-btn" href="#">Message</a>
+      <a class="msg-btn" href="#">Email</a>
+    </div>
+    <div class="blcok flex flex-col items-center content-center justify-center -mt-32 p-12">
+      <img class="rounded-full w-52 border-4 border-skin-base" src="{{user.profile_picture.url}}" alt="Profile Picture" />
+      <h1 class="text-2xl lg:text-3xl font-bold text-skin-base">{{user.first_name}} {{user.last_name}}</h1>
+      <h3 class="font-semibold text-xl">{{user.username}}</h3>
+    </div>
+  </div>
+  <!-- Profile Information -->
+  <div class="flex flex-row justify-between lg:-mt-36">
+    <div class="flex flex-col pl-16 pr-16 pb-16">
+      <h3 class="font-semibold text-2xl">{{user.university.name}}</h3>
+      <h3 class="font-semibold text-2xl">{{user.department.name}}</h3>
+    </div>
+    <!-- END BLOCK -->
+    {% endblock content %}
+  </div>
+</div>
