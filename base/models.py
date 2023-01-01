@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from stats.models import Semester 
 
 
 class University(models.Model):
@@ -147,3 +148,11 @@ class Unread_Counts(models.Model):
 
     def __str__(self):
         return f'{self.id} ({self.user})'
+
+class What_if(models.Model):
+    id = models.AutoField(primary_key=True)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    gpa = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return f'{self.semester.name} ({self.gpa})'
