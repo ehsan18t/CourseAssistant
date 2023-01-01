@@ -13,7 +13,7 @@
 <script>
   // setup
   const data = {
-    labels: [{% for val in chart.labels %} '{{ val }}' {% endfor %}],
+    labels: [{% for val in chart.labels %} '{{ val }}', {% endfor %}],
     datasets: [
       {
         label: "Expected GPA",
