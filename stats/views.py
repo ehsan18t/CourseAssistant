@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 from .models import Semester, Course, Assessment, Assessment_Type
 from chat.models import Study_Group, Participant
+from base.models import What_if
 
 
 def marks_to_gpa(marks):
@@ -28,9 +29,28 @@ def stats(request):
     cgpa = []
     ex_gpa = []
     ob_gpa = []
+    what_ifs = []
+    what_if_this = False
+    what_if_itr = 0
+    continuous_what_if_o_x_c = 0.0
+    if_what_if_found = False
     continuous_credit = 0.0
     continuous_o_x_c = 0.0
     for sem in semesters:
+        what_if = What_if.objects.filter(semester=sem.id)
+        if what_if:
+            what_if = what_if[0]
+            # if it gets true once all semesters will have to calculate the cgpa
+            if what_if.gpa != 0.0 or if_what_if_found:
+                what_if_itr += 1
+                if_what_if_found = True
+                # Whether we need to add this or the actual one
+                if what_if.gpa != 0.0:
+                    what_if_this = True
+                else:
+                    what_if_this = False
+            else:
+                what_ifs.append(what_if.gpa)
         courses = Course.objects.filter(semester=sem.id)
         e_x_c = 0.0 # expected gpa * credit
         o_x_c = 0.0 # obtained gpa * credit
@@ -46,7 +66,6 @@ def stats(request):
                 ob += p.obtained_marks
                 to += p.total_marks
 
-            print(course.credit)
             # Converting each course's marks to percentage
             if to != 0:
                 ex = (ex/to)*100
@@ -55,6 +74,14 @@ def stats(request):
                 # Converting each course's marks to gpa and multiplying with credits
                 e_x_c += marks_to_gpa(ex) * course.credit
                 o_x_c += marks_to_gpa(ob) * course.credit
+
+        # keep tracking continuous gpa*credit and total credit (for what if)
+        if what_if_this:
+            if what_if_itr == 1:
+                continuous_what_if_o_x_c = continuous_o_x_c
+            continuous_what_if_o_x_c += (what_if.gpa * credit)
+        else:
+            continuous_what_if_o_x_c += o_x_c
 
         # keep tracking continuous gpa*credit and total credit
         continuous_o_x_c += o_x_c
@@ -65,6 +92,11 @@ def stats(request):
             ex_gpa.append(e_x_c/credit)
             ob_gpa.append(o_x_c/credit)
             cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
+            if if_what_if_found:
+                what_ifs.append(continuous_what_if_o_x_c/continuous_credit) # cgpa of each trimester
+                print('What if:', continuous_what_if_o_x_c)
+                print('Continue:', continuous_o_x_c)
+                print('Credit:', continuous_credit)
             labels.append(sem.name)
             gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
         else:
@@ -72,6 +104,8 @@ def stats(request):
     
     data = zip(semesters, gpa)
     chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa, 'cgpa': cgpa}
+    if if_what_if_found:
+        chart['what_if'] = what_ifs
     return render(request, 'stats/stats.html', {'data': data, 'chart': chart})
 
 
