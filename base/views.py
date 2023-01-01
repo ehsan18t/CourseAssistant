@@ -6,7 +6,8 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm as UserCreationForm
-from .forms import LoginForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import *
 
 
@@ -279,3 +280,19 @@ def edit_profile(request):
 def others_profile(request,pk):
     other_user = User.objects.get(id=pk)
     return render(request, 'user/others_profile.html', {'other_user':other_user})
+
+def user_settings(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'user/settings.html', {
+        'form': form
+    })
