@@ -1,15 +1,17 @@
 <nav class="sidebar close">
   <!-- Header -->
   <header>
-    <div class="flex content-center items-center">
-      <!-- LOGO -->
-      <img class="h-12 w-12 icon rounded-full" src="{{ request.user.profile_picture.url }}" alt="logo" />
+    <a href="{% url 'profile' pk=request.user.id %}">
+      <div class="flex content-center items-center">
+        <!-- LOGO -->
+        <img class="h-12 w-12 icon rounded-full" src="{{ request.user.profile_picture.url }}" alt="logo" />
 
-      <!-- Header Text -->
-      <div class="text header-text">
-        <span class="name"> {{request.user.first_name}} {{request.user.last_name}}</span>
+        <!-- Header Text -->
+        <div class="text header-text">
+          <span class="name"> {{request.user.first_name}} {{request.user.last_name}}</span>
+        </div>
       </div>
-    </div>
+    </a>
 
     <!-- Toggle Icon -->
     <span class="toggle cursor-pointer"
