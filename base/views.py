@@ -279,7 +279,7 @@ def change_profile_picture(request):
         if picture:
             user.profile_picture = picture
             user.save()
-        return redirect('profile')
+        return redirect('profile', pk=user.id)
     return render(request, 'user/change_profile_picture.html', {'user': user})
 
 
