@@ -57,7 +57,7 @@
 <!-- Semester Card -->
 <div class="post-container">
   <br />
-  {% if data %} {% for val, gpa, credit in data %}
+  {% if data %} {% for val, gpa, credit, wt in data %}
   <a href="{% url 'courses' pk=val.id %}">
     <div class="post-card">
       <div class="post-text-container">
@@ -74,7 +74,7 @@
           <input type="hidden" name="semester_id" value="{{ val.id }}" />
           <input class="post-cm-btn" onclick="toggleVisibility('edit-post-popup')" type="submit" value="Edit" />
           <input class="post-cm-btn" style="margin-left: 0.25rem" onclick="return confirm('Are you sure you want to delete this item?')" type="submit" name="delete_semester" value="Delete" />
-          <input class="post-cm-btn" name="what_if" type="submit" value="What If" />
+          <input class="post-cm-btn" name="what_if" type="submit" value="{% if wt %} What If GPA {{wt.gpa}} {% else %} Add What If {% endif %}" />
         </form>
       </div>
     </div>

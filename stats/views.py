@@ -32,6 +32,7 @@ def stats(request):
     cgpa = []
     ex_gpa = []
     ob_gpa = []
+    what_if_list = []   # for details (not graph)
     what_ifs = []
     if_what_if_found = False
     what_if_itr = 0
@@ -52,6 +53,7 @@ def stats(request):
                     what_if_this = True
             else:
                 what_ifs.append(what_if.gpa)
+        what_if_list.append(what_if)
 
         courses = Course.objects.filter(semester=sem.id)
         e_x_c = 0.0 # expected gpa * credit
@@ -111,7 +113,7 @@ def stats(request):
     # semesters = semesters[::-1]
     # gpa = gpa[::-1]
 
-    data = zip(semesters, gpa, credits)
+    data = zip(semesters, gpa, credits, what_if_list)
     # labels = labels[::-1]
     # ex_gpa = ex_gpa[::-1]
     # ob_gpa = ob_gpa[::-1]
