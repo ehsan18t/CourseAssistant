@@ -110,12 +110,12 @@
       // Sign up form
       const signupForm = document.getElementById("signup-form");
       var form_fields = signupForm.querySelectorAll("input");
-      form_fields[0].placeholder = "First Name";
-      form_fields[1].placeholder = "Last Name";
-      form_fields[2].placeholder = "Email";
-      form_fields[3].placeholder = "Passwords";
-      form_fields[4].placeholder = "Confirm Passwords";
-      form_fields[5].placeholder = "Student ID";
+      form_fields[1].placeholder = "First Name";
+      form_fields[2].placeholder = "Last Name";
+      form_fields[3].placeholder = "Email";
+      form_fields[4].placeholder = "Passwords";
+      form_fields[5].placeholder = "Confirm Passwords";
+      form_fields[6].placeholder = "Student ID";
       var select_fields = signupForm.querySelectorAll("select");
 
       // remove first option
@@ -125,8 +125,6 @@
       // add default option
       select_fields[0].innerHTML = '<option value="" disabled selected hidden>Select University</option>' + select_fields[0].innerHTML;
       select_fields[1].innerHTML = '<option value="" disabled selected hidden>Select Department</option>' + select_fields[1].innerHTML;
-
-      // signin form
     </script>
   </body>
 </html>
