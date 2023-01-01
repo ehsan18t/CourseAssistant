@@ -24,6 +24,8 @@ def stats(request):
             delete_semester(request)
         return redirect('stats')
     semesters = Semester.objects.filter(user=request.user)
+    # sort semesters by date time ASC
+    semesters = sorted(semesters, key=lambda x: x.start_date)
     labels = []
     credits = []
     gpa = []
@@ -31,13 +33,13 @@ def stats(request):
     ex_gpa = []
     ob_gpa = []
     what_ifs = []
-    what_if_this = False
+    if_what_if_found = False
     what_if_itr = 0
     continuous_what_if_o_x_c = 0.0
-    if_what_if_found = False
     continuous_credit = 0.0
     continuous_o_x_c = 0.0
     for sem in semesters:
+        what_if_this = False
         what_if = What_if.objects.filter(semester=sem.id)
         if what_if:
             what_if = what_if[0]
@@ -48,10 +50,10 @@ def stats(request):
                 # Whether we need to add this or the actual one
                 if what_if.gpa != 0.0:
                     what_if_this = True
-                else:
-                    what_if_this = False
             else:
                 what_ifs.append(what_if.gpa)
+        else:
+            what_ifs.append(0.0)
         courses = Course.objects.filter(semester=sem.id)
         e_x_c = 0.0 # expected gpa * credit
         o_x_c = 0.0 # obtained gpa * credit
@@ -103,10 +105,19 @@ def stats(request):
             gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
         else:
             gpa.append({'expected': 0, 'obtained': 0})
+            credits.append(0)
     
+    # semesters = semesters[::-1]
+    # gpa = gpa[::-1]
+
     data = zip(semesters, gpa, credits)
+    # labels = labels[::-1]
+    # ex_gpa = ex_gpa[::-1]
+    # ob_gpa = ob_gpa[::-1]
+    # cgpa = cgpa[::-1]
     chart = {'labels': labels, 'expected': ex_gpa, 'obtained': ob_gpa, 'cgpa': cgpa}
     if if_what_if_found:
+        # what_ifs = what_ifs[::-1]
         chart['what_if'] = what_ifs
     return render(request, 'stats/stats.html', {'data': data, 'chart': chart})
 
