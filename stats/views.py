@@ -52,8 +52,7 @@ def stats(request):
                     what_if_this = True
             else:
                 what_ifs.append(what_if.gpa)
-        else:
-            what_ifs.append(0.0)
+
         courses = Course.objects.filter(semester=sem.id)
         e_x_c = 0.0 # expected gpa * credit
         o_x_c = 0.0 # obtained gpa * credit
@@ -101,6 +100,8 @@ def stats(request):
                 print('What if:', continuous_what_if_o_x_c)
                 print('Continue:', continuous_o_x_c)
                 print('Credit:', continuous_credit)
+            else:
+                what_ifs.append(0.0)
             labels.append(sem.name)
             gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
         else:
