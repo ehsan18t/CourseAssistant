@@ -214,7 +214,7 @@ def add_comment(request, pk):
                 if User.objects.filter(username=u).exists():
                     u = User.objects.filter(username=u)[0]
                     users.append(u)
-                    comment = comment.replace(word, '<a href="/profile/'+str(u.id)+'">'+word+'</a>')    # Need to changed replace with link
+                    comment = comment.replace(word, '<a id="comment" href="/profile/'+str(u.id)+'">'+word+'</a>')    # Need to changed replace with link
 
     comment_obj = Comment.objects.create(content=content, user=user, text=comment)
     comment_obj.save()
