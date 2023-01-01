@@ -45,7 +45,7 @@
             <input type="submit" name="signin" value="Login" class="btn solid" />
           </form>
           <!-- SIGNUP FORM -->
-          <form id="signup-form" action="{% url 'login' %}" class="sign-up-form">
+          <form id="signup-form" action="{% url 'login' %}" method="POST" class="sign-up-form">
             {% csrf_token %}
             <h2 class="title">Sign up</h2>
             <div class="input-field">
