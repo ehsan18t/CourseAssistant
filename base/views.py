@@ -255,31 +255,35 @@ def notification_view(request):
     unread_count.save()
     return render(request, 'notification_view.html', {'notifications': notifications})
 
-def user_profile(request):
-    if request.method == 'POST' :
-        upload = request.FILES.get('upload')
-        o = User.objects.get(id=request.user.id)
-        o.profile_picture = upload
-        o.save()
-        
-    return render(request, 'user/user_profile.html')
+
+def user_profile(request, pk):
+    user = User.objects.filter(id=pk)[0]
+    return render(request, 'user/profile.html', {'user': user})
+
 
 def edit_profile(request):
+    user = request.user
     if request.method == 'POST':
         firstName = request.POST.get('firstName')
         lastName = request.POST.get('lastName')
-        o = User.objects.get(id=request.user.id)
-        if firstName != '':
-            o.first_name = firstName
-        if lastName != '':
-            o.last_name = lastName
-        o.save()
+        if firstName and lastName:
+            user.first_name = firstName
+            user.last_name = lastName
+            user.save()
         return redirect('profile')
-    return render(request, 'user/edit_profile.html')
+    return render(request, 'user/edit_profile.html', {'user': user})
 
-def others_profile(request,pk):
-    other_user = User.objects.get(id=pk)
-    return render(request, 'user/others_profile.html', {'other_user':other_user})
+
+def change_profile_picture(request):
+    user = request.user
+    if request.method == 'POST':
+        picture = request.FILES.get('profile_picture')
+        if picture:
+            user.profile_picture = picture
+            user.save()
+        return redirect('profile')
+    return render(request, 'user/change_profile_picture.html', {'user': user})
+
 
 def user_settings(request):
     if request.method == 'POST':
