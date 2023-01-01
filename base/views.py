@@ -48,38 +48,29 @@ def check_uni_for_admin_creation():
 
 
 def login_page(request):
-    form = LoginForm()
+    form = UserCreationForm()
     if request.method == 'POST':
-        username = request.POST.get('email')
-        password = request.POST.get('passwords')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')
+        if 'signin' in request.POST:
+            username = request.POST.get('email')
+            password = request.POST.get('passwords')
+            user = authenticate(request, username=username, password=password)  # here username is email
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.info(request, 'Username or Password is incorrect')
         else:
-            messages.info(request, 'Username or Password is incorrect')
-    return render(request, 'login.html', {'form': form})
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Registration Successful')
+                return redirect('login')
+    return render(request, 'index.html', {'form': form})
 
 
 def logout_user(request):
     logout(request)
     return redirect('login')
-
-
-def signup(request):
-    form = UserCreationForm()
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Registration Successful')
-            return redirect('login')
-    return render(request, 'signup.html', {'form': form})
-
-
-# @login_required(login_url='login')
-# def messages_page(request):
-#     return render(request, 'messages.html')
 
 
 @login_required(login_url='login')

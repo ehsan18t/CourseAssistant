@@ -19,7 +19,7 @@ class University(models.Model):
         # return sid.startswith(self.sid_pattern)
 
     def __str__(self):
-        return f'{self.name} {self.domain} ({self.email_pattern}) - {self.sid_pattern}'
+        return f'{self.name}'
 
 
 class Department(models.Model):
@@ -28,7 +28,7 @@ class Department(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.name} ({self.university})'
+        return f'{self.name}'
 
 
 class CustomAccountManager(BaseUserManager):
