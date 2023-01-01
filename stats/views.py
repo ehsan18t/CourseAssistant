@@ -22,6 +22,12 @@ def stats(request):
             add_semester(request)
         if 'delete_semester' in request.POST:
             delete_semester(request)
+        if 'add_what_if' in request.POST:
+            pk = request.POST.get('semester_id')
+            add_what_if(request, pk)
+        if 'delete_what_if' in request.POST:
+            pk = request.POST.get('semester_id')
+            delete_what_if(request, pk)
         return redirect('stats')
     semesters = Semester.objects.filter(user=request.user)
     # sort semesters by date time ASC
@@ -123,6 +129,21 @@ def stats(request):
         # what_ifs = what_ifs[::-1]
         chart['what_if'] = what_ifs
     return render(request, 'stats/stats.html', {'data': data, 'chart': chart})
+
+
+def add_what_if(request, pk):
+    semester = Semester.objects.get(id=pk)
+    gpa = request.POST.get('what_if_gpa')
+    user = request.user
+
+    obj = What_if(semester=semester, gpa=gpa)
+    obj.save()
+
+
+def delete_what_if(request, pk):
+    semester = Semester.objects.get(id=pk)
+    obj = What_if.objects.get(semester=semester)
+    obj.delete()
 
 
 def add_semester(request):
