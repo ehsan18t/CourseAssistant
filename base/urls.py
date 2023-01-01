@@ -11,5 +11,5 @@ urlpatterns = [
     path('notification', views.notification_view, name="notification"),
     path('settings', views.user_settings, name="settings"),
     path('edit_profile', views.edit_profile, name="edit_profile"),
-    path('profile/<int:pk>', views.others_profile, name="profile"),
+    path('profile/<int:pk>', views.user_profile, name="profile"),
 ]
