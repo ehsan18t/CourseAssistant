@@ -11,7 +11,7 @@ class Semester(models.Model):
     auto_add_to_group = models.BooleanField(default=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
