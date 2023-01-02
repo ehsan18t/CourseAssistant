@@ -405,7 +405,7 @@ def add_assessment(request):
 
 def delete_assessment(request):
     assessment_id = request.POST.get('assessment_id')
-    assessment = Assessment.objects.filter(id=assessment_id)
+    assessment = Assessment.objects.filter(id=assessment_id)[0]
     course = Course.objects.filter(id=assessment.course_id)[0]
     semester = Semester.objects.filter(id=course.semester_id)[0]
     if request.user == semester.user:
