@@ -83,8 +83,8 @@ def stats(request):
                 ob = (ob/to)*100
                 credit += course.credit
             # Converting each course's marks to gpa and multiplying with credits
-            e_x_c += marks_to_gpa(ex) * course.credit
-            o_x_c += marks_to_gpa(ob) * course.credit
+            e_x_c += (marks_to_gpa(ex) * course.credit)
+            o_x_c += (marks_to_gpa(ob) * course.credit)
 
         # keep tracking continuous gpa*credit and total credit (for what if)
         if what_if_this:
