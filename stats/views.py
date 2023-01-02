@@ -111,7 +111,7 @@ def stats(request):
             else:
                 what_ifs.append(0.0)
             labels.append(sem.name)
-            gpa.append({'expected': e_x_c/credit, 'obtained': o_x_c/credit})
+            gpa.append({'expected': round(e_x_c/credit, 2), 'obtained': round(o_x_c/credit, 2)})
         else:
             gpa.append({'expected': 0, 'obtained': 0})
             credits.append(0)
