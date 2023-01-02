@@ -8,7 +8,7 @@ from base.models import What_if
 
 
 def marks_to_gpa(marks):
-    gpa = {'55': 00, '58': 1.00, '62': 1.33, '66': 1.67, '70': 2.00, '74': 2.33, '78': 2.67, '82': 3.00, '86': 3.33, '90': 3.67, '101': 4.00}
+    gpa = {'55': 00, '57': 1.00, '61': 1.33, '65': 1.67, '69': 2.00, '73': 2.33, '77': 2.67, '81': 3.00, '85': 3.33, '89': 3.67, '100': 4.00}
     for i in gpa:
         if int(marks) <= int(i):
             return gpa[i]
@@ -17,6 +17,7 @@ def marks_to_gpa(marks):
 
 @login_required(login_url='login')
 def stats(request):
+    # print(marks_to_gpa(66))
     if request.method == 'POST':
         if 'add_semester' in request.POST:
             add_semester(request)
@@ -81,9 +82,9 @@ def stats(request):
                 ex = (ex/to)*100
                 ob = (ob/to)*100
                 credit += course.credit
-                # Converting each course's marks to gpa and multiplying with credits
-                e_x_c += marks_to_gpa(ex) * course.credit
-                o_x_c += marks_to_gpa(ob) * course.credit
+            # Converting each course's marks to gpa and multiplying with credits
+            e_x_c += marks_to_gpa(ex) * course.credit
+            o_x_c += marks_to_gpa(ob) * course.credit
 
         # keep tracking continuous gpa*credit and total credit (for what if)
         if what_if_this:
