@@ -24,7 +24,7 @@
         <div class="font-semibold text-teal-900 text-4xl">{{content.title}}</div>
       </div>
       <!-- Author Info -->
-      <a href="#">
+      <a href="{% url 'profile' pk=content.user.id %}">
         <div class="hover:text-skin-primary pl-4 font-semibold text-teal-900 text-xl">{{content.user.first_name}} {{content.user.last_name}} <span class="font-light"> [{{content.user.username}}] </span></div>
       </a>
     </div>

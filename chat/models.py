@@ -200,7 +200,7 @@ class Read_Report(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return ' seen on ' + self.date
+        return ' seen on ' + str(self.date)
 
     class Meta:
         db_table = 'chat_read_reports'
