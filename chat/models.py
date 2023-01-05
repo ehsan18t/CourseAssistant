@@ -1,4 +1,5 @@
 from django.db import models
+
 from base.models import University, User
 
 
@@ -8,6 +9,7 @@ class Ditch(models.Model):
     blocker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocker')
     blocked = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked')
     ditched = models.BooleanField()
+
 
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
@@ -30,10 +32,12 @@ class Message(models.Model):
     def get_all_messages(id_1, id_2):
         messages = []
         # get messages between the two users, sort them by date(reverse) and add them to the list
-        message1 = Message.objects.filter(sender_id=id_1, recipient_id=id_2).order_by('-date') # get messages from sender to recipient
+        message1 = Message.objects.filter(sender_id=id_1, recipient_id=id_2).order_by(
+            '-date')  # get messages from sender to recipient
         for x in range(len(message1)):
             messages.append(message1[x])
-        message2 = Message.objects.filter(sender_id=id_2, recipient_id=id_1).order_by('-date') # get messages from recipient to sender
+        message2 = Message.objects.filter(sender_id=id_2, recipient_id=id_1).order_by(
+            '-date')  # get messages from recipient to sender
         for x in range(len(message2)):
             messages.append(message2[x])
 
@@ -66,7 +70,7 @@ class Message(models.Model):
                 k.append(i)
 
         return k
-    
+
     # u == user_pk
     @staticmethod
     def get_connected_users(u):
@@ -79,14 +83,14 @@ class Message(models.Model):
             l.add(u.sender)
         #  convert set to list
         return list(l)
-        
+
     # u == other user pk
     @staticmethod
     def get_last_message(current_user, u):
-        messages = Message.objects.filter(sender=current_user).filter(recipient=u) | Message.objects.filter(sender=u).filter(recipient=current_user)
+        messages = Message.objects.filter(sender=current_user).filter(recipient=u) | Message.objects.filter(
+            sender=u).filter(recipient=current_user)
         messages = messages.order_by('-date')
         return messages[0]
-
 
 
 class Study_Group(models.Model):
@@ -192,6 +196,7 @@ class Group_Message(models.Model):
         verbose_name = 'Group Message'
         verbose_name_plural = 'Group Messages'
         ordering = ('-date',)
+
 
 class Read_Report(models.Model):
     id = models.AutoField(primary_key=True)

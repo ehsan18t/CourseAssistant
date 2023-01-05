@@ -4,7 +4,7 @@ from chat.views import get_unread_messages_count
 
 def notifications(request):
     user = request.user
-    
+
     if not user.is_authenticated:
         return {}
 

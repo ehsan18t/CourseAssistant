@@ -1,14 +1,14 @@
-import copy
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from .models import Semester, Course, Assessment, Assessment_Type
-from chat.models import Study_Group, Participant
 from base.models import What_if
+from chat.models import Study_Group, Participant
+from .models import Semester, Course, Assessment, Assessment_Type
 
 
 def marks_to_gpa(marks):
-    gpa = {'55': 00, '57': 1.00, '61': 1.33, '65': 1.67, '69': 2.00, '73': 2.33, '77': 2.67, '81': 3.00, '85': 3.33, '89': 3.67, '100': 4.00}
+    gpa = {'55': 00, '57': 1.00, '61': 1.33, '65': 1.67, '69': 2.00, '73': 2.33, '77': 2.67, '81': 3.00, '85': 3.33,
+           '89': 3.67, '100': 4.00}
     for i in gpa:
         if int(marks) <= int(i):
             return gpa[i]
@@ -39,7 +39,7 @@ def stats(request):
     cgpa = []
     ex_gpa = []
     ob_gpa = []
-    what_if_list = []   # for details (not graph)
+    what_if_list = []  # for details (not graph)
     what_ifs = []
     if_what_if_found = False
     what_if_itr = 0
@@ -63,8 +63,8 @@ def stats(request):
         what_if_list.append(what_if)
 
         courses = Course.objects.filter(semester=sem.id)
-        e_x_c = 0.0 # expected gpa * credit
-        o_x_c = 0.0 # obtained gpa * credit
+        e_x_c = 0.0  # expected gpa * credit
+        o_x_c = 0.0  # obtained gpa * credit
         ex = 0.0
         ob = 0.0
         to = 0.0
@@ -79,8 +79,8 @@ def stats(request):
 
             # Converting each course's marks to percentage
             if to != 0:
-                ex = (ex/to)*100
-                ob = (ob/to)*100
+                ex = (ex / to) * 100
+                ob = (ob / to) * 100
                 credit += course.credit
             # Converting each course's marks to gpa and multiplying with credits
             e_x_c += (marks_to_gpa(ex) * course.credit)
@@ -101,22 +101,22 @@ def stats(request):
         # gpa or each trimester
         if credit != 0:
             credits.append(credit)
-            ex_gpa.append(e_x_c/credit)
-            ob_gpa.append(o_x_c/credit)
-            cgpa.append(continuous_o_x_c/continuous_credit) # cgpa of each trimester
+            ex_gpa.append(e_x_c / credit)
+            ob_gpa.append(o_x_c / credit)
+            cgpa.append(continuous_o_x_c / continuous_credit)  # cgpa of each trimester
             if if_what_if_found:
-                what_ifs.append(continuous_what_if_o_x_c/continuous_credit) # cgpa of each trimester
+                what_ifs.append(continuous_what_if_o_x_c / continuous_credit)  # cgpa of each trimester
                 print('What if:', continuous_what_if_o_x_c)
                 print('Continue:', continuous_o_x_c)
                 print('Credit:', continuous_credit)
             else:
                 what_ifs.append(0.0)
             labels.append(sem.name)
-            gpa.append({'expected': round(e_x_c/credit, 2), 'obtained': round(o_x_c/credit, 2)})
+            gpa.append({'expected': round(e_x_c / credit, 2), 'obtained': round(o_x_c / credit, 2)})
         else:
             gpa.append({'expected': 0, 'obtained': 0})
             credits.append(0)
-    
+
     # semesters = semesters[::-1]
     # gpa = gpa[::-1]
 
@@ -216,24 +216,24 @@ def courses(request, pk):
             ob += p.obtained_marks
             to += p.total_marks
         if to != 0:
-            ex = (ex/to)*100
-            ob = (ob/to)*100
+            ex = (ex / to) * 100
+            ob = (ob / to) * 100
         assessments.append({'expected': round(ex, 2), 'obtained': round(ob, 2)})
         o_x_c += marks_to_gpa(ob) * course.credit
         temp_course.append({'course': course, 'gpa': marks_to_gpa(ob) * course.credit})
-    
 
     # Contribution calculation
     for course in temp_course:
         if o_x_c != 0:
-            marks.append(round((course['gpa']/o_x_c)*100, 2))
+            marks.append(round((course['gpa'] / o_x_c) * 100, 2))
         else:
             marks.append(0)
 
     data = zip(data, assessments, groups, user_exists_in_group)
     chart = {'labels': names, 'marks': marks}
     semester_obj = Semester.objects.filter(id=pk)[0]
-    return render(request, 'stats/courses.html', {'data': data, 'semester': pk, 'semester_obj': semester_obj, 'chart': chart})
+    return render(request, 'stats/courses.html',
+                  {'data': data, 'semester': pk, 'semester_obj': semester_obj, 'chart': chart})
 
 
 def if_user_in_group(user, group):
@@ -245,7 +245,8 @@ def if_user_in_group(user, group):
 
 def if_group_exists(course):
     user = course.semester.user
-    group = Study_Group.objects.filter(course_code=course.course_code, section=course.section, university=user.university)
+    group = Study_Group.objects.filter(course_code=course.course_code, section=course.section,
+                                       university=user.university)
     if len(group) == 0:
         return None
     else:
@@ -253,10 +254,10 @@ def if_group_exists(course):
 
 
 def auto_add_people_to_group(course, group):
-    university  = course.semester.user.university
+    university = course.semester.user.university
     courses = Course.objects.filter(course_code=course.course_code, section=course.section)
     accepted = []
-    for  c in courses:
+    for c in courses:
         if c.semester.auto_add_to_group and c.semester.is_running:
             accepted.append(c.semester.user)
     for user in accepted:
@@ -271,7 +272,8 @@ def create_study_group(request):
     course = Course.objects.filter(id=course_id)[0]
     # group = Study_Group.objects.filter(course=course_id)
     # if len(group) == 0:
-    obj = Study_Group(name=f'{course.course_code} - {course.name} [{course.section}]', course_code=course.course_code, university = university, section=course.section)
+    obj = Study_Group(name=f'{course.course_code} - {course.name} [{course.section}]', course_code=course.course_code,
+                      university=university, section=course.section)
     obj.save()
     obj = Participant(user=request.user, study_group=obj)
     obj.save()
@@ -336,9 +338,9 @@ def assessment_graph_value(c_pk):
         selected_ob = []
         for b in assess:
             if b.obtained_marks > 0:
-                selected_ob.append((b.obtained_marks/b.total_marks) * a.mark_percentage)
+                selected_ob.append((b.obtained_marks / b.total_marks) * a.mark_percentage)
             else:
-                selected_ex.append((b.expected_marks/b.total_marks) * a.mark_percentage)
+                selected_ex.append((b.expected_marks / b.total_marks) * a.mark_percentage)
 
         # sort in descending order
         selected_ob.sort(reverse=True)
@@ -361,12 +363,11 @@ def assessment_graph_value(c_pk):
 
         print(ob, count, a.best_of)
         if a.best_of > count:
-            ob = round(ob/count, 2)
+            ob = round(ob / count, 2)
         else:
-            ob = round(ob/a.best_of, 2)
+            ob = round(ob / a.best_of, 2)
         obtained_marks.append(ob)
         total_marks.append(a.mark_percentage)
-
 
     return labels, total_marks, obtained_marks
 
@@ -388,7 +389,8 @@ def assessments(request, s_pk, c_pk):
         'obtained': obtained_marks
     }
     return render(request, 'stats/assessments.html',
-                  {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk, 'chart': chart})
+                  {'data': data, 'assessment_types': assessment_types, 'semester': s_pk, 'course': c_pk,
+                   'chart': chart})
 
 
 def add_assessment(request):
@@ -430,8 +432,9 @@ def assessment_types(request, s_pk, c_pk):
     for d in data:
         labels.append(d.name)
         marks.append(d.mark_percentage)
-    chart = {'labels': labels, 'marks': marks }
-    return render(request, 'stats/assessment_types.html', {'data': data, 'semester': s_pk, 'course': c_pk, 'chart': chart})
+    chart = {'labels': labels, 'marks': marks}
+    return render(request, 'stats/assessment_types.html',
+                  {'data': data, 'semester': s_pk, 'course': c_pk, 'chart': chart})
 
 
 def add_assessment_type(request):

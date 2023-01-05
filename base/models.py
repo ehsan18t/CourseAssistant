@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from stats.models import Semester 
+
+from stats.models import Semester
 
 
 class University(models.Model):
@@ -108,7 +109,7 @@ class Content(models.Model):
 
 class Reaction(models.Model):
     id = models.AutoField(primary_key=True)
-    reaction = models.IntegerField()    # 1: like, 2: dislike
+    reaction = models.IntegerField()  # 1: like, 2: dislike
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
     start_date = models.DateTimeField(auto_now_add=True)
@@ -128,9 +129,10 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.content} ({self.user})'
 
+
 class Notification(models.Model):
     id = models.AutoField(primary_key=True)
-    type = models.IntegerField()    # 1: comment, 2: reaction, 3: reply, 4: mention, 5: content approved, 6: content rejected
+    type = models.IntegerField()  # 1: comment, 2: reaction, 3: reply, 4: mention, 5: content approved, 6: content rejected
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE, null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
@@ -140,6 +142,7 @@ class Notification(models.Model):
     def __str__(self):
         return f'{self.type} ({self.user})'
 
+
 class Unread_Counts(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -148,6 +151,7 @@ class Unread_Counts(models.Model):
 
     def __str__(self):
         return f'{self.id} ({self.user})'
+
 
 class What_if(models.Model):
     id = models.AutoField(primary_key=True)
